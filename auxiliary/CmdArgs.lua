@@ -1,3 +1,7 @@
+--[[
+	class which handles reading the command line arguments.
+--]]
+
 local config <const> = require('config.config')
 
 local match <const> = string.match
