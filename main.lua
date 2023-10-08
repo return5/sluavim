@@ -15,11 +15,12 @@ Copyright (c) <2023> <github.com/return5>
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 --]]
 
-local config <const> = require('config.config')
 local CmdArgs <const> = require('auxiliary.CmdArgs')
+local ChangeOptions <const> = require('auxiliary.ChangeProgramOptions')
 
 local function main()
 	CmdArgs.readArgs(arg)
+	ChangeOptions.options()
 end
 
 main()

@@ -11,6 +11,8 @@ local pairs <const> = pairs
 local ChangeProgramOptions <const> = {}
 ChangeProgramOptions.__index = ChangeProgramOptions
 
+_ENV = ChangeProgramOptions
+
 local function setColorPairs(colorPairs)
 	for number,pair in pairs(colorPairs) do
 		NcursesColors.setColorPair(pair[1],number,pair[2],pair[3])
@@ -49,6 +51,5 @@ function ChangeProgramOptions.options()
 	if Config.colorValues ~= nil then setColorValues(Config.colorValues) end
 end
 
-_ENV = ChangeProgramOptions
 
-
+return ChangeProgramOptions
