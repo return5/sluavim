@@ -32,8 +32,8 @@ local function changeBooleanValue(field,value)
 	config[field] = boolVal
 end
 
-local function showLineNumber(value)
-	changeBooleanValue('showLineNumber',value)
+local function showLineNumbers(value)
+	changeBooleanValue('showLineNumbers',value)
 end
 
 local function easyMode(value)
@@ -49,8 +49,8 @@ local function showCursor(value)
 end
 
 local functionMapper <const> = {
-	n = showLineNumber,
-	['line-number'] = showLineNumber,
+	n = showLineNumbers,
+	['line-number'] = showLineNumbers,
 	e = easyMode,
 	['easy-mode'] = easyMode,
 	c = enableColor,
