@@ -9,7 +9,7 @@ _ENV = TextBuffer
 
 
 function TextBuffer:print()
-	self.lines:iterate(Line.printLine)
+	self.lines:iterate(Line.printAtRow)
 end
 
 function TextBuffer:removeLineAt(row)

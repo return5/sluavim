@@ -5,6 +5,10 @@ Node.__index = Node
 
 _ENV = Node
 
+function Node:setItem(item)
+	self.item = item
+	return self
+end
 
 function Node:doFunc(func,i,arg1)
 	func(self.item,i,arg1)

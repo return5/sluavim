@@ -67,6 +67,12 @@ function LinkedList:getItem(index)
 	return node:getItem()
 end
 
+function LinkedList:replace(index,item)
+	local node <const> = self:getNode(index)
+	node:setItem(item)
+	return self
+end
+
 function LinkedList:new()
 	return setmetatable({size = 0},self)
 end

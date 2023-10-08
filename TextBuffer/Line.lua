@@ -7,13 +7,12 @@ Line.__index = Line
 
 _ENV = Line
 
-function Line.printLine(line,row)
-	line.chars:iterate(Output.printCharAt,row)
+function Line:printAtRow(row)
+	self.chars:iterate(Output.printCharAt,row)
 end
 
 function Line:replaceCharAt(char,column)
-	local index <const> = column or #self.chars
-	self.chars[index] = char
+	self.chars:replace(column,char)
 	return self
 end
 
