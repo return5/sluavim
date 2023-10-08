@@ -1,3 +1,6 @@
+--[[
+	abstraction which represent a collection of text on screen
+--]]
 local Line <const> = require('TextBuffer.Line')
 local LinkedList <const> = require('collection.LinkedList')
 local setmetatable <const> = setmetatable

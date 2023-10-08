@@ -1,3 +1,6 @@
+--[[
+	abstraction to represent an individual line of text on screen
+--]]
 local Output <const> = require('localIO.Output')
 local LinkedList <const> = require('collection.LinkedList')
 local setmetatable <const> = setmetatable

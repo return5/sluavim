@@ -1,3 +1,7 @@
+--[[
+	class which represents the ability to write text to some output, typically a screen or terminal.
+	in our case we are writing to terminal using ncurses library
+--]]
 
 local write <const> = io.write
 local Output <const> = {}

@@ -1,3 +1,7 @@
+--[[
+	a simple linkedlist class.
+--]]
+
 local Node <const> = require('collection.Node')
 local setmetatable <const> = setmetatable
 
