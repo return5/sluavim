@@ -18,9 +18,14 @@ Copyright (c) <2023> <github.com/return5>
 local CmdArgs <const> = require('auxiliary.CmdArgs')
 local ChangeOptions <const> = require('auxiliary.ChangeProgramOptions')
 
+
+local function repl()
+end
+
 local function main()
 	CmdArgs.readArgs(arg)
 	ChangeOptions.options()
+	local initMode <const> = ChangeOptions.getINitMode()
 end
 
 main()

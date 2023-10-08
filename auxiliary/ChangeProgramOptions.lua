@@ -5,6 +5,8 @@
 local Config <const> = require('config.config')
 local NcursesColors <const> = require('ncurses.NcursesColors')
 local NcursesAux <const> = require('ncurses.NcursesAux')
+local NormalMode <const> = require('modes.NormalMode')
+local InsertMode <const> = require('modes.InsertMode')
 
 local pairs <const> = pairs
 
@@ -33,11 +35,6 @@ local function showCursor(val)
 	NcursesAux.showCursor(val)
 end
 
-local function easyMode(val)
-	--TODO
-	if val then end
-end
-
 local function showLineNumbers(val)
 	--TODO
 end
@@ -46,10 +43,17 @@ function ChangeProgramOptions.options()
 	if Config.showLineNumbers ~= nil then showLineNumbers(Config.showLineNumbers) end
 	if Config.showCursor ~= nil then showCursor(Config.showCursor) end
 	if Config.enableColor then enableColor() end
-	if Config.easyMode ~= nil then easyMode(Config.easyMode) end
 	if Config.colorPairs ~= nil then setColorPairs(Config.colorPairs) end
 	if Config.colorValues ~= nil then setColorValues(Config.colorValues) end
 end
 
+local function setEasyMode()
+
+end
+
+function ChangeProgramOptions.getInitMode()
+	if Config.easyMode ~= nil and Config.easyMode then return setEasyMode() end
+	return NormalMode
+end
 
 return ChangeProgramOptions
