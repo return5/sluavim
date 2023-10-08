@@ -10,6 +10,6 @@ screen:addCharAt(1,'h')
 	:addCharAt(2,'l'):addCharAt(2,'d'):addCharAt(2,'\n')
 	:replaceCharAt(2,2,8):replaceCharAt(-1,100,'r'):addCharAt(1,'\n')
 	--	:addLineAt():addCharAt(3,'h'):addCharAt(3,'o'):addCharAt(3,'w'):addCharAt(3,'\n')
-	--:removeCharAt(2,2):removeCharAt(2,1):removeCharAt(2,1):removeCharAt(2,1):removeCharAt(2,1):removeCharAt(2,1)
+	:removeCharAt(2,1):removeCharAt(2,1):removeCharAt(2,1):removeCharAt(2,1):removeCharAt(2,1)--:removeCharAt(2,1)
 
 screen:print()

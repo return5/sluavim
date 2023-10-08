@@ -17,11 +17,11 @@ function Line:replaceCharAt(char,column)
 end
 
 function Line:isEmpty()
-	return #self.chars == 0
+	return self.chars:isEmpty()
 end
 
 function Line:removeCharAt(column)
-	remove(self.chars,column)
+	self.chars:remove(column)
 	return self
 end
 

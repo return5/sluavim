@@ -1,12 +1,10 @@
 local Node <const> = require('collection.Node')
 local setmetatable <const> = setmetatable
-local Output <const> = require('localIO.Output')
 
 local LinkedList <const> = {}
 LinkedList.__index = LinkedList
 
 _ENV = LinkedList
-
 
 function LinkedList:iterate(func,arg1)
 	local node = self.head
@@ -18,7 +16,7 @@ function LinkedList:iterate(func,arg1)
 end
 
 function LinkedList:getNode(index)
-	local newIndex <const> = (index <= 0 and 0) or (index > self.size and self.size - 1) or index - 1
+	local newIndex <const> = (index <= 1 and 0) or (index > self.size and self.size - 1) or index - 1
 	local node = self.head
 	for i=1,newIndex,1 do
 		node = node.next
@@ -40,14 +38,22 @@ function LinkedList:add(item,index)
 	return self
 end
 
+function LinkedList:isEmpty()
+	return self.size == 0
+end
+
 local function removeNode(linkedList,index)
 	local node <const> = linkedList:getNode(index)
-	node.prev.next = node.next
-	if node.next then
-		node.next.prev = node.prev
+	local nextNode <const> = node.next
+	if node.prev then
+		node.prev.next = node.next
+	end
+	if nextNode then
+		nextNode.prev = node.prev
 	end
 	node.next = nil
 	node.prev = nil
+	return nextNode
 end
 
 function LinkedList:remove(index)
@@ -55,11 +61,12 @@ function LinkedList:remove(index)
 		return self
 	end
 	if index == 1 then
-		self.head = self.head.next
-		self.head.prev = nil
+		self.head = removeNode(self,index)
+	else
+		removeNode(self,index)
 	end
-	removeNode(self,index)
 	self.size = self.size - 1
+	return self
 end
 
 function LinkedList:getItem(index)

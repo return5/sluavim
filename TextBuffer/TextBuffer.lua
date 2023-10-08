@@ -7,7 +7,6 @@ TextBuffer.__index = TextBuffer
 
 _ENV = TextBuffer
 
-
 function TextBuffer:print()
 	self.lines:iterate(Line.printAtRow)
 end
