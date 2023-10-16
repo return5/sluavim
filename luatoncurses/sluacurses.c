@@ -79,6 +79,8 @@ static int addColorValue(lua_State *L);
 static int l_init_color(lua_State *L);
 static int l_getstr(lua_State *L);
 static int l_mousemask(lua_State *L);
+static int l_getCols(lua_State *L);
+static int l_getLines(lua_State *L)
 
 //-------------------------------- code -------------------------------------------------------
 
@@ -151,9 +153,20 @@ int luaopen_libs_luatoncurses_sluacurses(lua_State *L) {
     lua_register(L,"init_color",l_init_color);
     lua_register(L,"getstr",l_getstr);
     lua_register(L,"mousemask",l_mousemask);
+    lua_register(L,"getLines",l_getLines);
+    lua_register(L,"getCols",l_getCols);
     return 0;
 }
 
+static int l_getCols(lua_State *L) {
+	lua_pushnumber(L,COLS);
+	return 1;
+}
+
+static int l_getLines(lua-State *L) {
+	lua_pushnumber(L,LINES);
+	return 1;
+}
 
 static int l_initscr(__attribute__((unused)) lua_State *L) {
     initscr();
