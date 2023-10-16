@@ -35,7 +35,7 @@ function TextBuffer:addLineAt(pos)
 	return self
 end
 
-function TextBuffer:addCharAt(row,char,column)
+function TextBuffer:insert(row,char,column)
 	self.lines:getItem(row):addChar(char,column)
 	return self
 end

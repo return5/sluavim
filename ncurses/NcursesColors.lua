@@ -10,7 +10,7 @@ local COLOR_MAGENTA <const> = COLOR_MAGENTA
 local COLOR_CYAN <const> = COLOR_CYAN
 local COLOR_WHITE <const> = COLOR_WHITE
 local start_color <const> = start_color
-local init_pair <Const> = init_pair
+local init_pair <const> = init_pair
 local init_color <const> = init_color
 
 local NcursesColors <const> = {}
@@ -50,7 +50,7 @@ function NcursesColors.setColorPair(name,number,foreground,background)
 end
 
 function NcursesColors.initPair(pair,foreground,background)
-	init_pair(pair,NcursesColors.colors[foreground],NcursesColors.colors[background])
+	init_pair(NcursesColors.colors[NcursesColors.colorPairs[pair]],NcursesColors.colors[foreground],NcursesColors.colors[background])
 	return pair
 end
 

@@ -19,7 +19,7 @@ function Node:doFunc(func,i,arg1)
 end
 
 function Node:addNextNode(item)
-	self.next = Node:new(self,item)
+	self.next = Node:new(self,item,self.next)
 	return self.next
 end
 
@@ -27,8 +27,8 @@ function Node:getItem()
 	return self.item
 end
 
-function Node:new(prev,item)
-	return setmetatable({prev = prev,item = item},self)
+function Node:new(prev,item,next)
+	return setmetatable({prev = prev,item = item,next = next},self)
 end
 
 return Node

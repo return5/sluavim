@@ -20,7 +20,7 @@ local ChangeOptions <const> = require('auxiliary.ChangeProgramOptions')
 local Input <const> = require('localIO.Input')
 local Output <const> = require('localIO.Output')
 local Cursor <const> = require('window.Cursor')
-local TextBuffer <Const> = require('TextBuffer.TextBuffer')
+local TextBuffer <const> = require('TextBuffer.TextBuffer')
 local Window <const> = require('window.Window')
 
 local function repl(currentMode)
@@ -29,7 +29,7 @@ local function repl(currentMode)
 	local textBuffer <const> = TextBuffer:new()
 	while true do
 		local userInput <const> = Input.getCh()
-		currentMode = currentMode:parseInput(userInput,textBuffer,cursor)
+		currentMode = currentMode:parseInput(textBuffer,userInput,cursor)
 		window:setY(cursor)
 		Output.printTextBuffer(textBuffer,window)
 	end
@@ -38,8 +38,8 @@ end
 local function main()
 	CmdArgs.readArgs(arg)
 	ChangeOptions.options()
-	local initMode <const> = ChangeOptions.getINitMode()
-	repl(initMode)
+	local initMode <const> = ChangeOptions.getInitMode()
+--	repl(initMode)
 end
 
 main()

@@ -80,7 +80,7 @@ static int l_init_color(lua_State *L);
 static int l_getstr(lua_State *L);
 static int l_mousemask(lua_State *L);
 static int l_getCols(lua_State *L);
-static int l_getLines(lua_State *L)
+static int l_getLines(lua_State *L);
 
 //-------------------------------- code -------------------------------------------------------
 
@@ -110,7 +110,7 @@ static int addColorValue(lua_State *L) {
     return 8;
 }
 
-int luaopen_libs_luatoncurses_sluacurses(lua_State *L) {
+int luaopen_luatoncurses_sluacurses(lua_State *L) {
     addColorValue(L);
     lua_register(L,"getch",l_getch); 
     lua_register(L,"mvgetch",l_mvgetch); 
@@ -163,7 +163,7 @@ static int l_getCols(lua_State *L) {
 	return 1;
 }
 
-static int l_getLines(lua-State *L) {
+static int l_getLines(lua_State *L) {
 	lua_pushnumber(L,LINES);
 	return 1;
 }
