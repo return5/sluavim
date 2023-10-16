@@ -10,6 +10,19 @@ LinkedList.__index = LinkedList
 
 _ENV = LinkedList
 
+
+function LinkedList:iterateBuffer(start,limit,func)
+	local node = self:getNode(start)
+	local i = start + 1
+	local loopLimit <const> = limit <= self.size and limit or self.size
+	while i <= loopLimit and node do
+		node:doFunc(func,i)
+		node = node.next
+		i = i + 1
+	end
+	return self
+end
+
 function LinkedList:iterate(func,arg1)
 	local node = self.head
 	for i=1,self.size,1 do

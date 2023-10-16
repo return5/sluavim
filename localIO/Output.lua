@@ -16,12 +16,4 @@ function Output.printCharAt(char,column,row)
 	return self
 end
 
-local function
-
-function Output.printTextBuffer(textBuffer,cursor)
-	local cols <const> = NcursesIO.getCols()
-	local lines <const> = NcursesIO.getLines()
-
-end
-
 return Output

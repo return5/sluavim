@@ -1,3 +1,9 @@
+--[[
+	abstraction to represent the size of the printable window on screen.
+	functions as a sliding window. text which is visible on screen is inside of the sliding window.
+	this is so we only have to print/change text on screen which is currently visible.
+--]]
+
 local NcurseIO <const> = require('ncurses.NcursesIO')
 local setmetatable <const> = setmetatable
 
@@ -32,6 +38,10 @@ end
 function Window:moveUp()
 	self.y = self.y - 1
 	return self
+end
+
+function Window:getWindowStartEnd()
+	return self.x,self:getHeight()
 end
 
 function Window:setY(cursor)

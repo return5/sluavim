@@ -6,7 +6,7 @@ local Config <const> = require('config.config')
 local NcursesColors <const> = require('ncurses.NcursesColors')
 local NcursesAux <const> = require('ncurses.NcursesAux')
 local NormalMode <const> = require('modes.NormalMode')
-local InsertMode <const> = require('modes.InsertMode')
+local EasyMode <const> = require('modes.EasyMode')
 
 local pairs <const> = pairs
 
@@ -47,12 +47,8 @@ function ChangeProgramOptions.options()
 	if Config.colorValues ~= nil then setColorValues(Config.colorValues) end
 end
 
-local function setEasyMode()
-
-end
-
 function ChangeProgramOptions.getInitMode()
-	if Config.easyMode ~= nil and Config.easyMode then return setEasyMode() end
+	if Config.easyMode ~= nil and Config.easyMode then return EasyMode end
 	return NormalMode
 end
 

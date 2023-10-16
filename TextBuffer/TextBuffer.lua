@@ -10,8 +10,9 @@ TextBuffer.__index = TextBuffer
 
 _ENV = TextBuffer
 
-function TextBuffer:print()
-	self.lines:iterate(Line.printAtRow)
+function TextBuffer:print(window)
+	local start <const>, limit <const> = window:getWindowStartEnd()
+	self.lines:iterateBuffer(start,limit,Line.printAtRow)
 end
 
 function TextBuffer:removeLineAt(row)
