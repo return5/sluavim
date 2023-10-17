@@ -13,7 +13,7 @@ _ENV = LinkedList
 
 function LinkedList:iterateBuffer(start,limit,func)
 	local node = self:getNode(start)
-	local i = start + 1
+	local i = start
 	local loopLimit <const> = limit <= self.size and limit or self.size
 	while i <= loopLimit and node do
 		node:doFunc(func,i)
@@ -45,7 +45,7 @@ function LinkedList:add(item,index)
 	if self.size == 0 then
 		self.head = Node:new(nil,item)
 	elseif index == 1 then
-		self.head = self.head:addNextNode(item)
+		self.head = Node:new(nil,item,self.head)
 	else
 		local newIndex <const> = index or self.size + 1
 		local node <const> = self:getNode(newIndex - 1)
@@ -87,8 +87,7 @@ function LinkedList:remove(index)
 end
 
 function LinkedList:getItem(index)
-	local node  = self:getNode(index)
-	return node:getItem()
+	 return self:getNode(index):getItem()
 end
 
 function LinkedList:replace(index,item)

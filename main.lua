@@ -18,7 +18,6 @@ Copyright (c) <2023> <github.com/return5>
 local CmdArgs <const> = require('auxiliary.CmdArgs')
 local ChangeOptions <const> = require('auxiliary.ChangeProgramOptions')
 local Input <const> = require('localIO.Input')
-local Output <const> = require('localIO.Output')
 local Cursor <const> = require('window.Cursor')
 local TextBuffer <const> = require('TextBuffer.TextBuffer')
 local Window <const> = require('window.Window')
@@ -31,7 +30,7 @@ local function repl(currentMode)
 		local userInput <const> = Input.getCh()
 		currentMode = currentMode:parseInput(textBuffer,userInput,cursor)
 		window:setY(cursor)
-		Output.printTextBuffer(textBuffer,window)
+		textBuffer:print(window)
 	end
 end
 
@@ -39,6 +38,12 @@ local function main()
 	CmdArgs.readArgs(arg)
 	ChangeOptions.options()
 	local initMode <const> = ChangeOptions.getInitMode()
+	--local textBuffer <const> = TextBuffer:new()
+	--textBuffer:insert(1,'h',1):insert(1,'e',2):insert(1,'l',3):insert(1,'l',4):insert(1,'o',5):insert(1,':\n',6)
+	--textBuffer:addLineAt(2)
+	--textBuffer:insert(1,'w',1):insert(1,'o',2):insert(1,'r',3):insert(1,'l',4):insert(1,'d',5):insert(1,'\n',6)
+	--local window <const> = Window:new(1,1)
+	--textBuffer:print(window)
 --	repl(initMode)
 end
 

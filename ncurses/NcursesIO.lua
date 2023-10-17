@@ -17,11 +17,13 @@ local move     <const> = move
 _ENV = NcursesIo
 
 function NcursesIo.getCols()
-    return getCols()
+    return 6
+  --  return getCols()
 end
 
 function NcursesIo.getLines()
-    return getLines()
+    return 5
+  --  return getLines()
 end
 
 function NcursesIo.getCh()

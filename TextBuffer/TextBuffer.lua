@@ -4,7 +4,6 @@
 local Line <const> = require('TextBuffer.Line')
 local LinkedList <const> = require('collection.LinkedList')
 local setmetatable <const> = setmetatable
-
 local TextBuffer <const> = {}
 TextBuffer.__index = TextBuffer
 
