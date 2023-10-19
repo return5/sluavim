@@ -17,27 +17,29 @@ Copyright (c) <2023> <github.com/return5>
 
 local CmdArgs <const> = require('auxiliary.CmdArgs')
 local ChangeOptions <const> = require('auxiliary.ChangeProgramOptions')
-local Input <const> = require('localIO.Input')
 local Cursor <const> = require('window.Cursor')
 local TextBuffer <const> = require('TextBuffer.TextBuffer')
 local Window <const> = require('window.Window')
+local InsertMode <const> = require('modes.InsertMode')
+local Input <const> = require('localIO.Input')
 
 local function repl(currentMode)
 	local cursor <const> = Cursor:new(1,1)
 	local window <const> = Window:new(1,1)
 	local textBuffer <const> = TextBuffer:new()
-	while true do
-		local userInput <const> = Input.getCh()
-		currentMode = currentMode:parseInput(textBuffer,userInput,cursor)
+	for i=1,#Input.chars,1 do
+		currentMode = currentMode:takeInput(textBuffer,cursor)
 		window:setY(cursor)
-		textBuffer:print(window)
 	end
+	textBuffer:print(window)
 end
 
 local function main()
 	CmdArgs.readArgs(arg)
 	ChangeOptions.options()
+	InsertMode.setNormal()
 	local initMode <const> = ChangeOptions.getInitMode()
+	repl(initMode)
 	--local textBuffer <const> = TextBuffer:new()
 	--textBuffer:insert(1,'h',1):insert(1,'e',2):insert(1,'l',3):insert(1,'l',4):insert(1,'o',5):insert(1,':\n',6)
 	--textBuffer:addLineAt(2)

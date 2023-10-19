@@ -9,8 +9,12 @@ Input.__index = Input
 
 _ENV = Input
 
+ local i = 1
+ Input.chars = {'i','h','e','l','l','o','\n','w','o','r','l','d','\n'}
+
  function Input.getCh()
-   --TODO
+   i = i + 1
+  return chars[i - 1]
  end
 
 return Input

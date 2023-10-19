@@ -1,20 +1,16 @@
-local Output <const> = require('localIO.Output')
-local Input <const> = require('localIO.Input')
-local NormalMode <const> = require('modes.NormalMode')
+local BaseMode <const> = require('modes.BaseMode')
 local KeyMapping <const> = require('ncurses.NcursesKeyMap')
+local require <const> = require
 
-local InsertMode <const> = {}
+local InsertMode <const> = {type = 'insert'}
 InsertMode.__index = InsertMode
+setmetatable(InsertMode,BaseMode)
 
 _ENV = InsertMode
 
---TODO
-
-InsertMode.keyBindings = {
-	[KeyMapping.ESC] = InsertMode.returnNormal,
-	[KeyMapping.ENTER] = InsertMode.newLine,
-	[KeyMapping.BACK] = InsertMode.backSpace
-}
+function InsertMode.returnNormal()
+	return InsertMode.normalMode
+end
 
 function InsertMode.backSpace(textBuffer,_,cursor)
 	cursor:moveLeft()
@@ -22,16 +18,34 @@ function InsertMode.backSpace(textBuffer,_,cursor)
 	return InsertMode
 end
 
-function InsertMode.newLine(textBuffer,ch,cursor)
+function InsertMode.insertChar(textBuffer,ch,cursor)
 	textBuffer:insert(cursor.y,ch,cursor.x)
-	textBuffer:addNewLine(cursor.y)
-	cursor:moveDown()
+	cursor:moveRight()
 	return InsertMode
 end
 
-function InsertMode.returnNormal()
-	return NormalMode
+function InsertMode.newLine(textBuffer,ch,cursor)
+	InsertMode.insertChar(textBuffer,ch,cursor)
+	cursor:newLine()
+	textBuffer:addLineAt(cursor.y)
+	return InsertMode
 end
+
+function InsertMode.default(textBuffer,ch,cursor)
+	return InsertMode.insertChar(textBuffer,ch,cursor)
+end
+
+--attempting to avoid circular dependency. need to find a better way.
+--since both NormalMode and InsertMode require each other, attempting to 'require' NormalMode creates a circular dependency which crashes when the file is loaded.
+function InsertMode.setNormal()
+	InsertMode.normalMode = require('modes.NormalMode')
+end
+
+InsertMode.keyBindings = {
+	[KeyMapping.ESC] = InsertMode.returnNormal,
+	[KeyMapping.ENTER] = InsertMode.newLine,
+	[KeyMapping.BACK] = InsertMode.backSpace
+}
 
 return InsertMode
 

@@ -31,6 +31,11 @@ function Cursor:moveRight()
 	return self:moveX(1)
 end
 
+function Cursor:newLine()
+	self:moveX(-self.x + 1)
+	return self:moveDown()
+end
+
 function Cursor:move(x,y)
 	self.x = x
 	self.y = y
