@@ -5,16 +5,24 @@
 
 local InsertMode <const> = require('modes.InsertMode')
 local KeyMappings <const> = require('ncurses.NcursesKeyMap')
+local pairs <const> = pairs
 
-local EasyMode <const> = {}
+local EasyMode <const> = {type = 'easy'}
 EasyMode.__index = EasyMode
 setmetatable(EasyMode,InsertMode)
 
 _ENV = EasyMode
 
+
+EasyMode.keyBindings = {}
+
+--making a defensive copy of keyBindings.
+for k,v in pairs(InsertMode.keyBindings) do
+	EasyMode.keyBindings[k] = v
+end
+
+--for EasyMode disable the escape key, it should not return
 EasyMode.keyBindings[KeyMappings.ESC] = nil
-
-
 
 return EasyMode
 

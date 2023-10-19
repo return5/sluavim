@@ -1,5 +1,5 @@
 local BaseMode <const> = require('modes.BaseMode')
-local KeyMapping <const> = require('ncurses.NcursesKeyMap')
+local KeyMap <const> = require('ncurses.NcursesKeyMap')
 local require <const> = require
 
 local InsertMode <const> = {type = 'insert'}
@@ -14,7 +14,7 @@ end
 
 function InsertMode.backSpace(textBuffer,_,cursor)
 	cursor:moveLeft()
-	textBuffer:replaceCharAt()
+	textBuffer:removeCharAt(cursor.y,cursor.x)
 	return InsertMode
 end
 
@@ -42,9 +42,9 @@ function InsertMode.setNormal()
 end
 
 InsertMode.keyBindings = {
-	[KeyMapping.ESC] = InsertMode.returnNormal,
-	[KeyMapping.ENTER] = InsertMode.newLine,
-	[KeyMapping.BACK] = InsertMode.backSpace
+	[KeyMap.ESC] = InsertMode.returnNormal,
+	[KeyMap.ENTER] = InsertMode.newLine,
+	[KeyMap.BACK] = InsertMode.backSpace,
 }
 
 return InsertMode
