@@ -33,6 +33,10 @@ function TextBuffer:getLine(n)
 	return self.lines:getNode(n)
 end
 
+function TextBuffer:getLengthOfLine(line)
+	return self:getLine(line):getItem():getSize()
+end
+
 function TextBuffer:grabRowFrom(cursor)
 	 return self:getLine(cursor.y):getItem():grabFrom(cursor.x + 1)
 end
@@ -45,6 +49,10 @@ end
 function TextBuffer:insert(row,char,column)
 	self.lines:getItem(row):addChar(char,column)
 	return self
+end
+
+function TextBuffer:getSize()
+	return self.lines.size
 end
 
 function TextBuffer:new()

@@ -48,6 +48,10 @@ function Line:addChar(char,pos)
 	return self
 end
 
+function Line:getSize()
+	return self.chars.size
+end
+
 function Line:new()
 	return setmetatable({chars = LinkedList:new()},self)
 end

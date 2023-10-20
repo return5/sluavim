@@ -11,11 +11,25 @@ function Cursor:moveY(amount)
 end
 
 function Cursor:moveUp()
-	return self:moveY(-1)
+	self:moveY(-1)
+	if self.y <= 0 then self.y = 1 end
+	return self
 end
 
 function Cursor:moveDown()
 	return self:moveY(1)
+end
+
+function Cursor:moveDownWithLimit(limit)
+	self:moveDown()
+	if self.y > limit then self.y = limit end
+	return self
+end
+
+function Cursor:moveRightWithLimit(limit)
+	self:moveRight()
+	if self.x > limit then self.x = limit end
+	return self
 end
 
 function Cursor:moveX(amount)
@@ -32,7 +46,6 @@ end
 function Cursor:moveRight()
 	return self:moveX(1)
 end
-
 
 function Cursor:moveToStartOfLine()
 	return self:moveX(-self.x + 1)

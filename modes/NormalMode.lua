@@ -23,9 +23,51 @@ function NormalMode.moveToStartReturnInsertMode(_,_,cursor)
 	return InsertMode
 end
 
+function NormalMode.moveLeft(_,_,cursor)
+	cursor:moveLeft()
+	return NormalMode
+end
+
+function NormalMode.moveUp(_,_,cursor)
+	cursor:moveUp()
+	return NormalMode
+end
+
+function NormalMode.moveRight(textBuffer,_,cursor)
+	local limit <const> = textBuffer:getLengthOfLine(cursor.y) + 1
+	cursor:moveRightWithLimit(limit)
+	return NormalMode
+end
+
+function NormalMode.moveDown(textBuffer,_,cursor)
+	local limit <const> = textBuffer:getSize()
+	cursor:modeDownWithLimit(limit)
+	return NormalMode
+end
+
+function NormalMode.moveRightAndReturnInsertMode(textBuffer,_,cursor)
+	NormalMode.moveRight(textBuffer,nil,cursor)
+	return InsertMode
+end
+
+function NormalMode.returnInsertMode()
+	return InsertMode
+end
+
+function NormalMode.moveToEndAndReturnInsertMode(textBuffer,_,cursor)
+	cursor.x = textBuffer:getLengthOfLine(cursor.y) + 1
+	return InsertMode
+end
+
 NormalMode.keyBindings = {
-	a = NormalMode.returnInsertMode,
-	I = NormalMode.moveToStartReturnInsertMode
+	a = NormalMode.moveRightAndReturnInsertMode,
+	A = NormalMode.moveToEndAndReturnInsertMode,
+	i = NormalMode.returnInsertMode,
+	I = NormalMode.moveToStartReturnInsertMode,
+	h = NormalMode.moveLeft,
+	j = NormalMode.moveDown,
+	k = NormalMode.moveUp,
+	l = NormalMode.moveRight,
 }
 
 return NormalMode
