@@ -1,7 +1,7 @@
 local BaseMode <const> = require('modes.BaseMode')
 local InsertMode <const> = require('modes.InsertMode')
 
-local NormalMode <const> = {type = 'normal'}
+local NormalMode <const> = {type = 'normalmode'}
 NormalMode.__index = NormalMode
 
 setmetatable(NormalMode,BaseMode)
@@ -18,10 +18,14 @@ function NormalMode.returnInsertMode()
 	return InsertMode
 end
 
+function NormalMode.moveToStartReturnInsertMode(_,_,cursor)
+	cursor:moveToStartOfLine()
+	return InsertMode
+end
+
 NormalMode.keyBindings = {
-	i = NormalMode.returnInsertMode,
-	j = NormalMode.default,
-	k = NormalMode.returnInsertMode
+	a = NormalMode.returnInsertMode,
+	I = NormalMode.moveToStartReturnInsertMode
 }
 
 return NormalMode

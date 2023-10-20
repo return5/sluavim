@@ -4,8 +4,9 @@
 local Output <const> = require('localIO.Output')
 local LinkedList <const> = require('collection.LinkedList')
 local setmetatable <const> = setmetatable
+local type = type
 
-local Line <const> = {}
+local Line <const> = {type = "line"}
 Line.__index = Line
 
 _ENV = Line
@@ -17,6 +18,20 @@ end
 function Line:replaceCharAt(char,column)
 	self.chars:replace(column,char)
 	return self
+end
+
+function Line:insertNodeAtStart(node)
+	self.chars:setHead(node)
+	return self
+end
+
+function Line:grabFrom(n)
+	local node <const> = self.chars:getNode(n)
+	if node.prev then
+		node.prev.next = nil
+	end
+	self.chars:setSize(n - 1)
+	return node
 end
 
 function Line:isEmpty()

@@ -6,7 +6,7 @@
 local NcursesIO <const> = require('ncurses.NcursesIO')
 
 local write <const> = io.write
-local Output <const> = {}
+local Output <const> = {type = "output"}
 Output.__index = Output
 
 _ENV = Output

@@ -7,7 +7,7 @@
 local NcurseIO <const> = require('ncurses.NcursesIO')
 local setmetatable <const> = setmetatable
 
-local Window <const> = {}
+local Window <const> = {type = "window"}
 Window.__index = Window
 
 _ENV = Window

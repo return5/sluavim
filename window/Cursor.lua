@@ -1,6 +1,6 @@
 local setmetatable <const> = setmetatable
 
-local Cursor <const> = {}
+local Cursor <const> = {type = "cursor"}
 Cursor.__index = Cursor
 
 _ENV = Cursor
@@ -24,15 +24,22 @@ function Cursor:moveX(amount)
 end
 
 function Cursor:moveLeft()
-	return self:moveX(-1)
+	self:moveX(-1)
+	if self.x <= 0 then self.x = 1 end
+	return self
 end
 
 function Cursor:moveRight()
 	return self:moveX(1)
 end
 
+
+function Cursor:moveToStartOfLine()
+	return self:moveX(-self.x + 1)
+end
+
 function Cursor:newLine()
-	self:moveX(-self.x + 1)
+	self:moveToStartOfLine()
 	return self:moveDown()
 end
 

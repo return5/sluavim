@@ -3,7 +3,7 @@
  --]]
 local setmetatable <const> = setmetatable
 
-local Node <const> = {}
+local Node <const> = {type = "node"}
 Node.__index = Node
 
 _ENV = Node

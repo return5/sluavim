@@ -4,7 +4,7 @@
 local Line <const> = require('TextBuffer.Line')
 local LinkedList <const> = require('collection.LinkedList')
 local setmetatable <const> = setmetatable
-local TextBuffer <const> = {}
+local TextBuffer <const> = {type = "textbuffer"}
 TextBuffer.__index = TextBuffer
 
 _ENV = TextBuffer
@@ -27,6 +27,14 @@ end
 function TextBuffer:replaceCharAt(row,column,char)
 	self.lines:getItem(row):replaceCharAt(char,column)
 	return self
+end
+
+function TextBuffer:getLine(n)
+	return self.lines:getNode(n)
+end
+
+function TextBuffer:grabRowFrom(cursor)
+	 return self:getLine(cursor.y):getItem():grabFrom(cursor.x + 1)
 end
 
 function TextBuffer:addLineAt(pos)

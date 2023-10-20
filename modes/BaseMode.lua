@@ -1,6 +1,6 @@
 local Input <const> = require('localIO.Input')
 
-local BaseMode <const> = {type = 'base',keyBindings = {}}
+local BaseMode <const> = {type = 'basemode',keyBindings = {}}
 BaseMode.__index = BaseMode
 
 _ENV = BaseMode

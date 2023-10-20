@@ -2,7 +2,7 @@ local BaseMode <const> = require('modes.BaseMode')
 local KeyMap <const> = require('ncurses.NcursesKeyMap')
 local require <const> = require
 
-local InsertMode <const> = {type = 'insert'}
+local InsertMode <const> = {type = 'insertmode'}
 InsertMode.__index = InsertMode
 setmetatable(InsertMode,BaseMode)
 
@@ -10,6 +10,11 @@ _ENV = InsertMode
 
 function InsertMode.returnNormal()
 	return InsertMode.normalMode
+end
+
+function InsertMode.escape(_,_,cursor)
+	cursor:moveLeft()
+	return InsertMode.returnNormal()
 end
 
 function InsertMode.backSpace(textBuffer,_,cursor)
@@ -26,8 +31,12 @@ end
 
 function InsertMode.newLine(textBuffer,ch,cursor)
 	InsertMode.insertChar(textBuffer,ch,cursor)
+	cursor:moveX(-1)
+	local newHead <const> = textBuffer:grabRowFrom(cursor)
 	cursor:newLine()
 	textBuffer:addLineAt(cursor.y)
+	--get the line at y, then insert at the beginning any characters which were present behind the added newline character.
+	textBuffer:getLine(cursor.y):getItem():insertNodeAtStart(newHead)
 	return InsertMode
 end
 
@@ -42,7 +51,7 @@ function InsertMode.setNormal()
 end
 
 InsertMode.keyBindings = {
-	[KeyMap.ESC] = InsertMode.returnNormal,
+	[KeyMap.ESC] = InsertMode.escape,
 	[KeyMap.ENTER] = InsertMode.newLine,
 	[KeyMap.BACK] = InsertMode.backSpace,
 }

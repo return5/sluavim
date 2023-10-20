@@ -4,13 +4,26 @@
 
 local Node <const> = require('collection.Node')
 local setmetatable <const> = setmetatable
-local io = io
 
-local LinkedList <const> = {}
+local LinkedList <const> = {type = "linkedlist"}
 LinkedList.__index = LinkedList
 
 _ENV = LinkedList
 
+function LinkedList:setNewSize()
+	local temp = self.head
+	while temp do
+		self:incrementSize()
+		temp = temp.next
+	end
+	return self
+end
+
+function LinkedList:setHead(node)
+	self.head = node
+	self:setNewSize()
+	return self
+end
 
 function LinkedList:iterateBuffer(start,limit,func)
 	local node = self:getNode(start)
@@ -18,7 +31,6 @@ function LinkedList:iterateBuffer(start,limit,func)
 	local loopLimit <const> = limit <= self.size and limit or self.size
 	while i <= loopLimit and node do
 		node:doFunc(func,i)
-		io.write("\n-----\n")
 		node = node.next
 		i = i + 1
 	end
@@ -53,7 +65,17 @@ function LinkedList:add(item,index)
 		local node <const> = self:getNode(newIndex - 1)
 		node:addNextNode(item)
 	end
+	self:incrementSize()
+	return self
+end
+
+function LinkedList:incrementSize()
 	self.size = self.size + 1
+	return self
+end
+
+function LinkedList:setSize(size)
+	self.size = size
 	return self
 end
 

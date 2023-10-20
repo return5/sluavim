@@ -7,7 +7,7 @@ local InsertMode <const> = require('modes.InsertMode')
 local KeyMappings <const> = require('ncurses.NcursesKeyMap')
 local pairs <const> = pairs
 
-local EasyMode <const> = {type = 'easy'}
+local EasyMode <const> = {type = 'easymode'}
 EasyMode.__index = EasyMode
 setmetatable(EasyMode,InsertMode)
 
