@@ -3,7 +3,6 @@ local InsertMode <const> = require('modes.InsertMode')
 
 local NormalMode <const> = {type = 'normalmode'}
 NormalMode.__index = NormalMode
-
 setmetatable(NormalMode,BaseMode)
 
 _ENV = NormalMode
@@ -69,6 +68,11 @@ function NormalMode.setMacro()
 	return NormalMode
 end
 
+function NormalMode.runMacro(textBuffer,_,cursor)
+	BaseMode.runMacro(NormalMode,textBuffer,cursor)
+	return NormalMode
+end
+
 NormalMode.keyBindings = {
 	a = NormalMode.moveRightAndReturnInsertMode,
 	A = NormalMode.moveToEndAndReturnInsertMode,
@@ -78,7 +82,9 @@ NormalMode.keyBindings = {
 	j = NormalMode.moveDown,
 	k = NormalMode.moveUp,
 	l = NormalMode.moveRight,
-	--TODO d,y,:,f,t,p,P,@
+	q = NormalMode.setMacro,
+	['@'] = NormalMode.runMacro
+	--TODO d,y,:,f,t,p,P
 }
 
 return NormalMode

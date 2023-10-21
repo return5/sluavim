@@ -15,7 +15,7 @@ function BaseMode.addToMacro(ch)
 end
 
 function BaseMode:macroParseInput(ch,textBuffer,cursor)
-	BaseMode.addToMacro(ch)
+	if ch ~= 'q' then BaseMode.addToMacro(ch) end
 	return self:regularParseInput(ch,textBuffer,cursor)
 end
 
@@ -23,7 +23,7 @@ function BaseMode:macroParseInputSetRegister(ch)
 	BaseMode.macros[ch] = {}
 	BaseMode.currentRegister = ch
 	BaseMode.parseInput = BaseMode.macroParseInput
-	return BaseMode
+	return self
 end
 
 function BaseMode:regularParseInput(ch,textBuffer,cursor)
@@ -36,6 +36,15 @@ end
 function BaseMode:takeInput(textBuffer,cursor)
 	local ch <const> = Input.getCh()
 	return self:parseInput(ch,textBuffer,cursor)
+end
+
+function BaseMode:runMacro(textBuffer,cursor)
+	local ch <const> = Input.getCh()
+	local mode = self
+	for i=1,#BaseMode.macros[ch],1 do
+		mode = mode:parseInput(BaseMode.macros[ch][i],textBuffer,cursor)
+	end
+	return mode
 end
 
 BaseMode.parseInput = BaseMode.regularParseInput
