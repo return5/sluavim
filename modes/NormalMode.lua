@@ -8,8 +8,6 @@ setmetatable(NormalMode,BaseMode)
 
 _ENV = NormalMode
 
---TODO
-
 function NormalMode.default()
 	return NormalMode
 end
@@ -59,6 +57,18 @@ function NormalMode.moveToEndAndReturnInsertMode(textBuffer,_,cursor)
 	return InsertMode
 end
 
+function NormalMode.endMacro()
+	BaseMode.parseInput = BaseMode.regularParseInput
+	NormalMode.keyBindings['q'] = NormalMode.setMacro
+	return NormalMode
+end
+
+function NormalMode.setMacro()
+	BaseMode.parseInput = BaseMode.macroParseInputSetRegister
+	NormalMode.keyBindings['q'] = NormalMode.endMacro
+	return NormalMode
+end
+
 NormalMode.keyBindings = {
 	a = NormalMode.moveRightAndReturnInsertMode,
 	A = NormalMode.moveToEndAndReturnInsertMode,
@@ -68,6 +78,7 @@ NormalMode.keyBindings = {
 	j = NormalMode.moveDown,
 	k = NormalMode.moveUp,
 	l = NormalMode.moveRight,
+	--TODO d,y,:,f,t,p,P,@
 }
 
 return NormalMode
