@@ -1,5 +1,6 @@
 local BaseMode <const> = require('modes.BaseMode')
 local InsertMode <const> = require('modes.InsertMode')
+local KeyMAp <const> = require('ncurses.NcursesKeyMap')
 
 local NormalMode <const> = {type = 'normalmode'}
 NormalMode.__index = NormalMode
@@ -73,6 +74,31 @@ function NormalMode.runMacro(textBuffer,_,cursor)
 	return NormalMode
 end
 
+local function moveCursor(textBuffer,cursor,findFunc,offset)
+	local ch <const> = BaseMode.grabInput()
+	if ch == KeyMAp.ESC then return NormalMode end
+	local stop <const> = findFunc(textBuffer,cursor,ch)
+	if stop == -1 then return NormalMode end
+	cursor.x = stop + offset
+	return NormalMode
+end
+
+function NormalMode.from(textBuffer,_,cursor)
+	return moveCursor(textBuffer,cursor,textBuffer.findForward,0)
+end
+
+function NormalMode.to(textBuffer,_,cursor)
+	return moveCursor(textBuffer,cursor,textBuffer.findForward,-1)
+end
+
+function NormalMode.fromBackwards(textBuffer,_,cursor)
+	return moveCursor(textBuffer,cursor,textBuffer.findBackwards,0)
+end
+
+function NormalMode.toBackwards(textBuffer,_,cursor)
+	return moveCursor(textBuffer,cursor,textBuffer.findBackwards,1)
+end
+
 NormalMode.keyBindings = {
 	a = NormalMode.moveRightAndReturnInsertMode,
 	A = NormalMode.moveToEndAndReturnInsertMode,
@@ -83,8 +109,12 @@ NormalMode.keyBindings = {
 	k = NormalMode.moveUp,
 	l = NormalMode.moveRight,
 	q = NormalMode.setMacro,
-	['@'] = NormalMode.runMacro
-	--TODO d,y,:,f,t,p,P
+	['@'] = NormalMode.runMacro,
+	t = NormalMode.to,
+	T = NormalMode.toBackwards,
+	f = NormalMode.from,
+	F = NormalMode.fromBackwards
+	--TODO d,D,y,Y,:,f,F,t,T,p,P,r,R
 }
 
 return NormalMode

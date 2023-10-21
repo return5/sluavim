@@ -4,7 +4,6 @@
 local Output <const> = require('localIO.Output')
 local LinkedList <const> = require('collection.LinkedList')
 local setmetatable <const> = setmetatable
-local type = type
 
 local Line <const> = {type = "line"}
 Line.__index = Line
@@ -50,6 +49,14 @@ end
 
 function Line:getSize()
 	return self.chars.size
+end
+
+function Line:findForward(ch,x)
+	return self.chars:findForward(ch,x)
+end
+
+function Line:findBackwards(ch,x)
+	return self.chars:findBackwards(ch,x)
 end
 
 function Line:new()

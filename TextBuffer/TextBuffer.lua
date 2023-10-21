@@ -4,6 +4,7 @@
 local Line <const> = require('TextBuffer.Line')
 local LinkedList <const> = require('collection.LinkedList')
 local setmetatable <const> = setmetatable
+
 local TextBuffer <const> = {type = "textbuffer"}
 TextBuffer.__index = TextBuffer
 
@@ -49,6 +50,15 @@ end
 function TextBuffer:insert(row,char,column)
 	self.lines:getItem(row):addChar(char,column)
 	return self
+end
+
+function TextBuffer:findBackwards(cursor,ch)
+	local lines = self.lines:getNode(cursor.y):getItem()
+	return lines:findBackwards(ch,cursor.x)
+end
+
+function TextBuffer:findForward(cursor,ch)
+	return self.lines:getNode(cursor.y):getItem():findForward(ch,cursor.x)
 end
 
 function TextBuffer:getSize()

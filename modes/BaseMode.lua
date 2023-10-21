@@ -34,8 +34,12 @@ function BaseMode:regularParseInput(ch,textBuffer,cursor)
 end
 
 function BaseMode:takeInput(textBuffer,cursor)
-	local ch <const> = Input.getCh()
+	local ch <const> = BaseMode.grabInput()
 	return self:parseInput(ch,textBuffer,cursor)
+end
+
+function BaseMode.grabInput()
+	return Input:getCh()
 end
 
 function BaseMode:runMacro(textBuffer,cursor)

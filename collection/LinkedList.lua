@@ -10,6 +10,27 @@ LinkedList.__index = LinkedList
 
 _ENV = LinkedList
 
+function LinkedList:find(ch,x,offset,nextNodeFunc)
+	local newX = x + offset
+	local temp = self:getNode(newX)
+	while temp do
+		if temp:getItem() == ch then
+			return newX
+		end
+		temp = nextNodeFunc(temp)
+		newX = newX + offset
+	end
+	return -1
+end
+
+function LinkedList:findForward(ch,x)
+	return self:find(ch,x,1,function(temp) return temp.next end)
+end
+
+function LinkedList:findBackwards(ch,x)
+	return self:find(ch,x,-1,function(temp) return temp.prev end)
+end
+
 function LinkedList:setNewSize()
 	local temp = self.head
 	while temp do
