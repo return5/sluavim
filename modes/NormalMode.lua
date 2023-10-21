@@ -99,6 +99,10 @@ function NormalMode.toBackwards(textBuffer,_,cursor)
 	return moveCursor(textBuffer,cursor,textBuffer.findBackwards,1)
 end
 
+function NormalMode.delete()
+	return NormalMode.deleteMode
+end
+
 NormalMode.keyBindings = {
 	a = NormalMode.moveRightAndReturnInsertMode,
 	A = NormalMode.moveToEndAndReturnInsertMode,
@@ -113,9 +117,11 @@ NormalMode.keyBindings = {
 	t = NormalMode.to,
 	T = NormalMode.toBackwards,
 	f = NormalMode.from,
-	F = NormalMode.fromBackwards
-	--TODO d,D,y,Y,:,f,F,t,T,p,P,r,R
+	F = NormalMode.fromBackwards,
+	d = NormalMode.delete
+	--TODO d,D,y,Y,:,p,P,r,R,x,X
 }
+
 
 return NormalMode
 

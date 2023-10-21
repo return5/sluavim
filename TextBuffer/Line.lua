@@ -59,6 +59,10 @@ function Line:findBackwards(ch,x)
 	return self.chars:findBackwards(ch,x)
 end
 
+function Line:removeChars(start,stop,register)
+	return self.chars:removeNodes(start,stop,register)
+end
+
 function Line:new()
 	return setmetatable({chars = LinkedList:new()},self)
 end

@@ -1,6 +1,5 @@
 local BaseMode <const> = require('modes.BaseMode')
 local KeyMap <const> = require('ncurses.NcursesKeyMap')
-local require <const> = require
 
 local InsertMode <const> = {type = 'insertmode'}
 InsertMode.__index = InsertMode
@@ -42,12 +41,6 @@ end
 
 function InsertMode.default(textBuffer,ch,cursor)
 	return InsertMode.insertChar(textBuffer,ch,cursor)
-end
-
---attempting to avoid circular dependency. need to find a better way.
---since both NormalMode and InsertMode require each other, attempting to 'require' NormalMode creates a circular dependency which crashes when the file is loaded.
-function InsertMode.setNormal()
-	InsertMode.normalMode = require('modes.NormalMode')
 end
 
 InsertMode.keyBindings = {

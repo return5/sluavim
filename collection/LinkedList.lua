@@ -10,6 +10,37 @@ LinkedList.__index = LinkedList
 
 _ENV = LinkedList
 
+function LinkedList:selectNodes(start,stop,register)
+	local i = start
+	local startNode = self:getNode(start)
+	local temp = startNode
+	while temp and i < stop do
+		register[#register + 1] = temp:getItem()
+		temp = temp.next
+		i = i + 1
+	end
+	if temp then
+		register[#register + 1] = temp:getItem()
+	end
+	return startNode,temp
+end
+
+function LinkedList:removeNodes(start,stop,register)
+	local startNode <const>, stopNode <const> = self:selectNodes(start,stop,register)
+	local nextNode <const> = stopNode and stopNode.next or nil
+	if startNode == self.head then
+		self.head = nextNode
+	end
+	if startNode.prev then
+		startNode.prev.next = nextNode
+	end
+	if nextNode then
+		nextNode.prev = startNode.prev
+	end
+	self:setNewSize()
+	return self
+end
+
 function LinkedList:find(ch,x,offset,nextNodeFunc)
 	local newX = x + offset
 	local temp = self:getNode(newX)
@@ -33,6 +64,7 @@ end
 
 function LinkedList:setNewSize()
 	local temp = self.head
+	self.size = 0
 	while temp do
 		self:incrementSize()
 		temp = temp.next

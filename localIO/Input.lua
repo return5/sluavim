@@ -10,7 +10,7 @@ Input.__index = Input
 _ENV = Input
 
  local i = 1
- Input.chars = {'a','h','e','l','l','o','W','O','R','L','D',KeyMapings.ESC,'F','e','f','W'}
+ Input.chars = {'a','h','e','l','l','o','W','O','R','L','D',KeyMapings.ESC,'F','h','d','t','o'}
 
  function Input.getCh()
    i = i + 1

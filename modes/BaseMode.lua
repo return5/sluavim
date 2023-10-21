@@ -1,12 +1,23 @@
 local Input <const> = require('localIO.Input')
 
-local BaseMode <const> = {type = 'basemode',keyBindings = {},macros = {},currentRegister = ""}
+local BaseMode <const> = {type = 'basemode',keyBindings = {},macros = {},currentRegister = "",registers = {}}
 BaseMode.__index = BaseMode
 
 _ENV = BaseMode
 
 function BaseMode.default()
 	return BaseMode
+end
+
+function BaseMode.adjustRegister()
+	local i = 1
+	while BaseMode.registers[i] and i < 9 do
+		BaseMode.register[i + 1] = BaseMode.register[i]
+	end
+end
+
+function BaseMode.setFirstRegister(register)
+	BaseMode.registers[1] = register
 end
 
 function BaseMode.addToMacro(ch)
