@@ -25,8 +25,8 @@ function TextBuffer:removeCharAt(row,column)
 	return self
 end
 
-function TextBuffer:replaceCharAt(row,column,char)
-	self.lines:getItem(row):replaceCharAt(char,column)
+function TextBuffer:replaceCharAt(char,cursor)
+	self.lines:getItem(cursor.y):replaceCharAt(char,cursor.x)
 	return self
 end
 

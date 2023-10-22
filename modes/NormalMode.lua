@@ -8,6 +8,11 @@ setmetatable(NormalMode,BaseMode)
 
 _ENV = NormalMode
 
+function NormalMode.reset()
+	NormalMode.takeInput = nil
+	return NormalMode
+end
+
 function NormalMode.default()
 	return NormalMode
 end
@@ -74,29 +79,35 @@ function NormalMode.runMacro(textBuffer,_,cursor)
 	return NormalMode
 end
 
-local function moveCursor(textBuffer,cursor,findFunc,offset)
-	local ch <const> = BaseMode.grabInput()
-	if ch == KeyMap.ESC then return NormalMode end
-	local stop <const> = findFunc(textBuffer,cursor,ch)
-	if stop == -1 then return NormalMode end
-	cursor.x = stop + offset
+local function moveCursor(findFunc,offset)
+	return function(_,textBuffer,cursor)
+		local ch <const> = BaseMode.grabInput()
+		if ch == KeyMap.ESC then return NormalMode.reset() end
+		local stop <const> = findFunc(textBuffer,cursor,ch)
+		if stop == -1 then return NormalMode end
+		cursor.x = stop + offset
+		return NormalMode.reset()
+	end
+end
+
+function NormalMode.from(textBuffer)
+	 NormalMode.takeInput = moveCursor(textBuffer.findForward,0)
 	return NormalMode
 end
 
-function NormalMode.from(textBuffer,_,cursor)
-	return moveCursor(textBuffer,cursor,textBuffer.findForward,0)
+function NormalMode.to(textBuffer)
+	NormalMode.takeInput = moveCursor(textBuffer.findForward,-1)
+	return NormalMode
 end
 
-function NormalMode.to(textBuffer,_,cursor)
-	return moveCursor(textBuffer,cursor,textBuffer.findForward,-1)
-end
-
-function NormalMode.fromBackwards(textBuffer,_,cursor)
-	return moveCursor(textBuffer,cursor,textBuffer.findBackwards,0)
+function NormalMode.fromBackwards(textBuffer)
+	NormalMode.takeInput = moveCursor(textBuffer.findBackwards,0)
+	return NormalMode
 end
 
 function NormalMode.toBackwards(textBuffer,_,cursor)
-	return moveCursor(textBuffer,cursor,textBuffer.findBackwards,1)
+	NormalMode.takeInput = moveCursor(textBuffer,cursor,textBuffer.findBackwards,1)
+	return NormalMode
 end
 
 function NormalMode.delete()
@@ -119,6 +130,19 @@ function NormalMode.deletePrevChar(textBuffer,_,cursor)
 	return NormalMode
 end
 
+function NormalMode:takeInputReplaceChar(textBuffer,cursor)
+	local ch <const> = BaseMode.grabInput()
+	if ch ~= KeyMap.ESC then
+		textBuffer:replaceCharAt(ch,cursor)
+	end
+	return NormalMode.reset()
+end
+
+function NormalMode.replaceCurrentChar()
+	 NormalMode.takeInput = NormalMode.takeInputReplaceChar
+	return NormalMode
+end
+
 NormalMode.keyBindings = {
 	a = NormalMode.moveRightAndReturnInsertMode,
 	A = NormalMode.moveToEndAndReturnInsertMode,
@@ -136,8 +160,9 @@ NormalMode.keyBindings = {
 	F = NormalMode.fromBackwards,
 	d = NormalMode.delete,
 	x = NormalMode.deleteCurrentChar,
-	X = NormalMode.deletePrevChar
-	--TODO :,p,P,r,R,X,o,O,~,u,U
+	X = NormalMode.deletePrevChar,
+	r = NormalMode.replaceCurrentChar
+	--TODO :,p,P,r,R,o,O,~,u,U
 }
 
 

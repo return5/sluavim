@@ -95,9 +95,11 @@ end
 
 function LinkedList:iterate(func,arg1)
 	local node = self.head
-	for i=1,self.size,1 do
+	local i = 1
+	while node do
 		node:doFunc(func,i,arg1)
 		node = node.next
+		i = i + 1
 	end
 	return self
 end
