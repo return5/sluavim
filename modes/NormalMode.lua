@@ -105,7 +105,9 @@ end
 
 function NormalMode.deleteCurrentChar(textBuffer,_,cursor)
 	NormalMode.deleteMode.deleteCurrentChar(textBuffer,cursor)
-	cursor:moveLeft()
+	if cursor.x > textBuffer:getLengthOfLine(cursor.y) then
+		cursor:moveLeft()
+	end
 	if cursor.x <= 0 then cursor.x = 1 end
 	return NormalMode
 end
