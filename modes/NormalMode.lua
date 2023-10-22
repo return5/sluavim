@@ -112,6 +112,13 @@ function NormalMode.deleteCurrentChar(textBuffer,_,cursor)
 	return NormalMode
 end
 
+function NormalMode.deletePrevChar(textBuffer,_,cursor)
+	cursor:moveLeft()
+	if cursor.x <= 0 then cursor.x = 1 end
+	NormalMode.deleteMode.deleteCurrentChar(textBuffer,cursor)
+	return NormalMode
+end
+
 NormalMode.keyBindings = {
 	a = NormalMode.moveRightAndReturnInsertMode,
 	A = NormalMode.moveToEndAndReturnInsertMode,
@@ -128,9 +135,11 @@ NormalMode.keyBindings = {
 	f = NormalMode.from,
 	F = NormalMode.fromBackwards,
 	d = NormalMode.delete,
-	x = NormalMode.deleteCurrentChar
-	--TODO :,p,P,r,R,x,X,o,O,~,u,U
+	x = NormalMode.deleteCurrentChar,
+	X = NormalMode.deletePrevChar
+	--TODO :,p,P,r,R,X,o,O,~,u,U
 }
+
 
 return NormalMode
 
