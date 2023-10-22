@@ -26,10 +26,10 @@ end
 
 function Line:grabFrom(n)
 	local node <const> = self.chars:getNode(n)
-	if node.prev then
+	if node and node.prev then
 		node.prev.next = nil
 	end
-	self.chars:setSize(n - 1)
+	self.chars:setNewSize()
 	return node
 end
 

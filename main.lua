@@ -22,7 +22,6 @@ local TextBuffer <const> = require('TextBuffer.TextBuffer')
 local Window <const> = require('window.Window')
 local SetModeFields <const> = require('modes.SetModeFields')
 local Input <const> = require('localIO.Input')
-local BaseMode <const> = require('modes.BaseMode')
 
 local function repl(currentMode)
 	local cursor <const> = Cursor:new(1,1)

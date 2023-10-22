@@ -35,7 +35,9 @@ function TextBuffer:getLine(n)
 end
 
 function TextBuffer:getLengthOfLine(line)
-	return self:getLine(line):getItem():getSize()
+	local lineNode = self:getLine(line)
+	local item = lineNode:getItem()
+	return item:getSize()
 end
 
 function TextBuffer:grabRowFrom(cursor)

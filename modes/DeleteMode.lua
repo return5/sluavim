@@ -19,6 +19,12 @@ function DeleteMode.delete(textBuffer,cursor,deleteCharactersFunction)
 	return NormalMode
 end
 
+function DeleteMode.selectTilEnd(textBuffer,_,cursor)
+	local stop <const> = textBuffer:getLengthOfLine(cursor.y)
+	cursor.x = stop
+	return DeleteMode
+end
+
 function DeleteMode:takeInput(textBuffer,cursor)
 	local ch <const> = BaseMode.grabInput()
 	if DeleteMode.keyBindings[ch] then
@@ -34,8 +40,8 @@ DeleteMode.keyBindings = {
 	f = NormalMode.keyBindings.f,
 	F = NormalMode.keyBindings.F,
 	d = DeleteMode.deleteEntireLine,
-	['$'] = DeleteMode.deleteTilEnd,
-	['^'] = DeleteMode.deleteTilStart,
+	['$'] = DeleteMode.selectTilEnd,
+	['^'] = DeleteMode.selectTilStart,
 }
 
 return DeleteMode

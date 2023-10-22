@@ -119,7 +119,7 @@ NormalMode.keyBindings = {
 	f = NormalMode.from,
 	F = NormalMode.fromBackwards,
 	d = NormalMode.delete
-	--TODO d,D,y,Y,:,p,P,r,R,x,X
+	--TODO d,D,y,Y,:,p,P,r,R,x,X,o,O,~,u,U
 }
 
 

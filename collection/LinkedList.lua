@@ -4,6 +4,7 @@
 
 local Node <const> = require('collection.Node')
 local setmetatable <const> = setmetatable
+local io = io
 
 local LinkedList <const> = {type = "linkedlist"}
 LinkedList.__index = LinkedList
@@ -86,6 +87,7 @@ function LinkedList:iterateBuffer(start,limit,func)
 		node:doFunc(func,i)
 		node = node.next
 		i = i + 1
+		io.write("\n")
 	end
 	return self
 end
@@ -100,10 +102,11 @@ function LinkedList:iterate(func,arg1)
 end
 
 function LinkedList:getNode(index)
-	local newIndex <const> = (index <= 1 and 0) or (index > self.size and self.size - 1) or index - 1
 	local node = self.head
-	for i=1,newIndex,1 do
+	local i = 1
+	while i < index and node do
 		node = node.next
+		i = i + 1
 	end
 	return node
 end
