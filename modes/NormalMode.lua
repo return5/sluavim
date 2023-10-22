@@ -168,6 +168,10 @@ function NormalMode.replaceCharacters()
 	return NormalMode
 end
 
+function NormalMode.insertNewLine(textBuffer,_,cursor)
+	return NormalMode.returnInsertMode().newLine(textBuffer,nil,cursor)
+end
+
 NormalMode.keyBindings = {
 	a = NormalMode.moveRightAndReturnInsertMode,
 	A = NormalMode.moveToEndAndReturnInsertMode,
@@ -187,8 +191,9 @@ NormalMode.keyBindings = {
 	x = NormalMode.deleteCurrentChar,
 	X = NormalMode.deletePrevChar,
 	r = NormalMode.replaceCurrentChar,
-	R = NormalMode.replaceCharacters
-	--TODO :,p,P,R,o,O,~,u,U
+	R = NormalMode.replaceCharacters,
+	o = NormalMode.insertNewLine
+	--TODO :,p,P,O,~,u,U
 }
 
 
