@@ -130,16 +130,41 @@ function NormalMode.deletePrevChar(textBuffer,_,cursor)
 	return NormalMode
 end
 
-function NormalMode:takeInputReplaceChar(textBuffer,cursor)
+local function replaceChar(textBuffer,cursor)
 	local ch <const> = BaseMode.grabInput()
 	if ch ~= KeyMap.ESC then
 		textBuffer:replaceCharAt(ch,cursor)
+		return true
 	end
+	return false
+end
+
+function NormalMode:takeInputReplaceChar(textBuffer,cursor)
+	replaceChar(textBuffer,cursor)
 	return NormalMode.reset()
 end
 
 function NormalMode.replaceCurrentChar()
 	 NormalMode.takeInput = NormalMode.takeInputReplaceChar
+	return NormalMode
+end
+
+function NormalMode:takeInputContinualReplaceChars(textBuffer,cursor)
+	local returnVal <const> = replaceChar(textBuffer,cursor)
+	if returnVal then
+		cursor:moveRight()
+	else
+		return NormalMode.reset()
+	end
+	if cursor.x > textBuffer:getLengthOfLine(cursor.y) then
+		NormalMode.reset()
+		return NormalMode.returnInsertMode()
+	end
+	return NormalMode
+end
+
+function NormalMode.replaceCharacters()
+	NormalMode.takeInput = NormalMode.takeInputContinualReplaceChars
 	return NormalMode
 end
 
@@ -161,8 +186,9 @@ NormalMode.keyBindings = {
 	d = NormalMode.delete,
 	x = NormalMode.deleteCurrentChar,
 	X = NormalMode.deletePrevChar,
-	r = NormalMode.replaceCurrentChar
-	--TODO :,p,P,r,R,o,O,~,u,U
+	r = NormalMode.replaceCurrentChar,
+	R = NormalMode.replaceCharacters
+	--TODO :,p,P,R,o,O,~,u,U
 }
 
 
