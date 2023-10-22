@@ -7,14 +7,18 @@ DeleteMode.__index = DeleteMode
 _ENV = DeleteMode
 
 
+function DeleteMode.deleteChars(textBuffer,start,cursor)
+	local register <const> = {}
+	textBuffer:removeChars(start,cursor,register)
+	BaseMode.setFirstRegister(register)
+	return DeleteMode
+end
 
 function DeleteMode.delete(textBuffer,cursor,deleteCharactersFunction)
-	local register <const> = {}
 	local start <const> = cursor.x
 	deleteCharactersFunction(textBuffer,nil,cursor)
 	if cursor.x ~= start then
-		textBuffer:removeChars(start,cursor,register)
-		BaseMode.setFirstRegister(register)
+		DeleteMode.deleteChars(textBuffer,start,cursor)
 	end
 	return NormalMode
 end
@@ -23,6 +27,11 @@ function DeleteMode.selectTilEnd(textBuffer,_,cursor)
 	local stop <const> = textBuffer:getLengthOfLine(cursor.y)
 	cursor.x = stop
 	return DeleteMode
+end
+
+function DeleteMode.deleteCurrentChar(textBuffer,cursor)
+	DeleteMode.deleteChars(textBuffer,cursor.x,cursor)
+	return NormalMode
 end
 
 function DeleteMode:takeInput(textBuffer,cursor)

@@ -27,6 +27,7 @@ function LinkedList:selectNodes(start,stop,register)
 end
 
 function LinkedList:removeNodes(start,stop,register)
+	if start > self.size then return self end
 	local startNode <const>, stopNode <const> = self:selectNodes(start,stop,register)
 	local nextNode <const> = stopNode and stopNode.next or nil
 	if startNode == self.head then

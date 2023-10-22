@@ -1,6 +1,5 @@
 local BaseMode <const> = require('modes.BaseMode')
 local KeyMap <const> = require('ncurses.NcursesKeyMap')
-local io = io
 
 local InsertMode <const> = {type = 'insertmode'}
 InsertMode.__index = InsertMode
@@ -30,7 +29,6 @@ function InsertMode.insertChar(textBuffer,ch,cursor)
 end
 
 function InsertMode.newLine(textBuffer,_,cursor)
-	--cursor:moveX(1)
 	local newHead <const> = textBuffer:grabRowFrom(cursor)
 	cursor:newLine()
 	textBuffer:addLineAt(cursor.y)

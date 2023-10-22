@@ -1,6 +1,6 @@
 local BaseMode <const> = require('modes.BaseMode')
 local InsertMode <const> = require('modes.InsertMode')
-local KeyMAp <const> = require('ncurses.NcursesKeyMap')
+local KeyMap <const> = require('ncurses.NcursesKeyMap')
 
 local NormalMode <const> = {type = 'normalmode'}
 NormalMode.__index = NormalMode
@@ -76,7 +76,7 @@ end
 
 local function moveCursor(textBuffer,cursor,findFunc,offset)
 	local ch <const> = BaseMode.grabInput()
-	if ch == KeyMAp.ESC then return NormalMode end
+	if ch == KeyMap.ESC then return NormalMode end
 	local stop <const> = findFunc(textBuffer,cursor,ch)
 	if stop == -1 then return NormalMode end
 	cursor.x = stop + offset
@@ -103,6 +103,13 @@ function NormalMode.delete()
 	return NormalMode.deleteMode
 end
 
+function NormalMode.deleteCurrentChar(textBuffer,_,cursor)
+	NormalMode.deleteMode.deleteCurrentChar(textBuffer,cursor)
+	cursor:moveLeft()
+	if cursor.x <= 0 then cursor.x = 1 end
+	return NormalMode
+end
+
 NormalMode.keyBindings = {
 	a = NormalMode.moveRightAndReturnInsertMode,
 	A = NormalMode.moveToEndAndReturnInsertMode,
@@ -118,10 +125,10 @@ NormalMode.keyBindings = {
 	T = NormalMode.toBackwards,
 	f = NormalMode.from,
 	F = NormalMode.fromBackwards,
-	d = NormalMode.delete
-	--TODO d,D,y,Y,:,p,P,r,R,x,X,o,O,~,u,U
+	d = NormalMode.delete,
+	x = NormalMode.deleteCurrentChar
+	--TODO :,p,P,r,R,x,X,o,O,~,u,U
 }
-
 
 return NormalMode
 
