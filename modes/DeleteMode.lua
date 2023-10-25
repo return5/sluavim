@@ -25,12 +25,6 @@ function DeleteMode.delete(textBuffer,cursor)
 	return returnMode
 end
 
-function DeleteMode.selectTilEnd(textBuffer,_,cursor)
-	local stop <const> = textBuffer:getLengthOfLine(cursor.y)
-	cursor.x = stop
-	return DeleteMode
-end
-
 function DeleteMode.deleteCurrentChar(textBuffer,cursor)
 	DeleteMode.deleteChars(textBuffer,cursor.x,cursor)
 	return NormalMode
@@ -51,7 +45,7 @@ DeleteMode.keyBindings = {
 	f = NormalMode.keyBindings.f,
 	F = NormalMode.keyBindings.F,
 	d = DeleteMode.deleteEntireLine,
-	['$'] = DeleteMode.selectTilEnd,
+	['$'] = NormalMode.keyBindings['$'],
 	['^'] = DeleteMode.selectTilStart,
 }
 

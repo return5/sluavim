@@ -177,6 +177,14 @@ function NormalMode.insertNewLineAbove(textBuffer,_,cursor)
 	return NormalMode.returnInsertMode().newLineAbove(textBuffer,nil,cursor)
 end
 
+function NormalMode.moveToEndOfLine()
+	NormalMode.takeInput = function(_,textBuffer,cursor)
+		cursor.x = textBuffer:getLengthOfLine(cursor.y)
+		return NormalMode.reset()
+	end
+	return NormalMode
+end
+
 function NormalMode.pasteRegister(textBuffer,_,cursor)
 	local registerName <const> = BaseMode.currentRegister ~= "" and BaseMode.currentRegister or 1
 	local register <const> = BaseMode.registers[registerName]
@@ -212,7 +220,8 @@ NormalMode.keyBindings = {
 	R = NormalMode.replaceCharacters,
 	o = NormalMode.insertNewLine,
 	O = NormalMode.insertNewLineAbove,
-	p = NormalMode.pasteRegister
+	p = NormalMode.pasteRegister,
+	['$'] = NormalMode.moveToEndOfLine
 	--TODO :,y,P,~,d
 }
 
