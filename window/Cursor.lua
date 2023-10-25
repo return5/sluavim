@@ -37,6 +37,11 @@ function Cursor:moveX(amount)
 	return self
 end
 
+function Cursor:moveXTo(to)
+	self.x = to
+	return self
+end
+
 function Cursor:moveLeft()
 	self:moveX(-1)
 	if self.x <= 0 then self.x = 1 end
@@ -49,6 +54,11 @@ end
 
 function Cursor:moveToStartOfLine()
 	return self:moveX(-self.x + 1)
+end
+
+function Cursor:newLineAbove()
+	self:moveToStartOfLine()
+	return self:moveUp()
 end
 
 function Cursor:newLine()

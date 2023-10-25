@@ -1,6 +1,6 @@
 local Input <const> = require('localIO.Input')
 
-local BaseMode <const> = {type = 'basemode',keyBindings = {},macros = {},currentRegister = "",registers = {}}
+local BaseMode <const> = {type = 'basemode',keyBindings = {},macros = {},currentRegister = "",registers = {{}}}
 BaseMode.__index = BaseMode
 
 _ENV = BaseMode
@@ -12,7 +12,8 @@ end
 function BaseMode.adjustRegister()
 	local i = 1
 	while BaseMode.registers[i] and i < 9 do
-		BaseMode.register[i + 1] = BaseMode.register[i]
+		BaseMode.registers[i + 1] = BaseMode.registers[i]
+		i = i + 1
 	end
 end
 

@@ -1,6 +1,6 @@
 local BaseMode <const> = require('modes.BaseMode')
 local KeyMap <const> = require('ncurses.NcursesKeyMap')
-
+local io = io
 local InsertMode <const> = {type = 'insertmode'}
 InsertMode.__index = InsertMode
 setmetatable(InsertMode,BaseMode)
@@ -25,6 +25,12 @@ end
 function InsertMode.insertChar(textBuffer,ch,cursor)
 	textBuffer:insert(cursor.y,ch,cursor.x)
 	cursor:moveRight()
+	return InsertMode
+end
+
+function InsertMode.newLineAbove(textBuffer,_,cursor)
+	textBuffer:addLineAt(cursor.y)
+	cursor:moveXTo(1)
 	return InsertMode
 end
 

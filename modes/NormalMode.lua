@@ -44,7 +44,7 @@ end
 
 function NormalMode.moveDown(textBuffer,_,cursor)
 	local limit <const> = textBuffer:getSize()
-	cursor:modeDownWithLimit(limit)
+	cursor:moveDownWithLimit(limit)
 	return NormalMode
 end
 
@@ -65,6 +65,7 @@ end
 function NormalMode.endMacro()
 	BaseMode.parseInput = BaseMode.regularParseInput
 	NormalMode.keyBindings['q'] = NormalMode.setMacro
+	BaseMode.currentRegister = ""
 	return NormalMode
 end
 
@@ -91,7 +92,7 @@ local function moveCursor(findFunc,offset)
 end
 
 function NormalMode.from(textBuffer)
-	 NormalMode.takeInput = moveCursor(textBuffer.findForward,0)
+	NormalMode.takeInput = moveCursor(textBuffer.findForward,0)
 	return NormalMode
 end
 
@@ -172,6 +173,23 @@ function NormalMode.insertNewLine(textBuffer,_,cursor)
 	return NormalMode.returnInsertMode().newLine(textBuffer,nil,cursor)
 end
 
+function NormalMode.insertNewLineAbove(textBuffer,_,cursor)
+	return NormalMode.returnInsertMode().newLineAbove(textBuffer,nil,cursor)
+end
+
+function NormalMode.pasteRegister(textBuffer,_,cursor)
+	local registerName <const> = BaseMode.currentRegister ~= "" and BaseMode.currentRegister or 1
+	local register <const> = BaseMode.registers[registerName]
+	local insertMode <const> = NormalMode.returnInsertMode()
+	if #register > 0 then
+		cursor:moveRight()
+	end
+	for i=1,#register,1 do
+		insertMode.insertChar(textBuffer,register[i],cursor)
+	end
+	return NormalMode
+end
+
 NormalMode.keyBindings = {
 	a = NormalMode.moveRightAndReturnInsertMode,
 	A = NormalMode.moveToEndAndReturnInsertMode,
@@ -192,8 +210,10 @@ NormalMode.keyBindings = {
 	X = NormalMode.deletePrevChar,
 	r = NormalMode.replaceCurrentChar,
 	R = NormalMode.replaceCharacters,
-	o = NormalMode.insertNewLine
-	--TODO :,p,P,O,~,u,U
+	o = NormalMode.insertNewLine,
+	O = NormalMode.insertNewLineAbove,
+	p = NormalMode.pasteRegister
+	--TODO :,y,P,~,d
 }
 
 
