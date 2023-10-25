@@ -1,6 +1,5 @@
 local NormalMode <const> = require('modes.NormalMode')
 local BaseMode <const> = require('modes.BaseMode')
-local io = io
 
 local DeleteMode <const> = {type = "deletemode"}
 DeleteMode.__index = DeleteMode
@@ -9,7 +8,9 @@ _ENV = DeleteMode
 
 function DeleteMode.deleteChars(textBuffer,start,cursor)
 	local register <const> = {}
-	textBuffer:removeChars(start,cursor,register)
+	local startChar <const> = start <= cursor.x and start or cursor.x
+	local stopChar <const> = cursor.x >= start and cursor.x or start
+	textBuffer:removeChars(startChar,stopChar,cursor.y,register)
 	BaseMode.setFirstRegister(register)
 	return DeleteMode
 end

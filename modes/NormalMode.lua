@@ -106,8 +106,8 @@ function NormalMode.fromBackwards(textBuffer)
 	return NormalMode
 end
 
-function NormalMode.toBackwards(textBuffer,_,cursor)
-	NormalMode.takeInput = moveCursor(textBuffer,cursor,textBuffer.findBackwards,1)
+function NormalMode.toBackwards(textBuffer)
+	NormalMode.takeInput = moveCursor(textBuffer.findBackwards,1)
 	return NormalMode
 end
 
@@ -215,7 +215,6 @@ NormalMode.keyBindings = {
 	p = NormalMode.pasteRegister
 	--TODO :,y,P,~,d
 }
-
 
 return NormalMode
 
