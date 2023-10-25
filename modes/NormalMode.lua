@@ -224,7 +224,7 @@ NormalMode.keyBindings = {
 	O = NormalMode.insertNewLineAbove,
 	p = NormalMode.pasteRegister,
 	['$'] = NormalMode.moveToEndOfLine
-	--TODO :,y,P,~,d
+	--TODO :,y,P,~,d,"
 }
 
 return NormalMode
