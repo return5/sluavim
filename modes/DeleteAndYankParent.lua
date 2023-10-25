@@ -4,6 +4,7 @@ local BaseMode <const> = require('modes.BaseMode')
 local DeleteAndYankParent <const> = {type = "deleteandyankparent"}
 DeleteAndYankParent.__index = DeleteAndYankParent
 
+_ENV = DeleteAndYankParent
 
 function DeleteAndYankParent:action()
 	return DeleteAndYankParent.returnDeleteAndYankParent()
