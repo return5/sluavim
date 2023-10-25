@@ -45,7 +45,7 @@ DeleteMode.keyBindings = {
 	f = NormalMode.keyBindings.f,
 	F = NormalMode.keyBindings.F,
 	d = DeleteMode.deleteEntireLine,
-	['$'] = NormalMode.keyBindings['$'],
+	['$'] = NormalMode.setTakeInputToMoveToEndOfLine,
 	['^'] = DeleteMode.selectTilStart,
 }
 

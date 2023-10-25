@@ -177,13 +177,13 @@ function NormalMode.insertNewLineAbove(textBuffer,_,cursor)
 	return NormalMode.returnInsertMode().newLineAbove(textBuffer,nil,cursor)
 end
 
-local function normalModeMoveToEndOfLine(_,textBuffer,cursor)
+function NormalMode.moveToEndOfLine(_,textBuffer,cursor)
 	cursor.x = textBuffer:getLengthOfLine(cursor.y)
 	return NormalMode.reset()
 end
 
-function NormalMode.moveToEndOfLine()
-	NormalMode.takeInput = normalModeMoveToEndOfLine
+function NormalMode.setTakeInputToMoveToEndOfLine()
+	NormalMode.takeInput = NormalMode.moveToEndOfLine
 	return NormalMode
 end
 
