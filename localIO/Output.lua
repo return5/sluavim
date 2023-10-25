@@ -11,7 +11,11 @@ Output.__index = Output
 
 _ENV = Output
 
-function Output.printCharAt(char,column,row)
+function Output.newLine()
+	write("\n")
+end
+
+function Output.printCharAt(char)
 	write(char)
 	return self
 end

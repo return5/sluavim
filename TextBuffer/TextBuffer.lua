@@ -3,6 +3,7 @@
 --]]
 local Line <const> = require('TextBuffer.Line')
 local LinkedList <const> = require('collection.LinkedList')
+local Output <const> = require('localIO.Output')
 local setmetatable <const> = setmetatable
 
 local TextBuffer <const> = {type = "textbuffer"}
@@ -12,7 +13,7 @@ _ENV = TextBuffer
 
 function TextBuffer:print(window)
 	local start <const>, limit <const> = window:getWindowStartEnd()
-	self.lines:iterateBuffer(start,limit,Line.printAtRow)
+	self.lines:iterateBuffer(start,limit,Line.printAtRow,Output.newLine)
 end
 
 function TextBuffer:removeLineAt(row)
