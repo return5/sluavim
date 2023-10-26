@@ -182,8 +182,19 @@ function NormalMode:moveToEndOfLine(textBuffer,cursor)
 	return NormalMode.reset()
 end
 
+function NormalMode:moveToStartOfLine(_,cursor)
+	cursor:moveToStartOfLine()
+	return NormalMode.reset()
+
+end
+
 function NormalMode.setTakeInputToMoveToEndOfLine()
 	NormalMode.takeInput = NormalMode.moveToEndOfLine
+	return NormalMode
+end
+
+function NormalMode.setTakeInputToMoveToStartOfLine()
+	NormalMode.takeInput = NormalMode.moveToStartOfLine
 	return NormalMode
 end
 
@@ -223,7 +234,8 @@ NormalMode.keyBindings = {
 	o = NormalMode.insertNewLine,
 	O = NormalMode.insertNewLineAbove,
 	p = NormalMode.pasteRegister,
-	['$'] = NormalMode.moveToEndOfLine
+	['$'] = NormalMode.moveToEndOfLine,
+	['^'] = NormalMode.moveToStartOfLine
 	--TODO :,y,P,~,d,"
 }
 

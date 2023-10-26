@@ -14,7 +14,7 @@ end
 function DeleteMode.doAfterSelectEntireLine(textBuffer,cursor)
 	textBuffer:removeLineAt(cursor.y)
 	--TODO set cursor up if it is at bottom of page
-	DeleteMode.doAfter = DeleteMode.returnDeleteMode()
+	DeleteMode.doAfter = DeleteMode.returnDeleteMode
 	return DeleteMode.returnDeleteMode()
 end
 
@@ -26,5 +26,7 @@ end
 function DeleteMode.deleteCurrentChar(textBuffer,cursor)
 	return DeleteMode.deleteChars(textBuffer,cursor.x,cursor)
 end
+
+DeleteMode.doAfter = DeleteMode.returnDeleteMode
 
 return DeleteMode

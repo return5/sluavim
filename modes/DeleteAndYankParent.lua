@@ -50,6 +50,8 @@ function DeleteAndYankParent:takeInput(textBuffer,cursor)
 	return NormalMode
 end
 
+DeleteAndYankParent.doAfter = DeleteAndYankParent.returnDeleteAndYankParent
+
 DeleteAndYankParent.keyBindings = {
 	t = NormalMode.keyBindings.t,
 	T = NormalMode.keyBindings.T,
