@@ -27,7 +27,7 @@ local function repl(currentMode)
 	local cursor <const> = Cursor:new(1,1)
 	local window <const> = Window:new(1,1)
 	local textBuffer <const> = TextBuffer:new()
-	while Input.i < #Input.chars do
+	while Input.i < #Input.chars + 1 do
 		currentMode = currentMode:takeInput(textBuffer,cursor)
 		window:setY(cursor)
 	end

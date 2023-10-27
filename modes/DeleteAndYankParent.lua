@@ -1,3 +1,6 @@
+--[[
+	parent class for delete and yank modes. handles common functionality between them
+]]
 local NormalMode <const> = require('modes.NormalMode')
 local BaseMode <const> = require('modes.BaseMode')
 local KeyMap <const> = require('ncurses.NcursesKeyMap')
@@ -46,6 +49,7 @@ function DeleteAndYankParent.doAfterSelectEntireLine(textBuffer,cursor)
 	DeleteAndYankParent.doAfter = DeleteAndYankParent.returnDeleteAndYankParent
 	textBuffer:removeLineAt(cursor.y)
 	cursor:limitYToSizeOfTextBuffer(textBuffer)
+	cursor:moveToEndOfLine(textBuffer)
 	return DeleteAndYankParent.returnDeleteAndYankParent()
 end
 

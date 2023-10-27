@@ -175,7 +175,7 @@ function NormalMode.insertNewLineAbove(textBuffer,_,cursor)
 end
 
 function NormalMode:moveToEndOfLine(textBuffer,cursor)
-	cursor.x = textBuffer:getLengthOfLine(cursor.y)
+	cursor:moveToEndOfLine(textBuffer)
 	return NormalMode.reset()
 end
 
@@ -195,6 +195,7 @@ function NormalMode.setTakeInputToMoveToStartOfLine()
 	return NormalMode
 end
 
+--TODO test this
 function NormalMode.pasteRegister(textBuffer,_,cursor)
 	local registerName <const> = BaseMode.currentRegister ~= "" and BaseMode.currentRegister or 1
 	local register <const> = BaseMode.registers[registerName]
@@ -233,7 +234,7 @@ NormalMode.keyBindings = {
 	p = NormalMode.pasteRegister,
 	['$'] = NormalMode.moveToEndOfLine,
 	['^'] = NormalMode.moveToStartOfLine
-	--TODO :,y,P,~,d,"
+	--TODO :,y,P,~,"
 }
 
 return NormalMode

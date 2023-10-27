@@ -11,11 +11,11 @@ Input.__index = Input
 _ENV = Input
 
  Input.i = 1
- Input.chars = {'a','h','e','l','l','o','W','O','R','L','D',KeyMapings.ENTER,'j','u','m','p',KeyMapings.ESC,'F','m','d','t','p','a','t'}--'d','f','p','a','l'}
+ Input.chars = {'a','h','e','l','l','o','W','O','R','L','D',KeyMapings.ENTER,'j','u','m','p',KeyMapings.ESC,'d','d','u','a','t'}
 
  function Input.getCh()
    Input.i = Input.i + 1
-  return Input.chars[i - 1]
+  return Input.chars[Input.i - 1]
  end
 
 return Input

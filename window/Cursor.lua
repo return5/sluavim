@@ -10,6 +10,11 @@ function Cursor:moveY(amount)
 	return self
 end
 
+function Cursor:moveToEndOfLine(textBuffer)
+	self.x = textBuffer:getLengthOfLine(self.y)
+	return self
+end
+
 function Cursor:moveUp()
 	self:moveY(-1)
 	if self.y <= 0 then self.y = 1 end

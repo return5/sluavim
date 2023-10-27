@@ -4,7 +4,6 @@
 
 local Node <const> = require('collection.Node')
 local setmetatable <const> = setmetatable
-local io = io
 
 local LinkedList <const> = {type = "linkedlist"}
 LinkedList.__index = LinkedList
@@ -71,7 +70,6 @@ function LinkedList:setNewSize()
 		self:incrementSize()
 		temp = temp.next
 	end
-	io.write("new size is: ",self.size,"\n")
 	return self
 end
 
