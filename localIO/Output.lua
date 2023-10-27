@@ -12,10 +12,11 @@ Output.__index = Output
 _ENV = Output
 
 function Output.newLine()
-	write("\n")
+	write("\nnewline\n")
 end
 
-function Output.printCharAt(char)
+function Output.printCharAt(char,i,j)
+	--write('printing at: ',j,":",i,' ')
 	write(char)
 	return self
 end

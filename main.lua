@@ -32,7 +32,7 @@ local function repl(currentMode)
 		window:setY(cursor)
 	end
 	textBuffer:print(window)
-	io.write("cursor.x: ",cursor.x,"\n")
+	io.write("cursor: ",cursor.x,":",cursor.y,"\n")
 end
 
 local function main()

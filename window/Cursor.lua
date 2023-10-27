@@ -1,4 +1,5 @@
 local setmetatable <const> = setmetatable
+local io = io
 
 local Cursor <const> = {type = "cursor"}
 Cursor.__index = Cursor
@@ -22,6 +23,19 @@ end
 
 function Cursor:moveDownWithLimit(limit)
 	self:moveDown()
+	if self.y > limit then self.y = limit end
+	return self
+end
+
+function Cursor:limitXToLengthOfLine(textBuffer)
+	local limit <const> = textBuffer:getLengthOfLine(self.y)
+	io.write("limit is: ",limit,"\n")
+	if self.x > limit then self.x = limit end
+	return self
+end
+
+function Cursor:limitYToSizeOfTextBuffer(textBuffer)
+	local limit <const> = textBuffer:getSize()
 	if self.y > limit then self.y = limit end
 	return self
 end

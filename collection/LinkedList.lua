@@ -145,7 +145,7 @@ local function removeNode(linkedList,index)
 	local node <const> = linkedList:getNode(index)
 	local nextNode <const> = node.next
 	if node.prev then
-		node.prev.next = node.next
+		node.prev.next = nextNode
 	end
 	if nextNode then
 		nextNode.prev = node.prev

@@ -1,6 +1,7 @@
 local BaseMode <const> = require('modes.BaseMode')
 local InsertMode <const> = require('modes.InsertMode')
 local KeyMap <const> = require('ncurses.NcursesKeyMap')
+local io = io
 
 local NormalMode <const> = {type = 'normalmode'}
 NormalMode.__index = NormalMode
@@ -38,6 +39,7 @@ end
 
 function NormalMode.moveRight(textBuffer,_,cursor)
 	local limit <const> = textBuffer:getLengthOfLine(cursor.y) + 1
+	io.write("move right limit: ",limit,"\n")
 	cursor:moveRightWithLimit(limit)
 	return NormalMode
 end
@@ -85,7 +87,7 @@ local function moveCursor(findFunc,offset)
 		local ch <const> = BaseMode.grabInput()
 		if ch == KeyMap.ESC then return NormalMode.reset() end
 		local stop <const> = findFunc(textBuffer,cursor,ch)
-		if stop == -1 then return NormalMode end
+		if stop == -1 then return NormalMode.reset() end
 		cursor.x = stop + offset
 		return NormalMode.reset()
 	end
@@ -117,10 +119,7 @@ end
 
 function NormalMode.deleteCurrentChar(textBuffer,_,cursor)
 	NormalMode.deleteMode.deleteCurrentChar(textBuffer,cursor)
-	if cursor.x > textBuffer:getLengthOfLine(cursor.y) then
-		cursor:moveLeft()
-	end
-	if cursor.x <= 0 then cursor.x = 1 end
+	cursor:limitXToLengthOfLine(textBuffer)
 	return NormalMode
 end
 
@@ -178,6 +177,8 @@ function NormalMode.insertNewLineAbove(textBuffer,_,cursor)
 end
 
 function NormalMode:moveToEndOfLine(textBuffer,cursor)
+	io.write("type of self is: ",self.type,"\n")
+	io.write("type of buffer is: ",textBuffer.type,"\n")
 	cursor.x = textBuffer:getLengthOfLine(cursor.y)
 	return NormalMode.reset()
 end
