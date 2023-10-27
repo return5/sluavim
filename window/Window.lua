@@ -1,7 +1,7 @@
 --[[
 	abstraction to represent the size of the printable window on screen.
 	functions as a sliding window. text which is visible on screen is inside of the sliding window.
-	this is so we only have to print/change text on screen which is currently visible.
+	this is so the program only has to to print text on screen which is currently visible.
 --]]
 
 local NcurseIO <const> = require('ncurses.NcursesIO')

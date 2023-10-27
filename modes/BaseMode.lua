@@ -1,3 +1,7 @@
+--[[
+	Parent class for NormalMode, InputMode, VisualSelect mode.
+--]]
+
 local Input <const> = require('localIO.Input')
 
 local BaseMode <const> = {type = 'basemode',keyBindings = {},macros = {},currentRegister = "",registers = {{}}}

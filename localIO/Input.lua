@@ -1,7 +1,9 @@
  --[[
- 	clas which represents an abstraction of user inputs. class receives user inputs from anysource.
- 	in this case we are taking keyboard input via ncurses.
+ 	clas which represents an abstraction of user inputs. class should be able to receive user inputs from any source.
+ 	functions as a wrapper class to abstract away user inputs from the rest of the program.
+ 	in this case the class is taking keyboard input via ncurses.
  --]]
+
  local NcursesIO <const> = require('ncurses.NcursesIO')
  local KeyMapings <const> = require('ncurses.NcursesKeyMap')
 

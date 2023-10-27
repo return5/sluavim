@@ -1,6 +1,7 @@
 --[[
-	abstraction which represent a collection of text on screen
+	abstraction which represent a collection of text lines.
 --]]
+
 local Line <const> = require('TextBuffer.Line')
 local LinkedList <const> = require('collection.LinkedList')
 local Output <const> = require('localIO.Output')

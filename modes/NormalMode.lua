@@ -1,3 +1,7 @@
+--[[
+	class which represents NormalMode in a VIM editor.
+--]]
+
 local BaseMode <const> = require('modes.BaseMode')
 local InsertMode <const> = require('modes.InsertMode')
 local KeyMap <const> = require('ncurses.NcursesKeyMap')

@@ -1,6 +1,7 @@
 --[[
 	parent class for delete and yank modes. handles common functionality between them
-]]
+--]]
+
 local NormalMode <const> = require('modes.NormalMode')
 local BaseMode <const> = require('modes.BaseMode')
 local KeyMap <const> = require('ncurses.NcursesKeyMap')

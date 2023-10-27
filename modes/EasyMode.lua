@@ -1,6 +1,6 @@
 --[[
 	easy mode is a mode which makes the text editor behave like a traditional text editor.
-	there is no different modes, just one special type of insert mode.
+	removes the 'modal' aspect of vim, just one special type of insert mode.
 --]]
 
 local InsertMode <const> = require('modes.InsertMode')

@@ -1,3 +1,8 @@
+--[[
+	class represents a cursor on screen with x and y coordinates.
+	this class handles nothing but the x and y, no other attributes of the cursor are handled by this class.
+--]]
+
 local setmetatable <const> = setmetatable
 
 local Cursor <const> = {type = "cursor"}

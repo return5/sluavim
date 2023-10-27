@@ -1,3 +1,7 @@
+--[[
+	class for delete mode. handles deleting text from a textBuffer when using 'd' commands in NormalMode and VisualSelect mode
+--]]
+
 local DeleteAndYankParent <const> = require('modes.DeleteAndYankParent')
 
 local DeleteMode <const> = {type = "deletemode"}

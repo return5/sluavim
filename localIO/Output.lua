@@ -1,6 +1,7 @@
 --[[
 	class which represents the ability to write text to some output, typically a screen or terminal.
-	in our case we are writing to terminal using ncurses library
+	works as a wrapper class which represents an abstraction to outputting text. decouples output from teh rest of the program.
+	in this case the  writing to terminal is using ncurses library.
 --]]
 
 local NcursesIO <const> = require('ncurses.NcursesIO')

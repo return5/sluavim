@@ -1,6 +1,10 @@
+--[[
+	Class which represents InsertMode of a VIM editor.
+--]]
+
 local BaseMode <const> = require('modes.BaseMode')
 local KeyMap <const> = require('ncurses.NcursesKeyMap')
-local io = io
+
 local InsertMode <const> = {type = 'insertmode'}
 InsertMode.__index = InsertMode
 setmetatable(InsertMode,BaseMode)
