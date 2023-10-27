@@ -1,7 +1,6 @@
 local NormalMode <const> = require('modes.NormalMode')
 local BaseMode <const> = require('modes.BaseMode')
 local KeyMap <const> = require('ncurses.NcursesKeyMap')
-local io = io
 
 local DeleteAndYankParent <const> = {type = "deleteandyankparent"}
 DeleteAndYankParent.__index = DeleteAndYankParent
@@ -109,7 +108,7 @@ DeleteAndYankParent.keyBindings = {
 	T = DeleteAndYankParent.toBackwards,
 	f = DeleteAndYankParent.from,
 	F = DeleteAndYankParent.fromBackwards,
-	d = DeleteAndYankParent.selectEntireLine,
+	d = DeleteAndYankParent.selectEntireLine, -- TODO move x to start of line
 	['$'] = NormalMode.setTakeInputToMoveToEndOfLine,
 	['^'] = NormalMode.setTakeInputToMoveToStartOfLine
 }

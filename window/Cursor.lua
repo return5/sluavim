@@ -1,5 +1,4 @@
 local setmetatable <const> = setmetatable
-local io = io
 
 local Cursor <const> = {type = "cursor"}
 Cursor.__index = Cursor
@@ -29,7 +28,6 @@ end
 
 function Cursor:limitXToLengthOfLine(textBuffer)
 	local limit <const> = textBuffer:getLengthOfLine(self.y)
-	io.write("limit is: ",limit,"\n")
 	if self.x > limit then self.x = limit end
 	return self
 end
