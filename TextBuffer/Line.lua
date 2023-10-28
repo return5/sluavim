@@ -65,7 +65,7 @@ function Line:removeChars(start,stop,register)
 end
 
 function Line:copyChars(start,stop,register)
-	return self.chars:removeNodes(start,stop,register,LinkedList.returnSelf)
+	return self.chars:iterateNodes(start,stop,register,LinkedList.returnSelf)
 end
 
 function Line:new()

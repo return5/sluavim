@@ -22,6 +22,15 @@ local TextBuffer <const> = require('TextBuffer.TextBuffer')
 local Window <const> = require('window.Window')
 local SetModeFields <const> = require('modes.SetModeFields')
 local Input <const> = require('localIO.Input')
+local BaseMode <const> = require('modes.BaseMode')
+
+local function printRegister()
+	local reg <const> = BaseMode.registers[1]
+	io.write("printing register\n")
+	for i=1,#reg,1 do
+		io.write(reg[i],"\n")
+	end
+end
 
 local function repl(currentMode)
 	local cursor <const> = Cursor:new(1,1)
@@ -32,6 +41,7 @@ local function repl(currentMode)
 		window:setY(cursor)
 	end
 	textBuffer:print(window)
+	printRegister()
 end
 
 local function main()

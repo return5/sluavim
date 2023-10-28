@@ -1,12 +1,12 @@
-local YankMode <const> = require('modes.yank.YankMode')
+local YankMovements <const> = require('modes.yank.YankMovements')
 
 local YankFrom <const> = {}
-YankMode.__index = YankFrom
+YankFrom.__index = YankFrom
 
 _ENV = YankFrom
 
 function YankFrom:takeInput(textBuffer,cursor)
-	return YankMode:takeInputAndMoveThenDoAction(textBuffer,cursor,textBuffer.findForward,0)
+	return YankMovements:moveCursorAndCopyChars(textBuffer,cursor,textBuffer.findForward,0)
 end
 
 return YankFrom

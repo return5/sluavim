@@ -7,10 +7,12 @@ YankLine.__index = YankLine
 _ENV = YankLine
 
 function YankLine:takeInput(textBuffer,cursor)
-	YankMode.moveCursorToStartOfLine(cursor)
 	local start <const> = cursor.x
+	YankMode.moveCursorToStartOfLine(cursor)
+	local startOfLine <const> = cursor.x
 	YankMode.moveCursorToEndOfLine(textBuffer,cursor)
-	YankMode:deleteOrYankCharacters(textBuffer,cursor,start)
+	YankMode:deleteOrYankCharacters(textBuffer,cursor,startOfLine)
+	cursor:moveXTo(start)
 	return NormalMode
 end
 

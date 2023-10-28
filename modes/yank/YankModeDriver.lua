@@ -47,7 +47,7 @@ YankModeDriver.keyBindings = {
 	T = YankModeDriver.toBackwards,
 	f = YankModeDriver.from,
 	F = YankModeDriver.fromBackwards,
-	d = YankModeDriver.yankEntireLine,
+	y = YankModeDriver.yankEntireLine,
 	['$'] = YankModeDriver.yankToEnd,
 	['^'] = YankModeDriver.yankToStart,
 }

@@ -6,7 +6,10 @@ local BaseMode <const> = require('modes.BaseMode')
 local InsertMode <const> = require('modes.InsertMode')
 local KeyMap <const> = require('ncurses.NcursesKeyMap')
 
-local NormalMode <const> = {type = 'normalmode',deleteModeDriver = "please remember to set this before using class"}
+local NormalMode <const> = {
+	type = 'normalmode', deleteModeDriver = "please remember to set this before using this class.",
+	yankModeDriver = "please remember to set this before using this class."
+	}
 NormalMode.__index = NormalMode
 setmetatable(NormalMode,BaseMode)
 
@@ -122,6 +125,10 @@ function NormalMode.delete()
 	return NormalMode.deleteModeDriver
 end
 
+function NormalMode.yank()
+	return NormalMode.yankModeDriver
+end
+
 function NormalMode.deleteCurrentChar(textBuffer,_,cursor)
 	NormalMode.deleteMode.deleteCurrentChar(textBuffer,cursor)
 	cursor:limitXToLengthOfLine(textBuffer)
@@ -232,14 +239,19 @@ NormalMode.keyBindings = {
 	O = NormalMode.insertNewLineAbove,
 	p = NormalMode.pasteRegister,
 	['$'] = NormalMode.moveToEndOfLine,
-	['^'] = NormalMode.moveToStartOfLine
+	['^'] = NormalMode.moveToStartOfLine,
+	y = NormalMode.yank
 	--TODO :,y,P,~,"
 }
-
 
 function NormalMode.setDeleteModeDriver(deleteModeDriver)
 	NormalMode.delteModeDriver = deleteModeDriver
 	NormalMode.keyBindings.D = deleteModeDriver.deleteToEnd
+	return NormalMode
+end
+
+function NormalMode.setYankModeDriver(yankModeDriver)
+	NormalMode.yankModeDriver = yankModeDriver
 	return NormalMode
 end
 
