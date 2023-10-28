@@ -3,7 +3,6 @@
   - eliminate the nested takeInput call.
 - [ ] add ```~``` functionality.
 - [ ] add ```u``` and ```^r``` functionality.
-- [ ] add all ``y`` functionality.
 - [ ] add ``"`` functionality to select register.
 - [ ] add ``p`` and ```P``` functionality.
 - [ ] add ``:`` mode.
