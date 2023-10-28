@@ -27,7 +27,6 @@ function DeleteAndYankParent:deleteOrYankCharacters(textBuffer,cursor,start)
 	local register <const> = {}
 	local startChar <const> = start <= cursor.x and start or cursor.x
 	local stopChar <const> = cursor.x >= start and cursor.x or start
-	io.write("deleteoryank, ",startChar,":",stopChar,"\n")
 	self.action(textBuffer,startChar,stopChar,cursor.y,register)
 	BaseMode.setFirstRegister(register)
 	cursor.x = startChar

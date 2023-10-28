@@ -3,6 +3,8 @@ local DeleteFrom <const> = require('modes.delete.DeleteFrom')
 local DeleteToBackwards <const> = require('modes.delete.DeleteToBackwards')
 local DeleteFromBackwards <const> = require('modes.delete.DeleteFromBackwards')
 local DeleteLine <const> = require('modes.delete.DeleteLine')
+local DeleteToStart <const> = require('modes.delete.DeleteToStart')
+local DeleteToEnd <const> = require('modes.delete.DeleteToEnd')
 local BaseMode <const> = require('modes.BaseMode')
 
 local DeleteModeDriver <const> = {type = "DeleteModeDriver"}
@@ -32,14 +34,22 @@ function DeleteModeDriver.deleteEntireLine(textBuffer,_,cursor)
 	return DeleteLine:takeInput(textBuffer,cursor)
 end
 
+function DeleteModeDriver.deleteToStart(textBuffer,_,cursor)
+	return DeleteToStart:takeInput(textBuffer,cursor)
+end
+
+function DeleteModeDriver.deleteToEnd(textBuffer,_,cursor)
+	return DeleteToEnd:takeInput(textBuffer,cursor)
+end
+
 DeleteModeDriver.keyBindings = {
 	t = DeleteModeDriver.to,
 	T = DeleteModeDriver.toBackwards,
 	f = DeleteModeDriver.from,
 	F = DeleteModeDriver.fromBackwards,
 	d = DeleteModeDriver.deleteEntireLine,
-	--['$'] = NormalMode.setTakeInputToMoveToEndOfLine,
-	--['^'] = NormalMode.setTakeInputToMoveToStartOfLine
+	['$'] = DeleteModeDriver.deleteToEnd,
+	['^'] = DeleteModeDriver.deleteToStart
 }
 
 return DeleteModeDriver

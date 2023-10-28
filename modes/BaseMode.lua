@@ -58,6 +58,7 @@ function BaseMode.grabInput()
 	return Input:getCh()
 end
 
+--TODO make macroMode class
 function BaseMode:runMacro(textBuffer,cursor)
 	local ch <const> = Input.getCh()
 	local mode = self

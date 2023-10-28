@@ -5,7 +5,6 @@
 local BaseMode <const> = require('modes.BaseMode')
 local InsertMode <const> = require('modes.InsertMode')
 local KeyMap <const> = require('ncurses.NcursesKeyMap')
-local io = io
 
 local NormalMode <const> = {type = 'normalmode',deleteModeDriver = "please remember to set this before using class"}
 NormalMode.__index = NormalMode
@@ -67,6 +66,7 @@ function NormalMode.moveToEndAndReturnInsertMode(textBuffer,_,cursor)
 	return InsertMode
 end
 
+--TODO create macro mode
 function NormalMode.endMacro()
 	BaseMode.parseInput = BaseMode.regularParseInput
 	NormalMode.keyBindings['q'] = NormalMode.setMacro
@@ -117,7 +117,6 @@ function NormalMode.toBackwards(textBuffer)
 end
 
 function NormalMode.delete()
-	io.write("returning deletemodedriver\n")
 	return NormalMode.deleteModeDriver
 end
 
