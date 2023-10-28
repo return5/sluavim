@@ -25,10 +25,7 @@ function LinkedList:selectNodes(start,stop,register)
 	return startNode,temp
 end
 
-function LinkedList:removeNodes(start,stop,register)
-	if start > self.size then return self end
-	local startNode <const>, stopNode <const> = self:selectNodes(start,stop,register)
-	local nextNode <const> = stopNode and stopNode.next or nil
+function LinkedList:removeNodes(startNode,nextNode)
 	if startNode == self.head then
 		self.head = nextNode
 	end
@@ -40,6 +37,17 @@ function LinkedList:removeNodes(start,stop,register)
 	end
 	self:setNewSize()
 	return self
+end
+
+function LinkedList:returnSelf()
+	return self
+end
+
+function LinkedList:iterateNodes(start,stop,register,func2)
+	if start > self.size then return self end
+	local startNode <const>, stopNode <const> = self:selectNodes(start,stop,register)
+	local nextNode <const> = stopNode and stopNode.next or nil
+	return func2(self,startNode,nextNode)
 end
 
 function LinkedList:find(ch,x,offset,nextNodeFunc)

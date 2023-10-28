@@ -65,8 +65,12 @@ function TextBuffer:findForward(cursor,ch)
 	return self.lines:getNode(cursor.y):getItem():findForward(ch,cursor.x)
 end
 
-function TextBuffer:removeChars(start,stop,row,register)
+function TextBuffer.removeChars(start,stop,row,register)
 	return self.lines:getNode(row):getItem():removeChars(start,stop,register)
+end
+
+function TextBuffer:copyChars(start,stop,row,register)
+	return self.lines:getNode(row):getItem():copyChars(start,stop,register)
 end
 
 function TextBuffer:getSize()
