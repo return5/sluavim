@@ -26,11 +26,15 @@ function BaseMode.setFirstRegister(register)
 	BaseMode.registers[1] = register
 end
 
-function BaseMode.removeEndOfRegister()
+function BaseMode.insertIntoCurrentRegister(ch)
 	local register <const> = BaseMode.registers[BaseMode.currentRegister]
-	if register and register[#register]then
-		register[#register] = nil
-	end
+	register[#register + 1] = ch
+	return BaseMode
+end
+
+function BaseMode.setRegister(ch)
+	BaseMode.registers[ch] = {}
+	BaseMode.currentRegister = ch
 	return BaseMode
 end
 
