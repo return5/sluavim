@@ -8,7 +8,7 @@
 
 local NormalMode <const> = require('modes.NormalMode')
 local InsertMode <const> = require('modes.InsertMode')
-local DeleteMode <const> = require('modes.DeleteMode')
+local DeleteModeDriver <const> = require('modes.delete.DeleteModeDriver')
 
 local SetModeFields <const> = {}
 SetModeFields.__index = SetModeFields
@@ -17,7 +17,7 @@ _ENV = SetModeFields
 
 function SetModeFields.setModes()
 	InsertMode.normalMode = NormalMode
-	NormalMode.deleteMode = DeleteMode
+	NormalMode.deleteModeDriver = DeleteModeDriver
 end
 
 return SetModeFields

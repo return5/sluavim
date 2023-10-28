@@ -4,7 +4,7 @@
 
 local DeleteAndYankParent <const> = require('modes.DeleteAndYankParent')
 
-local DeleteMode <const> = {type = "deletemode"}
+local DeleteMode <const> = {}
 DeleteMode.__index = DeleteMode
 setmetatable(DeleteMode,DeleteAndYankParent)
 
@@ -24,7 +24,5 @@ end
 function DeleteMode.deleteCurrentChar(textBuffer,cursor)
 	return DeleteMode:deleteOrYankCharacters(textBuffer,cursor,cursor.x)
 end
-
-DeleteMode.doAfter = DeleteMode.returnDeleteMode
 
 return DeleteMode

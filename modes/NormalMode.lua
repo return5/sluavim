@@ -5,8 +5,9 @@
 local BaseMode <const> = require('modes.BaseMode')
 local InsertMode <const> = require('modes.InsertMode')
 local KeyMap <const> = require('ncurses.NcursesKeyMap')
+local io = io
 
-local NormalMode <const> = {type = 'normalmode'}
+local NormalMode <const> = {type = 'normalmode',deleteModeDriver = "please remember to set this before using class"}
 NormalMode.__index = NormalMode
 setmetatable(NormalMode,BaseMode)
 
@@ -116,7 +117,8 @@ function NormalMode.toBackwards(textBuffer)
 end
 
 function NormalMode.delete()
-	return NormalMode.deleteMode
+	io.write("returning deletemodedriver\n")
+	return NormalMode.deleteModeDriver
 end
 
 function NormalMode.deleteCurrentChar(textBuffer,_,cursor)
