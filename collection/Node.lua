@@ -1,5 +1,5 @@
  --[[
- 	a node class for linkedlist.
+	a node class for linkedlist.
  --]]
 local setmetatable <const> = setmetatable
 

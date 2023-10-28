@@ -12,6 +12,7 @@ setmetatable(NormalMode,BaseMode)
 
 _ENV = NormalMode
 
+--TODO delete this once i change is os takeInput is no longer getting reassigned
 function NormalMode.reset()
 	NormalMode.takeInput = nil
 	return NormalMode
@@ -96,6 +97,7 @@ local function moveCursor(findFunc,offset)
 	end
 end
 
+--make these MovementModes
 function NormalMode.from(textBuffer)
 	NormalMode.takeInput = moveCursor(textBuffer.findForward,0)
 	return NormalMode
@@ -147,11 +149,13 @@ function NormalMode:takeInputReplaceChar(textBuffer,cursor)
 	return NormalMode.reset()
 end
 
+--make this a ReplaceCharMode
 function NormalMode.replaceCurrentChar()
 	 NormalMode.takeInput = NormalMode.takeInputReplaceChar
 	return NormalMode
 end
 
+--make this a ContinuousReplaceMode
 function NormalMode:takeInputContinualReplaceChars(textBuffer,cursor)
 	local returnVal <const> = replaceChar(textBuffer,cursor)
 	if returnVal then
@@ -188,16 +192,6 @@ function NormalMode:moveToStartOfLine(_,cursor)
 	cursor:moveToStartOfLine()
 	return NormalMode.reset()
 
-end
-
-function NormalMode.setTakeInputToMoveToEndOfLine()
-	NormalMode.takeInput = NormalMode.moveToEndOfLine
-	return NormalMode
-end
-
-function NormalMode.setTakeInputToMoveToStartOfLine()
-	NormalMode.takeInput = NormalMode.moveToStartOfLine
-	return NormalMode
 end
 
 --TODO test this

@@ -10,12 +10,6 @@ setmetatable(DeleteMode,DeleteAndYankParent)
 
 _ENV = DeleteMode
 
-function DeleteMode.doAfterSelectEntireLine(textBuffer,cursor)
-	textBuffer:removeLineAt(cursor.y)
-	DeleteMode.doAfter = DeleteMode.returnDeleteMode
-	return DeleteMode
-end
-
 function DeleteMode.action(textBuffer,startChar,stopChar,y,register)
 	textBuffer:removeChars(startChar,stopChar,y,register)
 	return DeleteMode

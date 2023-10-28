@@ -78,20 +78,9 @@ function Cursor:moveToStartOfLine()
 	return self:moveX(-self.x + 1)
 end
 
-function Cursor:newLineAbove()
-	self:moveToStartOfLine()
-	return self:moveUp()
-end
-
 function Cursor:newLine()
 	self:moveToStartOfLine()
 	return self:moveDown()
-end
-
-function Cursor:move(x,y)
-	self.x = x
-	self.y = y
-	return self
 end
 
 function Cursor:new(x,y)

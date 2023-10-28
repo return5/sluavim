@@ -5,7 +5,6 @@
 local NormalMode <const> = require('modes.NormalMode')
 local BaseMode <const> = require('modes.BaseMode')
 local KeyMap <const> = require('ncurses.NcursesKeyMap')
-local io = io
 
 local DeleteAndYankParent <const> = {type = "deleteandyankparent"}
 DeleteAndYankParent.__index = DeleteAndYankParent
@@ -15,11 +14,7 @@ setmetatable(DeleteAndYankParent,BaseMode)
 _ENV = DeleteAndYankParent
 
 function DeleteAndYankParent:action()
-	return DeleteAndYankParent.returnDeleteAndYankParent()
-end
-
-function DeleteAndYankParent.returnNormalMode()
-	return NormalMode
+	return DeleteAndYankParent
 end
 
 function DeleteAndYankParent:deleteOrYankCharacters(textBuffer,cursor,start)
@@ -37,22 +32,6 @@ function DeleteAndYankParent:doAction(textBuffer,cursor)
 	local start <const> = cursor.x
 	local nextStep <const> = NormalMode:takeInput(textBuffer,cursor)
 	return nextStep(self,textBuffer,cursor,start)
-end
-
-function DeleteAndYankParent.returnDeleteAndYankParent()
-	return DeleteAndYankParent
-end
-
-function DeleteAndYankParent.reset()
-	return NormalMode.reset()
-end
-
-function DeleteAndYankParent.doAfterSelectEntireLine(textBuffer,cursor)
-	DeleteAndYankParent.doAfter = DeleteAndYankParent.returnDeleteAndYankParent
-	textBuffer:removeLineAt(cursor.y)
-	cursor:limitYToSizeOfTextBuffer(textBuffer)
-	cursor:moveToEndOfLine(textBuffer)
-	return DeleteAndYankParent.returnDeleteAndYankParent()
 end
 
 function DeleteAndYankParent:moveCursor(textBuffer,cursor,findFunction,offset)
