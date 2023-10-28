@@ -49,7 +49,7 @@ DeleteModeDriver.keyBindings = {
 	F = DeleteModeDriver.fromBackwards,
 	d = DeleteModeDriver.deleteEntireLine,
 	['$'] = DeleteModeDriver.deleteToEnd,
-	['^'] = DeleteModeDriver.deleteToStart
+	['^'] = DeleteModeDriver.deleteToStart,
 }
 
 return DeleteModeDriver

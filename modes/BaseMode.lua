@@ -45,6 +45,7 @@ end
 function BaseMode:regularParseInput(ch,textBuffer,cursor)
 	if self.keyBindings[ch] then
 		return self.keyBindings[ch](textBuffer,ch,cursor)
+	else
 	end
 	return self.default(textBuffer,ch,cursor)
 end

@@ -242,5 +242,12 @@ NormalMode.keyBindings = {
 	--TODO :,y,P,~,"
 }
 
+
+function NormalMode.setDeleteModeDriver(deleteModeDriver)
+	NormalMode.delteModeDriver = deleteModeDriver
+	NormalMode.keyBindings.D = deleteModeDriver.deleteToEnd
+	return NormalMode
+end
+
 return NormalMode
 

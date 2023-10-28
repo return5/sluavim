@@ -17,7 +17,7 @@ _ENV = SetModeFields
 
 function SetModeFields.setModes()
 	InsertMode.normalMode = NormalMode
-	NormalMode.deleteModeDriver = DeleteModeDriver
+	NormalMode.setDeleteModeDriver(DeleteModeDriver)
 end
 
 return SetModeFields
