@@ -13,6 +13,8 @@
 - [ ] read files into program.
 - [ ] write to files from program.
 - [ ] move macro functionality to a MacroMode class
+- [ ] add delete word command
+- [ ] add register class
 
 
 

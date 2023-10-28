@@ -7,8 +7,9 @@ local InsertMode <const> = require('modes.InsertMode')
 local KeyMap <const> = require('ncurses.NcursesKeyMap')
 
 local NormalMode <const> = {
-	type = 'normalmode', deleteModeDriver = "please remember to set this before using this class.",
-	yankModeDriver = "please remember to set this before using this class."
+		type = 'NormalMode', deleteModeDriver = "please remember to set this before using this class.",
+		yankModeDriver = "please remember to set this before using this class.",
+		macroModeDriver = "please remember to set this before using this class."
 	}
 NormalMode.__index = NormalMode
 setmetatable(NormalMode,BaseMode)
@@ -70,24 +71,6 @@ function NormalMode.moveToEndAndReturnInsertMode(textBuffer,_,cursor)
 	return InsertMode
 end
 
---TODO create macro mode
-function NormalMode.endMacro()
-	BaseMode.parseInput = BaseMode.regularParseInput
-	NormalMode.keyBindings['q'] = NormalMode.setMacro
-	BaseMode.currentRegister = ""
-	return NormalMode
-end
-
-function NormalMode.setMacro()
-	BaseMode.parseInput = BaseMode.macroParseInputSetRegister
-	NormalMode.keyBindings['q'] = NormalMode.endMacro
-	return NormalMode
-end
-
-function NormalMode.runMacro(textBuffer,_,cursor)
-	BaseMode.runMacro(NormalMode,textBuffer,cursor)
-	return NormalMode
-end
 
 local function moveCursor(findFunc,offset)
 	return function(_,textBuffer,cursor)
@@ -198,10 +181,21 @@ end
 function NormalMode:moveToStartOfLine(_,cursor)
 	cursor:moveToStartOfLine()
 	return NormalMode.reset()
-
 end
 
---TODO test this
+function NormalMode.deleteTilEnd(textBuffer,_,cursor)
+	return NormalMode.deleteModeDriver.deleteToEnd(textBuffer,_,cursor)
+end
+
+function NormalMode.returnSetMacroRegisterMode()
+	return NormalMode.macroModeDriver.setRegister()
+end
+
+function NormalMode.runMacro()
+	return NormalMode.macroModeDriver.runMacro()
+end
+
+--TODO test this.  move pasting to a mode
 function NormalMode.pasteRegister(textBuffer,_,cursor)
 	local registerName <const> = BaseMode.currentRegister ~= "" and BaseMode.currentRegister or 1
 	local register <const> = BaseMode.registers[registerName]
@@ -224,13 +218,14 @@ NormalMode.keyBindings = {
 	j = NormalMode.moveDown,
 	k = NormalMode.moveUp,
 	l = NormalMode.moveRight,
-	q = NormalMode.setMacro,
+	q = NormalMode.returnSetMacroRegisterMode,
 	['@'] = NormalMode.runMacro,
 	t = NormalMode.to,
 	T = NormalMode.toBackwards,
 	f = NormalMode.from,
 	F = NormalMode.fromBackwards,
 	d = NormalMode.delete,
+	D = NormalMode.deleteTilEnd,
 	x = NormalMode.deleteCurrentChar,
 	X = NormalMode.deletePrevChar,
 	r = NormalMode.replaceCurrentChar,
@@ -245,13 +240,17 @@ NormalMode.keyBindings = {
 }
 
 function NormalMode.setDeleteModeDriver(deleteModeDriver)
-	NormalMode.delteModeDriver = deleteModeDriver
-	NormalMode.keyBindings.D = deleteModeDriver.deleteToEnd
+	NormalMode.deleteModeDriver = deleteModeDriver
 	return NormalMode
 end
 
 function NormalMode.setYankModeDriver(yankModeDriver)
 	NormalMode.yankModeDriver = yankModeDriver
+	return NormalMode
+end
+
+function NormalMode.setMacroModeDriver(macroModeDriver)
+	NormalMode.macroModeDriver = macroModeDriver
 	return NormalMode
 end
 

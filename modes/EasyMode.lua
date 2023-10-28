@@ -13,10 +13,8 @@ setmetatable(EasyMode,InsertMode)
 
 _ENV = EasyMode
 
-
-EasyMode.keyBindings = {}
-
 --making a defensive copy of keyBindings.
+EasyMode.keyBindings = {}
 for k,v in pairs(InsertMode.keyBindings) do
 	EasyMode.keyBindings[k] = v
 end

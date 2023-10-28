@@ -50,6 +50,7 @@ DeleteModeDriver.keyBindings = {
 	d = DeleteModeDriver.deleteEntireLine,
 	['$'] = DeleteModeDriver.deleteToEnd,
 	['^'] = DeleteModeDriver.deleteToStart,
+	--add dw
 }
 
 return DeleteModeDriver
