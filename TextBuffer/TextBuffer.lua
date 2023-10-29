@@ -6,11 +6,28 @@ local Line <const> = require('TextBuffer.Line')
 local LinkedList <const> = require('collection.LinkedList')
 local Output <const> = require('localIO.Output')
 local setmetatable <const> = setmetatable
+local gmatch <const> = string.gmatch
 
 local TextBuffer <const> = {type = "textbuffer"}
 TextBuffer.__index = TextBuffer
 
 _ENV = TextBuffer
+
+
+function TextBuffer:readTextIntoBuffer(text)
+	local column = 1
+	local row = 1
+	for char in gmatch(text,".") do
+		self:insert(row,char,column)
+		if char == "\n" then
+			row = row + 1
+			self:addLineAt(row)
+			column = 0
+		end
+		column = column + 1
+	end
+	return self
+end
 
 function TextBuffer:print(window)
 	local start <const>, limit <const> = window:getWindowStartEnd()
