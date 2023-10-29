@@ -6,7 +6,7 @@ local DeleteLine <const> = require('modes.delete.DeleteLine')
 local DeleteToStart <const> = require('modes.delete.DeleteToStart')
 local DeleteToEnd <const> = require('modes.delete.DeleteToEnd')
 local BaseMode <const> = require('modes.BaseMode')
-
+local io = io
 local DeleteModeDriver <const> = {type = "DeleteModeDriver"}
 DeleteModeDriver.__index = DeleteModeDriver
 

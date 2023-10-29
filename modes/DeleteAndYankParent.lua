@@ -6,7 +6,7 @@ local NormalMode <const> = require('modes.NormalMode')
 local BaseMode <const> = require('modes.BaseMode')
 local KeyMap <const> = require('ncurses.NcursesKeyMap')
 
-local DeleteAndYankParent <const> = {type = "deleteandyankparent"}
+local DeleteAndYankParent <const> = {type = "DeleteAndYankParent"}
 DeleteAndYankParent.__index = DeleteAndYankParent
 
 setmetatable(DeleteAndYankParent,BaseMode)
@@ -36,9 +36,9 @@ end
 
 function DeleteAndYankParent:moveCursor(textBuffer,cursor,findFunction,offset)
 	local ch <const> = BaseMode.grabInput()
-	if ch == KeyMap.ESC then return NormalMode.reset end
+	if ch == KeyMap.ESC then return NormalMode.returnNormalMode end
 	local stop <const> = findFunction(textBuffer,cursor,ch)
-	if stop == -1 then return NormalMode.reset end
+	if stop == -1 then return NormalMode.returnNormalMode end
 	cursor.x = stop + offset
 	return DeleteAndYankParent.deleteOrYankCharacters
 end

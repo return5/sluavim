@@ -1,5 +1,5 @@
 local MacroModeBase <const> = require('modes.macro.MacroModeBase')
-local MacroNormalMode <const> = require('modes.macro.MacroNormalMode')
+local MacroNormalMode <const> = require('modes.macro.macroNormalAndInsert.MacroNormalMode')
 local BaseMode <const> = require('modes.BaseMode')
 
 local SetMacroRegisterMode <const> = {type = "SetMacroRegisterMode"}

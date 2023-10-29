@@ -25,7 +25,7 @@ local Input <const> = require('localIO.Input')
 local BaseMode <const> = require('modes.BaseMode')
 
 local function printRegister()
-	local reg <const> = BaseMode.registers[1]
+	local reg <const> = BaseMode.registers['e']
 	io.write("printing register\n")
 	for i=1,#reg,1 do
 		io.write(reg[i],"\n")

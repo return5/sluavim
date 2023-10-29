@@ -5,22 +5,19 @@
 local BaseMode <const> = require('modes.BaseMode')
 local InsertMode <const> = require('modes.InsertMode')
 local KeyMap <const> = require('ncurses.NcursesKeyMap')
+local io = io
 
 local NormalMode <const> = {
 		type = 'NormalMode', deleteModeDriver = "please remember to set this before using this class.",
 		yankModeDriver = "please remember to set this before using this class.",
-		macroModeDriver = "please remember to set this before using this class."
+		macroModeDriver = "please remember to set this before using this class.",
+		movementDriver = "please remember to set this before using this class."
 	}
 NormalMode.__index = NormalMode
+
 setmetatable(NormalMode,BaseMode)
 
 _ENV = NormalMode
-
---TODO delete this once i change is os takeInput is no longer getting reassigned
-function NormalMode.reset()
-	NormalMode.takeInput = nil
-	return NormalMode
-end
 
 function NormalMode.default()
 	return NormalMode
@@ -66,42 +63,29 @@ function NormalMode.returnInsertMode()
 	return InsertMode
 end
 
+function NormalMode.returnNormalMode()
+	return NormalMode
+end
+
 function NormalMode.moveToEndAndReturnInsertMode(textBuffer,_,cursor)
 	cursor.x = textBuffer:getLengthOfLine(cursor.y) + 1
 	return InsertMode
 end
-
-
-local function moveCursor(findFunc,offset)
-	return function(_,textBuffer,cursor)
-		local ch <const> = BaseMode.grabInput()
-		if ch == KeyMap.ESC then return NormalMode.reset() end
-		local stop <const> = findFunc(textBuffer,cursor,ch)
-		if stop == -1 then return NormalMode.reset() end
-		cursor.x = stop + offset
-		return NormalMode.reset()
-	end
-end
-
 --make these MovementModes
-function NormalMode.from(textBuffer)
-	NormalMode.takeInput = moveCursor(textBuffer.findForward,0)
-	return NormalMode
+function NormalMode.from()
+	return NormalMode.movementDriver.from()
 end
 
-function NormalMode.to(textBuffer)
-	NormalMode.takeInput = moveCursor(textBuffer.findForward,-1)
-	return NormalMode
+function NormalMode.to()
+	return NormalMode.movementDriver.to()
 end
 
-function NormalMode.fromBackwards(textBuffer)
-	NormalMode.takeInput = moveCursor(textBuffer.findBackwards,0)
-	return NormalMode
+function NormalMode.fromBackwards()
+	return NormalMode.movementDriver.fromBackwards()
 end
 
-function NormalMode.toBackwards(textBuffer)
-	NormalMode.takeInput = moveCursor(textBuffer.findBackwards,1)
-	return NormalMode
+function NormalMode.toBackwards()
+	return NormalMode.movementDriver.toBackwards()
 end
 
 function NormalMode.delete()
@@ -136,10 +120,10 @@ end
 
 function NormalMode:takeInputReplaceChar(textBuffer,cursor)
 	replaceChar(textBuffer,cursor)
-	return NormalMode.reset()
+	return NormalMode.returnNormalMode()
 end
 
---make this a ReplaceCharMode
+--TODO make this a ReplaceCharMode
 function NormalMode.replaceCurrentChar()
 	 NormalMode.takeInput = NormalMode.takeInputReplaceChar
 	return NormalMode
@@ -151,10 +135,10 @@ function NormalMode:takeInputContinualReplaceChars(textBuffer,cursor)
 	if returnVal then
 		cursor:moveRight()
 	else
-		return NormalMode.reset()
+		return NormalMode.returnNormalMode()
 	end
 	if cursor.x > textBuffer:getLengthOfLine(cursor.y) then
-		NormalMode.reset()
+		NormalMode.returnNormalMode()
 		return NormalMode.returnInsertMode()
 	end
 	return NormalMode
@@ -175,12 +159,12 @@ end
 
 function NormalMode:moveToEndOfLine(textBuffer,cursor)
 	cursor:moveToEndOfLine(textBuffer)
-	return NormalMode.reset()
+	return NormalMode.returnNormalMode()
 end
 
 function NormalMode:moveToStartOfLine(_,cursor)
 	cursor:moveToStartOfLine()
-	return NormalMode.reset()
+	return NormalMode.returnNormalMode()
 end
 
 function NormalMode.deleteTilEnd(textBuffer,_,cursor)
@@ -251,6 +235,11 @@ end
 
 function NormalMode.setMacroModeDriver(macroModeDriver)
 	NormalMode.macroModeDriver = macroModeDriver
+	return NormalMode
+end
+
+function NormalMode.setMovementDriver(movementDriver)
+	NormalMode.movementDriver = movementDriver
 	return NormalMode
 end
 

@@ -1,8 +1,7 @@
-local MacroInsertAndNormalModeParent <const> = require('modes.macro.MacroInsertAndNormalModeParent')
+local MacroInsertAndNormalModeParent <const> = require('modes.macro.macroNormalAndInsert.MacroInsertAndNormalModeParent')
 local InsertMode <const> = require('modes.InsertMode')
 local pairs <const> = pairs
 local KeyMap <const> = require('ncurses.NcursesKeyMap')
-local io  = io
 
 local MacroInsertMode <const> = {type = "MacroInsertMode", macroNormalMode = "please remember to set this value before using this class."}
 MacroInsertMode.__index = MacroInsertMode
@@ -17,9 +16,9 @@ function MacroInsertMode.default(textBuffer,ch,cursor)
 	return MacroInsertMode
 end
 
-function MacroInsertMode.escape(_,_,cursor)
+function MacroInsertMode.escape(_,ch,cursor)
 	InsertMode.escape(nil,nil,cursor)
-	io.write("inside of MAcroInsertMode returning type: ",MacroInsertMode.macroNormalMode.type,"\n")
+	MacroInsertMode.insertCharIntoMacro(ch)
 	return MacroInsertMode.macroNormalMode
 end
 
