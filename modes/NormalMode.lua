@@ -4,6 +4,7 @@
 
 local BaseMode <const> = require('modes.BaseMode')
 local InsertMode <const> = require('modes.InsertMode')
+local io = io
 
 local NormalMode <const> = {
 		type = 'NormalMode', deleteModeDriver = "please remember to set this before using this class.",
@@ -69,6 +70,7 @@ function NormalMode.delete()
 end
 
 function NormalMode.yank()
+	io.write("returning yank mode driver\n")
 	return NormalMode.yankModeDriver
 end
 
@@ -94,6 +96,7 @@ function NormalMode.insertNewLineAbove(textBuffer,_,cursor)
 end
 
 function NormalMode:moveToEndOfLine(textBuffer,cursor)
+	io.write("type of textbuff: ",textBuffer.type,"\n")
 	cursor:moveToEndOfLine(textBuffer)
 	return NormalMode.returnNormalMode()
 end

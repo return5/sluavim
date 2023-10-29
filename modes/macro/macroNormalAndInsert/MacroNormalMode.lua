@@ -29,6 +29,11 @@ function MacroNormalMode.setMacroDeleteModeDriver(macroDeleteModeDriver)
 	return MacroNormalMode
 end
 
+function MacroNormalMode.setMacroYankDriver(macroYankDriver)
+	wrapFunctionsToReturnMacroMode({'y'},macroYankDriver)
+	return MacroNormalMode
+end
+
 local function setMacroMovementFuncs(macroMoveDriver)
 	MacroNormalMode.keyBindings.f = macroMoveDriver.from
 	MacroNormalMode.keyBindings.F = macroMoveDriver.fromBackwards
@@ -54,10 +59,11 @@ end
 
 MacroNormalMode.keyBindings['q'] = MacroNormalMode.endMacro
 
-function MacroNormalMode.setDriverModes(macroInsertMode,macroDeleteModeDriver,macroMovementDriver)
+function MacroNormalMode.setDriverModes(macroInsertMode,macroDeleteModeDriver,macroMovementDriver,macroYankDriver)
 	MacroNormalMode.setMacroInsertMode(macroInsertMode)
 	MacroNormalMode.setMacroDeleteModeDriver(macroDeleteModeDriver)
 	MacroNormalMode.setMacroMoveDriver(macroMovementDriver)
+	MacroNormalMode.setMacroYankDriver(macroYankDriver)
 	return MacroNormalMode
 end
 

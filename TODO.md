@@ -12,6 +12,7 @@
 - [ ] write to files from program.
 - [ ] add delete word command
 - [ ] add register class
+- [ ] yank macro modes
 
 
 

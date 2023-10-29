@@ -25,7 +25,7 @@ function DeleteAndYankParent:deleteOrYankCharacters(textBuffer,cursor,start)
 	self.action(textBuffer,startChar,stopChar,cursor.y,register)
 	BaseMode.setFirstRegister(register)
 	cursor.x = startChar
-	return NormalMode.reset()
+	return NormalMode
 end
 
 function DeleteAndYankParent:doAction(textBuffer,cursor)
