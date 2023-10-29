@@ -3,8 +3,9 @@
 --]]
 
 local Input <const> = require('localIO.Input')
+local Registers <const> = require('model.Registers')
 
-local BaseMode <const> = {type = 'basemode',keyBindings = {},macros = {},currentRegister = "current",registers = {{}}}
+local BaseMode <const> = {type = 'basemode',keyBindings = {},registers = Registers}
 BaseMode.__index = BaseMode
 
 _ENV = BaseMode
@@ -13,29 +14,28 @@ function BaseMode.default()
 	return BaseMode
 end
 
---TODO create register class
 function BaseMode.adjustRegister()
-	local i = 1
-	while BaseMode.registers[i] and i < 9 do
-		BaseMode.registers[i + 1] = BaseMode.registers[i]
-		i = i + 1
-	end
+	BaseMode.registers:adjustRegister()
+	return BaseMode
 end
 
 function BaseMode.setFirstRegister(register)
-	BaseMode.registers[1] = register
+	BaseMode.registers:setFirstRegister(register)
+	return BaseMode
 end
 
 function BaseMode.insertIntoCurrentRegister(ch)
-	local register <const> = BaseMode.registers[BaseMode.currentRegister]
-	register[#register + 1] = ch
+	BaseMode.registers:addToCurrentRegister(ch)
 	return BaseMode
 end
 
 function BaseMode.setRegister(ch)
-	BaseMode.registers[ch] = {}
-	BaseMode.currentRegister = ch
+	BaseMode.registers:setRegister(ch)
 	return BaseMode
+end
+
+function BaseMode.getRegister(ch)
+	return BaseMode.registers:getRegister(ch)
 end
 
 function BaseMode:parseInput(ch,textBuffer,cursor)

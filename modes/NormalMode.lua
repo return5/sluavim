@@ -110,10 +110,11 @@ function NormalMode.deleteTilEnd(textBuffer,_,cursor)
 	return NormalMode.deleteModeDriver.deleteToEnd(textBuffer,_,cursor)
 end
 
---TODO test this.  move pasting to a mode
+--TODO test this.  move pasting to a mode or add to register class
 function NormalMode.pasteRegister(textBuffer,_,cursor)
-	local registerName <const> = BaseMode.currentRegister ~= "" and BaseMode.currentRegister or 1
-	local register <const> = BaseMode.registers[registerName]
+	--add this to register class
+	local registerName <const> = BaseMode.registers.currentRegister ~= "" and BaseMode.registers.currentRegister or 1
+	local register <const> = BaseMode.getRegister(registerName)
 	local insertMode <const> = NormalMode.returnInsertMode()
 	if #register > 0 then
 		cursor:moveRight()

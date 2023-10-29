@@ -23,13 +23,15 @@ local Window <const> = require('window.Window')
 local SetModeFields <const> = require('modes.SetModeFields')
 local Input <const> = require('localIO.Input')
 local BaseMode <const> = require('modes.BaseMode')
+local Output <const> = require('localIO.Output')
 
 local function printRegister(r)
-	local reg <const> = BaseMode.registers[r]
-	io.write("printing register\n")
+	local reg <const> = BaseMode.getRegister(r)
+	Output.printCharAt("printing register\n")
 	for i=1,#reg,1 do
-		io.write(reg[i],"\n")
+		Output.printCharAt(reg[i])
 	end
+	Output.printCharAt("\n")
 end
 
 local function repl(currentMode)
@@ -42,6 +44,7 @@ local function repl(currentMode)
 	end
 	textBuffer:print(window)
 	printRegister(1)
+	printRegister(2)
 end
 
 local function main()

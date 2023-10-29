@@ -10,7 +10,7 @@ _ENV = RunMacroMode
 
 function RunMacroMode:doAction(textBuffer,ch,cursor)
 	local mode = NormalMode
-	local macro <const> = RunMacroMode.registers[ch]
+	local macro <const> = RunMacroMode.getRegister(ch)
 	for i=1,#macro,1 do
 		mode = mode:parseInput(macro[i],textBuffer,cursor)
 	end
