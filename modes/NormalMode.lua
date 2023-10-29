@@ -4,14 +4,10 @@
 
 local BaseMode <const> = require('modes.BaseMode')
 local InsertMode <const> = require('modes.InsertMode')
-local KeyMap <const> = require('ncurses.NcursesKeyMap')
-local io = io
 
 local NormalMode <const> = {
 		type = 'NormalMode', deleteModeDriver = "please remember to set this before using this class.",
 		yankModeDriver = "please remember to set this before using this class.",
-		macroModeDriver = "please remember to set this before using this class.",
-		movementDriver = "please remember to set this before using this class."
 	}
 NormalMode.__index = NormalMode
 
@@ -59,10 +55,6 @@ function NormalMode.moveRightAndReturnInsertMode(textBuffer,_,cursor)
 	return InsertMode
 end
 
-function NormalMode.returnInsertMode()
-	return InsertMode
-end
-
 function NormalMode.returnNormalMode()
 	return NormalMode
 end
@@ -70,22 +62,6 @@ end
 function NormalMode.moveToEndAndReturnInsertMode(textBuffer,_,cursor)
 	cursor.x = textBuffer:getLengthOfLine(cursor.y) + 1
 	return InsertMode
-end
---make these MovementModes
-function NormalMode.from()
-	return NormalMode.movementDriver.from()
-end
-
-function NormalMode.to()
-	return NormalMode.movementDriver.to()
-end
-
-function NormalMode.fromBackwards()
-	return NormalMode.movementDriver.fromBackwards()
-end
-
-function NormalMode.toBackwards()
-	return NormalMode.movementDriver.toBackwards()
 end
 
 function NormalMode.delete()
@@ -104,50 +80,10 @@ end
 
 function NormalMode.deletePrevChar(textBuffer,_,cursor)
 	cursor:moveLeft()
-	if cursor.x <= 0 then cursor.x = 1 end
 	NormalMode.deleteMode.deleteCurrentChar(textBuffer,cursor)
 	return NormalMode
 end
 
-local function replaceChar(textBuffer,cursor)
-	local ch <const> = BaseMode.grabInput()
-	if ch ~= KeyMap.ESC then
-		textBuffer:replaceCharAt(ch,cursor)
-		return true
-	end
-	return false
-end
-
-function NormalMode:takeInputReplaceChar(textBuffer,cursor)
-	replaceChar(textBuffer,cursor)
-	return NormalMode.returnNormalMode()
-end
-
---TODO make this a ReplaceCharMode
-function NormalMode.replaceCurrentChar()
-	 NormalMode.takeInput = NormalMode.takeInputReplaceChar
-	return NormalMode
-end
-
---make this a ContinuousReplaceMode
-function NormalMode:takeInputContinualReplaceChars(textBuffer,cursor)
-	local returnVal <const> = replaceChar(textBuffer,cursor)
-	if returnVal then
-		cursor:moveRight()
-	else
-		return NormalMode.returnNormalMode()
-	end
-	if cursor.x > textBuffer:getLengthOfLine(cursor.y) then
-		NormalMode.returnNormalMode()
-		return NormalMode.returnInsertMode()
-	end
-	return NormalMode
-end
-
-function NormalMode.replaceCharacters()
-	NormalMode.takeInput = NormalMode.takeInputContinualReplaceChars
-	return NormalMode
-end
 
 function NormalMode.insertNewLine(textBuffer,_,cursor)
 	return NormalMode.returnInsertMode().newLine(textBuffer,nil,cursor)
@@ -169,14 +105,6 @@ end
 
 function NormalMode.deleteTilEnd(textBuffer,_,cursor)
 	return NormalMode.deleteModeDriver.deleteToEnd(textBuffer,_,cursor)
-end
-
-function NormalMode.returnSetMacroRegisterMode()
-	return NormalMode.macroModeDriver.setRegister()
-end
-
-function NormalMode.runMacro()
-	return NormalMode.macroModeDriver.runMacro()
 end
 
 --TODO test this.  move pasting to a mode
@@ -202,18 +130,10 @@ NormalMode.keyBindings = {
 	j = NormalMode.moveDown,
 	k = NormalMode.moveUp,
 	l = NormalMode.moveRight,
-	q = NormalMode.returnSetMacroRegisterMode,
-	['@'] = NormalMode.runMacro,
-	t = NormalMode.to,
-	T = NormalMode.toBackwards,
-	f = NormalMode.from,
-	F = NormalMode.fromBackwards,
 	d = NormalMode.delete,
 	D = NormalMode.deleteTilEnd,
 	x = NormalMode.deleteCurrentChar,
 	X = NormalMode.deletePrevChar,
-	r = NormalMode.replaceCurrentChar,
-	R = NormalMode.replaceCharacters,
 	o = NormalMode.insertNewLine,
 	O = NormalMode.insertNewLineAbove,
 	p = NormalMode.pasteRegister,
@@ -229,18 +149,45 @@ function NormalMode.setDeleteModeDriver(deleteModeDriver)
 end
 
 function NormalMode.setYankModeDriver(yankModeDriver)
+	--TODO
 	NormalMode.yankModeDriver = yankModeDriver
 	return NormalMode
 end
 
+local function setMacroModeDriverFuncs(macroModeDriver)
+	NormalMode.keyBindings.q = macroModeDriver.setRegister
+	NormalMode.keyBindings['@'] = macroModeDriver.runMacro
+end
+
 function NormalMode.setMacroModeDriver(macroModeDriver)
-	NormalMode.macroModeDriver = macroModeDriver
+	setMacroModeDriverFuncs(macroModeDriver)
 	return NormalMode
 end
 
+local function setMovementDriverFuncs(movementDriver)
+	NormalMode.keyBindings.t = movementDriver.to
+	NormalMode.keyBindings.T = movementDriver.toBackwards
+	NormalMode.keyBindings.f = movementDriver.from
+	NormalMode.keyBindings.F = movementDriver.fromBackwards
+end
+
 function NormalMode.setMovementDriver(movementDriver)
-	NormalMode.movementDriver = movementDriver
+	setMovementDriverFuncs(movementDriver)
 	return NormalMode
+end
+
+function NormalMode.setReplacementModeDriver(replaceDriver)
+	NormalMode.keyBindings.r = replaceDriver.replaceChar
+	NormalMode.keyBindings.R = replaceDriver.continuousReplacement
+	return NormalMode
+end
+
+function NormalMode.setDrivers(replaceDriver,movementDriver,macroModeDriver,yankModeDriver,deleteModeDriver)
+	NormalMode.setMovementDriver(movementDriver)
+	NormalMode.setReplacementModeDriver(replaceDriver)
+	NormalMode.setMacroModeDriver(macroModeDriver)
+	NormalMode.setYankModeDriver(yankModeDriver)
+	NormalMode.setDeleteModeDriver(deleteModeDriver)
 end
 
 return NormalMode

@@ -1,30 +1,30 @@
 local BaseMode <const> = require('modes.BaseMode')
-local MacroMovementFrom <const> = require('modes.macro.movement.MacroMovementFrom')
-local MacroMovementFromBackwards <const> = require('modes.macro.movement.MacroMovementFromBackwards')
-local MacroMovementTo <const> = require('modes.macro.movement.MacroMovementTo')
-local MacroMovementToBackwards <const> = require('modes.macro.movement.MacroMovementToBackwards')
+local MovementFrom <const> = require('modes.movement.MovementFrom')
+local MovementFromBackwards <const> = require('modes.movement.MovementFromBackwards')
+local MovementTo <const> = require('modes.movement.MovementTo')
+local MovementToBackwards <const> = require('modes.movement.MovementToBackwards')
 
-local MacroMovementDriver <const> = {type = "MacroMovementDriver"}
-MacroMovementDriver.__index = MacroMovementDriver
+local MovementDriver <const> = {type = "MovementDriver"}
+MovementDriver.__index = MovementDriver
 
-setmetatable(MacroMovementDriver,BaseMode)
+setmetatable(MovementDriver,BaseMode)
 
-_ENV = MacroMovementDriver
+_ENV = MovementDriver
 
-function MacroMovementDriver.from()
-	return MacroMovementFrom
+function MovementDriver.from()
+	return MovementFrom
 end
 
-function MacroMovementDriver.to()
-	return MacroMovementTo
+function MovementDriver.to()
+	return MovementTo
 end
 
-function MacroMovementDriver.fromBackwards()
-	return MacroMovementFromBackwards
+function MovementDriver.fromBackwards()
+	return MovementFromBackwards
 end
 
-function MacroMovementDriver.toBackwards()
-	return MacroMovementToBackwards
+function MovementDriver.toBackwards()
+	return MovementToBackwards
 end
 
-return MacroMovementDriver
+return MovementDriver

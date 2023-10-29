@@ -2,10 +2,7 @@ local MacroInsertAndNormalModeParent <const> = require('modes.macro.macroNormalA
 local NormalMode <const> = require('modes.NormalMode')
 local pairs <const> = pairs
 
-local MacroNormalMode <const> = {
-		type = "MacroNormalMode", macroInsertMode = "please remember to set this value before using this class.",
-		macroDeleteModeDriver = "please remember to set this value before using this class.",macroYankMode = "please remember to set this value before using this class."
-}
+local MacroNormalMode <const> = {type = "MacroNormalMode"}
 MacroNormalMode.__index = MacroNormalMode
 
 setmetatable(MacroNormalMode, MacroInsertAndNormalModeParent)
@@ -23,13 +20,11 @@ local function wrapFunctionsToReturnMacroMode(chars,returnMode)
 end
 
 function MacroNormalMode.setMacroInsertMode(macroInsertMode)
-	MacroNormalMode.macroInsertMode = macroInsertMode
 	wrapFunctionsToReturnMacroMode({'a','A','i','I'},macroInsertMode)
 	return MacroNormalMode
 end
 
 function MacroNormalMode.setMacroDeleteModeDriver(macroDeleteModeDriver)
-	MacroNormalMode.macroDeleteMode = macroDeleteModeDriver
 	wrapFunctionsToReturnMacroMode({'d'},macroDeleteModeDriver)
 	return MacroNormalMode
 end
@@ -42,7 +37,6 @@ local function setMacroMovementFuncs(macroMoveDriver)
 end
 
 function MacroNormalMode.setMacroMoveDriver(macroMoveDriver)
-	MacroNormalMode.macroMoveDriver = macroMoveDriver
 	setMacroMovementFuncs(macroMoveDriver)
 	return MacroNormalMode
 end

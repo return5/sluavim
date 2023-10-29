@@ -41,7 +41,7 @@ local function repl(currentMode)
 		window:setY(cursor)
 	end
 	textBuffer:print(window)
-	printRegister()
+	--printRegister()
 end
 
 local function main()

@@ -10,6 +10,10 @@ Cursor.__index = Cursor
 
 _ENV = Cursor
 
+function Cursor:isXGreaterEndOfLine(textBuffer)
+	return self.x > textBuffer:getLengthOfLine(self.y)
+end
+
 function Cursor:moveY(amount)
 	self.y = self.y + amount
 	return self
