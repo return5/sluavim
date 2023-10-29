@@ -38,11 +38,14 @@ function InsertMode.newLineAbove(textBuffer,_,cursor)
 	return InsertMode
 end
 
-function InsertMode.newLine(textBuffer,_,cursor)
+function InsertMode.newLine(textBuffer,ch,cursor)
+	textBuffer:insert(cursor.y,ch,cursor.x)
 	local newHead <const> = textBuffer:grabRowFrom(cursor)
 	cursor:newLine()
 	textBuffer:addLineAt(cursor.y)
 	if newHead then
+		textBuffer:removeCharAtEnd(cursor.y - 1,ch)
+		newHead:addPrevChar(ch)
 		--get the line at y, then insert at the beginning any characters which were present behind the added newline character.
 		textBuffer:getLine(cursor.y):getItem():insertNodeAtStart(newHead)
 	end

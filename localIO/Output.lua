@@ -13,13 +13,14 @@ Output.__index = Output
 _ENV = Output
 
 function Output.newLine()
-	write("\nnewline\n")
+	--write("\nnewline\n")
+	return Output
 end
 
 function Output.printCharAt(char,i,j)
 	--write('printing at: ',j,":",i,' ')
 	write(char)
-	return self
+	return Output
 end
 
 return Output

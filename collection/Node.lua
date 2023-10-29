@@ -18,6 +18,16 @@ function Node:doFunc(func,i,arg1)
 	return self
 end
 
+
+ function Node:matchChar(ch)
+	 return self.item == ch
+ end
+
+function Node:readIntoTable(strTbl)
+ strTbl[#strTbl + 1] = self.item
+ return self
+end
+
 function Node:addNextNode(item)
 	self.next = Node:new(self,item,self.next)
 	return self.next

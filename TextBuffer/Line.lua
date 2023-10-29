@@ -68,6 +68,16 @@ function Line:copyChars(start,stop,register)
 	return self.chars:iterateNodes(start,stop,register,LinkedList.returnSelf)
 end
 
+function Line:readIntoTable(strTbl)
+	self.chars:readLineIntoTable(strTbl)
+	return self
+end
+
+function Line:removeCharAtEnd(ch)
+	self.chars:removeIfMatchChar(ch,self.chars.size)
+	return self
+end
+
 function Line:new()
 	return setmetatable({chars = LinkedList:new()},self)
 end

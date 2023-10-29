@@ -11,6 +11,8 @@
 - [ ] read files into program.
 - [ ] write to files from program.
 - [ ] add delete word command
+- [ ] add yank word
+- [ ] fix up ```o``` and ```O```
 
 
 

@@ -87,6 +87,33 @@ function LinkedList:setHead(node)
 	return self
 end
 
+function LinkedList:removeIfMatchChar(ch,index)
+	local node <const> = self:getNode(index)
+	if node:matchChar(ch) then
+		return self:remove(index)
+	end
+	return self
+end
+
+function LinkedList:readLineIntoTable(strTbl)
+	local temp = self.head
+	while temp do
+		temp:readIntoTable(strTbl)
+		temp = temp.next
+	end
+	return self
+end
+
+--TODO eliminate this code duplication
+function LinkedList:readIntoTable(strTbl)
+	local temp = self.head
+	while temp do
+		temp:getItem():readIntoTable(strTbl)
+		temp = temp.next
+	end
+	return self
+end
+
 function LinkedList:iterateBuffer(start,limit,func,func2)
 	local node = self:getNode(start)
 	local i = start

@@ -24,6 +24,7 @@ local SetModeFields <const> = require('modes.SetModeFields')
 local Input <const> = require('localIO.Input')
 local BaseMode <const> = require('modes.BaseMode')
 local Output <const> = require('localIO.Output')
+local WriteFile <const> = require('files.WriteFile')
 
 local function printRegister(r)
 	local reg <const> = BaseMode.getRegister(r)
@@ -45,6 +46,7 @@ local function repl(currentMode)
 	textBuffer:print(window)
 	printRegister(1)
 	printRegister(2)
+	WriteFile.writeFile("myText.txt",textBuffer)
 end
 
 local function main()

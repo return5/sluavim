@@ -17,6 +17,11 @@ function TextBuffer:print(window)
 	self.lines:iterateBuffer(start,limit,Line.printAtRow,Output.newLine)
 end
 
+function TextBuffer:readIntoTable(strTbl)
+	self.lines:readIntoTable(strTbl)
+	return self
+end
+
 function TextBuffer:removeLineAt(row)
 	return self.lines:remove(row)
 end
@@ -75,6 +80,11 @@ end
 
 function TextBuffer:getSize()
 	return self.lines.size
+end
+
+function TextBuffer:removeCharAtEnd(row,ch)
+	self.lines:getNode(row):getItem():removeCharAtEnd(ch)
+	return self
 end
 
 function TextBuffer:new()
