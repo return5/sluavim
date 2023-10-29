@@ -26,10 +26,8 @@ _ENV = SetModeFields
 function SetModeFields.setModes()
 	InsertMode.normalMode = NormalMode
 	NormalMode.setDrivers(ReplacementModeDriver,MovementDriver,MacroModeDriver,YankModeDriver,DeleteModeDriver)
-	MacroNormalMode.setMacroInsertMode(MacroInsertMode)
+	MacroNormalMode.setDriverModes(MacroInsertMode,MacroDeleteModeDriver,MacroMovementDriver)
 	MacroInsertMode.setMacroNormalMode(MacroNormalMode)
-	MacroNormalMode.setMacroDeleteModeDriver(MacroDeleteModeDriver)
-	MacroNormalMode.setMacroMoveDriver(MacroMovementDriver)
 	return SetModeFields
 end
 

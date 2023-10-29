@@ -54,4 +54,11 @@ end
 
 MacroNormalMode.keyBindings['q'] = MacroNormalMode.endMacro
 
+function MacroNormalMode.setDriverModes(macroInsertMode,macroDeleteModeDriver,macroMovementDriver)
+	MacroNormalMode.setMacroInsertMode(macroInsertMode)
+	MacroNormalMode.setMacroDeleteModeDriver(macroDeleteModeDriver)
+	MacroNormalMode.setMacroMoveDriver(macroMovementDriver)
+	return MacroNormalMode
+end
+
 return MacroNormalMode
