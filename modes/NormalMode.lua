@@ -85,8 +85,8 @@ function NormalMode.deletePrevChar(textBuffer,_,cursor)
 end
 
 
-function NormalMode.insertNewLine(textBuffer,_,cursor)
-	return NormalMode.returnInsertMode().newLine(textBuffer,nil,cursor)
+function NormalMode.insertNewLineBelowAndReturnInsertMode(textBuffer,_,cursor)
+	return NormalMode.returnInsertMode().insertNewLineBelowAndReturnInsertMode(textBuffer,nil,cursor)
 end
 
 function NormalMode.insertNewLineAbove(textBuffer,_,cursor)
@@ -135,7 +135,7 @@ NormalMode.keyBindings = {
 	D = NormalMode.deleteTilEnd,
 	x = NormalMode.deleteCurrentChar,
 	X = NormalMode.deletePrevChar,
-	o = NormalMode.insertNewLine,
+	o = NormalMode.insertNewLineBelowAndReturnInsertMode,
 	O = NormalMode.insertNewLineAbove,
 	p = NormalMode.pasteRegister,
 	['$'] = NormalMode.moveToEndOfLine,

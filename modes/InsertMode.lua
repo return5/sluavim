@@ -35,14 +35,24 @@ end
 function InsertMode.newLineAbove(textBuffer,_,cursor)
 	textBuffer:addLineAt(cursor.y,cursor.y,"\n")
 	cursor:moveXTo(1)
+	textBuffer:addEndingNewLine(cursor.y,"\n")
+	return InsertMode
+end
+
+local function addNewLine(textBuffer,ch,cursor)
+	local oldY <const> = cursor.y
+	cursor:newLine()
+	textBuffer:newLine(cursor.y,oldY,ch)
+end
+
+function InsertMode.insertNewLineBelowAndReturnInsertMode(textBuffer,_,cursor)
+	addNewLine(textBuffer,"\n",cursor)
 	return InsertMode
 end
 
 function InsertMode.newLine(textBuffer,ch,cursor)
 	local newHead <const> = textBuffer:grabRowFrom(cursor)
-	local oldY <const> = cursor.y
-	cursor:newLine()
-	textBuffer:newLine(cursor.y,oldY,ch)
+	addNewLine(textBuffer,ch,cursor)
 	if newHead then
 		--get the line at y, then insert at the beginning any characters which were present behind the added newline character.
 		textBuffer:insertAtStart(cursor.y,newHead)
