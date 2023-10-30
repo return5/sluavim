@@ -7,7 +7,7 @@ local DeleteAndYankParent <const> = require('modes.DeleteAndYankParent')
 local BaseMode <const> = require('modes.BaseMode')
 local KeyMap <const> = require('ncurses.NcursesKeyMap')
 
-local MacroDeleteAndYankParent <const> = {type = "MacroDeleteAndYankParent"}
+local MacroDeleteAndYankParent <const> = {type = "MacroDeleteAndYankParent",wordPattern = "[^a-zA-Z]"}
 MacroDeleteAndYankParent.__index = MacroDeleteAndYankParent
 
 setmetatable(MacroDeleteAndYankParent,BaseMode)
@@ -56,6 +56,22 @@ function MacroDeleteAndYankParent:takeInput(textBuffer,cursor)
 	end
 	return MacroNormalMode
 end
+
+local function findTilPattern(textBuffer,cursor,offset,findFunction)
+	local startX <const> = cursor.x
+	local stop <const> = findFunction(textBuffer,cursor,MacroDeleteAndYankParent.wordPattern)
+	cursor:setX(stop + offset)
+	return startX
+end
+
+function MacroDeleteAndYankParent:findForward(textBuffer,cursor,offset)
+	return findTilPattern(textBuffer,cursor,offset,textBuffer.findForwardPattern)
+end
+
+function MacroDeleteAndYankParent:findBackwards(textBuffer,cursor,offset)
+	return findTilPattern(textBuffer,cursor,offset,textBuffer.findBackwardsPattern)
+end
+
 
 function MacroDeleteAndYankParent:takeInputAndMoveThenDoAction(textBuffer,cursor,findFunc,offset)
 	return DeleteAndYankParent.takeInputAndMoveThenDoAction(self,textBuffer,cursor,findFunc,offset)

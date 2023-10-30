@@ -5,6 +5,8 @@ local MacroDeleteFromBackwards <const> = require('modes.macro.macroDelete.MacroD
 local MacroDeleteLine <const> = require('modes.macro.macroDelete.MacroDeleteLine')
 local MacroDeleteToStart <const> = require('modes.macro.macroDelete.MacroDeleteToStart')
 local MacroDeleteToEnd <const> = require('modes.macro.macroDelete.MacroDeleteToEnd')
+local MacroDeleteWord <const> = require('modes.macro.macroDelete.MacroDeleteWord')
+local MacrDeleteWordBackwards <const> = require('modes.macro.macroDelete.MacroDeleteWordBackwards')
 local BaseMode <const> = require('modes.BaseMode')
 
 local MacroDeleteModeDriver <const> = {type = "MacroDeleteModeDriver"}
@@ -42,6 +44,14 @@ function MacroDeleteModeDriver.deleteToEnd(textBuffer,_,cursor)
 	return MacroDeleteToEnd:takeInput(textBuffer,cursor)
 end
 
+function MacroDeleteModeDriver.deleteWordForward(textBuffer,_,cursor)
+	return MacroDeleteWord:takeInput(textBuffer,cursor)
+end
+
+function MacroDeleteModeDriver.deleteWordForward(textBuffer,_,cursor)
+	return MacrDeleteWordBackwards:takeInput(textBuffer,cursor)
+end
+
 MacroDeleteModeDriver.keyBindings = {
 	t = MacroDeleteModeDriver.to,
 	T = MacroDeleteModeDriver.toBackwards,
@@ -50,6 +60,8 @@ MacroDeleteModeDriver.keyBindings = {
 	d = MacroDeleteModeDriver.deleteEntireLine,
 	['$'] = MacroDeleteModeDriver.deleteToEnd,
 	['^'] = MacroDeleteModeDriver.deleteToStart,
+	w = MacroDeleteModeDriver.deleteWordForward,
+	W = MacroDeleteModeDriver.deleteWordBackwards
 	--add dw
 }
 
