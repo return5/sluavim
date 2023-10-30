@@ -4,6 +4,7 @@
 
 local Node <const> = require('collection.Node')
 local setmetatable <const> = setmetatable
+local match <const> = string.match
 
 local LinkedList <const> = {type = "linkedlist"}
 LinkedList.__index = LinkedList
@@ -50,11 +51,11 @@ function LinkedList:iterateNodes(start,stop,register,func2)
 	return func2(self,startNode,nextNode)
 end
 
-function LinkedList:find(ch,x,offset,nextNodeFunc)
+function LinkedList:find(expected,x,offset,nextNodeFunc,findFunction)
 	local newX = x + offset
 	local temp = self:getNode(newX)
 	while temp do
-		if temp:getItem() == ch then
+		if findFunction(temp,expected) then
 			return newX
 		end
 		temp = nextNodeFunc(temp)
@@ -63,12 +64,28 @@ function LinkedList:find(ch,x,offset,nextNodeFunc)
 	return -1
 end
 
-function LinkedList:findForward(ch,x)
-	return self:find(ch,x,1,function(temp) return temp.next end)
+function LinkedList.findPattern(node,pattern)
+	return match(node:getItem(),pattern)
 end
 
-function LinkedList:findBackwards(ch,x)
-	return self:find(ch,x,-1,function(temp) return temp.prev end)
+function LinkedList.findChar(node,char)
+	return node:getItem() == char
+end
+
+local function returnNextNode(temp)
+	return temp.next
+end
+
+function LinkedList:findForward(expected,startPos,findFunction)
+	return self:find(expected,startPos,1,returnNextNode,findFunction)
+end
+
+local function returnPreviousNode(temp)
+	return temp.prev
+end
+
+function LinkedList:findBackwards(expected,startPos,findFunction)
+	return self:find(expected,startPos,-1,returnPreviousNode,findFunction)
 end
 
 function LinkedList:setNewSize()
@@ -149,6 +166,12 @@ function LinkedList:getNode(index)
 		i = i + 1
 	end
 	return node
+end
+
+function LinkedList:getItem(index)
+	local node <const> = self:getNode(index)
+	if node then return node.item end
+	return nil
 end
 
 function LinkedList:add(item,index)

@@ -52,12 +52,20 @@ function Line:getSize()
 	return self.chars.size
 end
 
-function Line:findForward(ch,x)
-	return self.chars:findForward(ch,x)
+function Line:findForwardPattern(pattern,startPos)
+	return self.chars:findForward(pattern,startPos,self.chars.findPattern)
 end
 
-function Line:findBackwards(ch,x)
-	return self.chars:findBackwards(ch,x)
+function Line:findForward(ch,startPos)
+	return self.chars:findForward(ch,startPos,self.chars.findChar)
+end
+
+function Line:findBackwards(ch,startPos)
+	return self.chars:findBackwards(ch,startPos,self.chars.findChar)
+end
+
+function Line:findBackwardsPattern(pattern,startPos)
+	return self.chars:findBackwards(pattern,startPos,self.chars.findPattern)
 end
 
 function Line:removeChars(start,stop,register)

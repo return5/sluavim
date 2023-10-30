@@ -60,7 +60,7 @@ function NormalMode.returnNormalMode()
 end
 
 function NormalMode.moveToEndAndReturnInsertMode(textBuffer,_,cursor)
-	cursor.x = textBuffer:getLengthOfLine(cursor.y) + 1
+	cursor:setX(textBuffer:getLengthOfLine(cursor.y) + 1)
 	return InsertMode
 end
 

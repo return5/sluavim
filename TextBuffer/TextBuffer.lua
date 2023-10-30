@@ -92,21 +92,29 @@ function TextBuffer:insertAtStart(pos,chars)
 	self:getLine(pos):getItem():insertNodeAtStart(chars)
 end
 
+function TextBuffer:findForwardPattern(cursor,pat)
+	return self.lines:getItem(cursor.y):findForwardPattern(pat,cursor.x)
+end
+
+function TextBuffer:findBackwardsPattern(cursor,pat)
+	return self.lines:getItem(cursor.y):findBackwardsPattern(pat,cursor.x)
+end
+
 function TextBuffer:findBackwards(cursor,ch)
-	local lines = self.lines:getNode(cursor.y):getItem()
+	local lines = self.lines:getItem(cursor.y)
 	return lines:findBackwards(ch,cursor.x)
 end
 
 function TextBuffer:findForward(cursor,ch)
-	return self.lines:getNode(cursor.y):getItem():findForward(ch,cursor.x)
+	return self.lines:getItem(cursor.y):findForward(ch,cursor.x)
 end
 
 function TextBuffer:removeChars(start,stop,row,register)
-	return self.lines:getNode(row):getItem():removeChars(start,stop,register)
+	return self.lines:getItem(row):removeChars(start,stop,register)
 end
 
 function TextBuffer:copyChars(start,stop,row,register)
-	return self.lines:getNode(row):getItem():copyChars(start,stop,register)
+	return self.lines:getItem(row):copyChars(start,stop,register)
 end
 
 function TextBuffer:getSize()
@@ -114,12 +122,12 @@ function TextBuffer:getSize()
 end
 
 function TextBuffer:removeCharAtEnd(row,ch)
-	self.lines:getNode(row):getItem():removeCharAtEnd(ch)
+	self.lines:getItem(row):removeCharAtEnd(ch)
 	return self
 end
 
 function TextBuffer:addEndingNewLine(pos,ch)
-	self.lines:getNode(pos):getItem():addEndingNewLine(ch)
+	self.lines:getItem(pos):addEndingNewLine(ch)
 
 end
 

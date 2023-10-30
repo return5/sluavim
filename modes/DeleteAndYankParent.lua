@@ -6,7 +6,7 @@ local NormalMode <const> = require('modes.NormalMode')
 local BaseMode <const> = require('modes.BaseMode')
 local KeyMap <const> = require('ncurses.NcursesKeyMap')
 
-local DeleteAndYankParent <const> = {type = "DeleteAndYankParent"}
+local DeleteAndYankParent <const> = {type = "DeleteAndYankParent",wordPattern = "[^a-zA-Z]"}
 DeleteAndYankParent.__index = DeleteAndYankParent
 
 setmetatable(DeleteAndYankParent,BaseMode)
@@ -24,7 +24,7 @@ function DeleteAndYankParent:deleteOrYankCharacters(textBuffer,cursor,start)
 	local stopChar <const> = cursor.x >= start and cursor.x or start
 	self.action(textBuffer,startChar,stopChar,cursor.y,register)
 	BaseMode.setFirstRegister(register)
-	cursor.x = startChar
+	cursor:setX(startChar)
 	return NormalMode
 end
 
@@ -39,7 +39,7 @@ function DeleteAndYankParent:moveCursor(textBuffer,cursor,findFunction,offset)
 	if ch == KeyMap.ESC then return NormalMode.returnNormalMode end
 	local stop <const> = findFunction(textBuffer,cursor,ch)
 	if stop == -1 then return NormalMode.returnNormalMode end
-	cursor.x = stop + offset
+	cursor:setX(stop + offset)
 	return DeleteAndYankParent.deleteOrYankCharacters
 end
 
@@ -60,6 +60,21 @@ function DeleteAndYankParent:takeInput(textBuffer,cursor)
 		self:doAction(textBuffer,cursor)
 	end
 	return NormalMode
+end
+
+local function findTilPattern(textBuffer,cursor,offset,findFunction)
+	local startX <const> = cursor.x
+	local stop <const> = findFunction(textBuffer,cursor,DeleteAndYankParent.wordPattern)
+	cursor:setX(stop + offset)
+	return startX
+end
+
+function DeleteAndYankParent:findForward(textBuffer,cursor,offset)
+	return findTilPattern(textBuffer,cursor,offset,textBuffer.findForwardPattern)
+end
+
+function DeleteAndYankParent:findBackwards(textBuffer,cursor,offset)
+	return findTilPattern(textBuffer,cursor,offset,textBuffer.findBackwardsPattern)
 end
 
 function DeleteAndYankParent:takeInputAndMoveThenDoAction(textBuffer,cursor,findFunc,offset)

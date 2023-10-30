@@ -13,7 +13,7 @@ function MovementMode:parseInput(ch,textBuffer,cursor)
 	if ch == KeyMap.ESC then return NormalMode.returnNormalMode() end
 	local stop <const>, offset <const> = self:findFunction(textBuffer,cursor,ch)
 	if stop == -1 then return NormalMode.returnNormalMode() end
-	cursor.x = stop + offset
+	cursor:setX(stop + offset)
 	return NormalMode.returnNormalMode()
 end
 

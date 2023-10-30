@@ -13,7 +13,7 @@ function MacroMovementMode:parseInput(ch,textBuffer,cursor)
 	if ch == KeyMap.ESC then return MacroNormalMode end
 	local stop <const>, offset <const> = self:findFunction(textBuffer,cursor,ch)
 	if stop == -1 then return MacroNormalMode end
-	cursor.x = stop + offset
+	cursor:setX(stop + offset)
 	return MacroNormalMode
 end
 

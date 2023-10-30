@@ -83,6 +83,11 @@ function Cursor:moveToStartOfLine()
 	return self
 end
 
+function Cursor:setX(newX)
+	self.x = newX
+	return self
+end
+
 function Cursor:newLine()
 	return self:moveToStartOfLine():moveDown()
 end

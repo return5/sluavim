@@ -34,7 +34,7 @@ function MacroDeleteAndYankParent:moveCursor(textBuffer,cursor,findFunction,offs
 	if ch == KeyMap.ESC then return MacroNormalMode.reset end
 	local stop <const> = findFunction(textBuffer,cursor,ch)
 	if stop == -1 then return MacroNormalMode.reset end
-	cursor.x = stop + offset
+	cursor:setX(stop + offset)
 	return MacroDeleteAndYankParent.deleteOrYankCharacters
 end
 
