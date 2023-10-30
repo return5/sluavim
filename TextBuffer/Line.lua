@@ -73,6 +73,10 @@ function Line:readIntoTable(strTbl)
 	return self
 end
 
+function Line:addEndingNewLine(ch)
+	self.chars:addEndingNode(ch)
+end
+
 function Line:removeCharAtEnd(ch)
 	self.chars:removeIfMatchChar(ch,self.chars.size)
 	return self

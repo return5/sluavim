@@ -21,11 +21,9 @@ local Cursor <const> = require('window.Cursor')
 local TextBuffer <const> = require('TextBuffer.TextBuffer')
 local Window <const> = require('window.Window')
 local SetModeFields <const> = require('modes.SetModeFields')
-local Input <const> = require('localIO.Input')
 local BaseMode <const> = require('modes.BaseMode')
 local Output <const> = require('localIO.Output')
-local WriteFile <const> = require('files.WriteFile')
-local ReadFile <const> = require('files.ReadFile')
+local Input <const> = require('localIO.Input')
 
 local function printRegister(r)
 	local reg <const> = BaseMode.getRegister(r)
@@ -36,30 +34,23 @@ local function printRegister(r)
 	Output.printCharAt("\n")
 end
 
-local function repl(currentMode)
+local function repl(currentMode,textBuffer)
 	local cursor <const> = Cursor:new(1,1)
 	local window <const> = Window:new(1,1)
-	local textBuffer <const> = TextBuffer:new()
 	while Input.i < #Input.chars + 1 do
 		currentMode = currentMode:takeInput(textBuffer,cursor)
 		window:setY(cursor)
 	end
 	textBuffer:print(window)
-	printRegister(1)
-	printRegister(2)
-	WriteFile.writeFile("myText.txt",textBuffer)
 end
 
 local function main()
-	CmdArgs.readArgs(arg)
+	local textBuffer <const> = TextBuffer:new()
+	CmdArgs.readArgs(arg,textBuffer)
 	ChangeOptions.options()
 	SetModeFields.setModes()
 	local initMode <const> = ChangeOptions.getInitMode()
-	local textBuffer <const> = TextBuffer:new()
-	ReadFile.readFile("myText.txt",textBuffer)
-	local window <const> = Window:new(1,1)
-	textBuffer:print(window)
-	--repl(initMode)
+	repl(initMode,textBuffer)
 end
 
 main()

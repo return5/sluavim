@@ -79,12 +79,12 @@ function Cursor:moveRight()
 end
 
 function Cursor:moveToStartOfLine()
-	return self:moveX(-self.x + 1)
+	self.x = 1
+	return self
 end
 
 function Cursor:newLine()
-	self:moveToStartOfLine()
-	return self:moveDown()
+	return self:moveToStartOfLine():moveDown()
 end
 
 function Cursor:new(x,y)

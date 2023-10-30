@@ -38,7 +38,14 @@ function Node:getItem()
 end
 
 function Node:new(prev,item,next)
-	return setmetatable({prev = prev,item = item,next = next},self)
+	local node <const> = setmetatable({prev = prev,item = item,next = next},self)
+	if next then
+		node.next.prev = node
+	end
+	if prev then
+		node.prev.next = node
+	end
+	return node
 end
 
 return Node

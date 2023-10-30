@@ -18,11 +18,12 @@ function TextBuffer:readTextIntoBuffer(text)
 	local column = 1
 	local row = 1
 	for char in gmatch(text,".") do
-		self:insert(row,char,column)
 		if char == "\n" then
 			row = row + 1
-			self:addLineAt(row)
+			self:newLine(row,row - 1,char)
 			column = 0
+		else
+			self:insert(row,char,column)
 		end
 		column = column + 1
 	end
@@ -65,7 +66,7 @@ function TextBuffer:getLengthOfLine(line)
 end
 
 function TextBuffer:grabRowFrom(cursor)
-	 return self:getLine(cursor.y):getItem():grabFrom(cursor.x + 1)
+	 return self:getLine(cursor.y):getItem():grabFrom(cursor.x)
 end
 
 function TextBuffer:addLineAt(pos)
@@ -73,9 +74,22 @@ function TextBuffer:addLineAt(pos)
 	return self
 end
 
+function TextBuffer:newLine(newPos,oldPos,ch)
+	self:addEndingNewLine(oldPos,ch)
+	self:addLineAt(newPos)
+	if newPos < self:getSize() then
+		self:addEndingNewLine(newPos,ch)
+	end
+	return self
+end
+
 function TextBuffer:insert(row,char,column)
 	self.lines:getItem(row):addChar(char,column)
 	return self
+end
+
+function TextBuffer:insertAtStart(pos,chars)
+	self:getLine(pos):getItem():insertNodeAtStart(chars)
 end
 
 function TextBuffer:findBackwards(cursor,ch)
@@ -102,6 +116,11 @@ end
 function TextBuffer:removeCharAtEnd(row,ch)
 	self.lines:getNode(row):getItem():removeCharAtEnd(ch)
 	return self
+end
+
+function TextBuffer:addEndingNewLine(pos,ch)
+	self.lines:getNode(pos):getItem():addEndingNewLine(ch)
+
 end
 
 function TextBuffer:new()

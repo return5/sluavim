@@ -13,7 +13,7 @@ Output.__index = Output
 _ENV = Output
 
 function Output.newLine()
-	--write("\nnewline\n")
+--	write("\nnewline\n")
 	return Output
 end
 

@@ -135,6 +135,9 @@ function LinkedList:iterate(func,arg1)
 		node = node.next
 		i = i + 1
 	end
+	if self.endingNode and self.endingNode.item then
+		self.endingNode:doFunc(func,i,arg1)
+	end
 	return self
 end
 
@@ -210,6 +213,11 @@ end
 function LinkedList:replace(index,item)
 	local node <const> = self:getNode(index)
 	node:setItem(item)
+	return self
+end
+
+function LinkedList:addEndingNode(ch)
+	self.endingNode = Node:new(nil,ch)
 	return self
 end
 

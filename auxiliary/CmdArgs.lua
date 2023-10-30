@@ -3,6 +3,7 @@
 --]]
 
 local config <const> = require('config.config')
+local ReadFile <const> = require('files.ReadFile')
 
 local match <const> = string.match
 local gmatch <const> = string.gmatch
@@ -56,7 +57,7 @@ local functionMapper <const> = {
 	c = enableColor,
 	['enable-color'] = enableColor,
 	s = showCursor,
-	['show-cursor'] = showCursor
+	['show-cursor'] = showCursor,
 }
 
 local function changeConfigBasedOnFlag(flagAndArg,regex)
@@ -64,7 +65,19 @@ local function changeConfigBasedOnFlag(flagAndArg,regex)
 	if functionMapper[flag] then functionMapper[flag](argument) end
 end
 
-function CmdArgs.readArgs(args)
+--TODO fix this stuff up
+local function readFile(argsText,textBuffer)
+	local fileOption <const> = match(argsText,"%-%-file;*([^;]+)")
+	if fileOption then
+		return ReadFile.readFile(fileOption,textBuffer)
+	end
+	local fOption <const> = match(argsText,"%-f;*([^;]+)")
+	if fOption then
+		return ReadFile.readFile(fOption,textBuffer)
+	end
+end
+
+function CmdArgs.readArgs(args,textBuffer)
 	local argsText <const> = concat(args,";;")
 	for dashes,flagAndArg in gmatch(argsText,'(%-+);*([^;]+%;*[^;%-]*)') do
 		if #dashes == 2 then
@@ -73,6 +86,7 @@ function CmdArgs.readArgs(args)
 			changeConfigBasedOnFlag(flagAndArg,"([^;]);*(.+)")
 		end
 	end
+	readFile(argsText,textBuffer)
 end
 
 return CmdArgs
