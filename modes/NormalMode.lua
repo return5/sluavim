@@ -88,8 +88,7 @@ function NormalMode.deleteCurrentChar(textBuffer,_,cursor)
 end
 
 function NormalMode.deletePrevChar(textBuffer,_,cursor)
-	cursor:moveLeft()
-	NormalMode.deleteMode.deleteCurrentChar(textBuffer,cursor)
+	NormalMode.deleteModeDriver.deletePrevChar(textBuffer,cursor)
 	return NormalMode
 end
 

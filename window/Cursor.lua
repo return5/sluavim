@@ -14,7 +14,7 @@ function Cursor:getX()
 	return self.x
 end
 
-function Cursor:xIsLessThan(limit)
+function Cursor:isXLessThan(limit)
 	return self.x < limit
 end
 
@@ -96,6 +96,10 @@ end
 
 function Cursor:moveRight()
 	return self:moveX(1)
+end
+
+function Cursor:doNothing()
+	return self
 end
 
 function Cursor:moveToStartOfLine()

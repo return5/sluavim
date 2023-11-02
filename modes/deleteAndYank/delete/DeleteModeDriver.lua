@@ -12,9 +12,10 @@ local DeleteWord <const> = require('modes.deleteAndYank.delete.DeleteWord')
 local DeleteWordBackwards <const> = require('modes.deleteAndYank.delete.DeleteWordBackwards')
 local DeleteAndYankParent <const> = require('modes.deleteAndYank.DeleteAndYankParent')
 local BaseMode <const> = require('modes.BaseMode')
-local DeleteChar <const> = require('modes.deleteAndYank.delete.DeleteChar')
+local DeleteCurrentChar <const> = require('modes.deleteAndYank.delete.DeleteCurrentChar')
 local NormalMode <const> = require('modes.NormalMode')
 local DeleteTo <const> = require('modes.deleteAndYank.delete.DeleteTo')
+local DeletePreviousChar <const> = require('modes.deleteAndYank.delete.DeletePrevChar')
 local pairs <const> = pairs
 
 local DeleteModeDriver <const> = {type = "DeleteModeDriver"}
@@ -68,7 +69,11 @@ function DeleteModeDriver.deleteWordBackwards(textBuffer,_,cursor)
 end
 
 function DeleteModeDriver.deleteCurrentChar(textBuffer,cursor)
-	return DeleteChar:deleteChar(textBuffer,cursor)
+	return DeleteCurrentChar:deleteCurrentChar(textBuffer,cursor)
+end
+
+function DeleteModeDriver.deletePrevChar(textBuffer,cursor)
+	return DeletePreviousChar:deletePrevChar(textBuffer,cursor)
 end
 
 DeleteModeDriver.keyBindings = {

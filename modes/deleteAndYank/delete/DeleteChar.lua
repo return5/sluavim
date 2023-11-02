@@ -9,9 +9,10 @@ local function returnCurrentX(cursor)
 	return function() return cursor:getX() end
 end
 
-function DeleteChar:deleteChar(textBuffer,cursor)
-	if cursor:xIsLessThan(1) then return self.returnNormalMode() end
-	return self:moveCursorAndDoAction(nil,textBuffer,cursor,returnCurrentX(cursor),0)
+function DeleteChar:deleteChar(textBuffer,cursor,limit,offset,movementFunction)
+	if cursor:isXLessThan(limit) then return self.returnNormalMode() end
+	movementFunction(cursor)
+	return self:moveCursorAndDoAction(nil,textBuffer,cursor,returnCurrentX(cursor),offset)
 end
 
 return DeleteChar
