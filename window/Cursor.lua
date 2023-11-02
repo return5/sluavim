@@ -14,6 +14,10 @@ function Cursor:getX()
 	return self.x
 end
 
+function Cursor:xIsLessThan(limit)
+	return self.x < limit
+end
+
 function Cursor:adjustYToTextBufferSize(textBuffer)
 	local size <const> = textBuffer:getSize()
 	if self.y > size then

@@ -5,7 +5,7 @@ YankWord.__index = YankWord
 setmetatable(YankWord,YankMode)
 
 function YankWord:yankWord(textBuffer,cursor)
-	local originalX <const> = cursor.x
+	local originalX <const> = cursor:getX()
 	local returnMode <const> = self:moveCursorAndDoAction(nil,textBuffer,cursor,self.findForwardPattern,-1)
 	cursor:moveXTo(originalX)
 	return returnMode

@@ -9,7 +9,7 @@ _ENV = ContinuousReplacementMode
 
 function ContinuousReplacementMode:replace(textBuffer,ch,cursor)
 	if cursor:isXGreaterEndOfLine(textBuffer) then
-		textBuffer:insert(cursor.y,ch,cursor.x)
+		textBuffer:insert(cursor:getY(),ch,cursor:getX())
 	else
 		textBuffer:replaceCharAt(ch,cursor)
 	end

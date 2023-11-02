@@ -51,7 +51,7 @@ function TextBuffer:removeCharAt(row,column)
 end
 
 function TextBuffer:replaceCharAt(char,cursor)
-	self.lines:getItem(cursor.y):replaceCharAt(char,cursor.x)
+	self.lines:getItem(cursor:getY()):replaceCharAt(char,cursor:getX())
 	return self
 end
 
@@ -66,7 +66,7 @@ function TextBuffer:getLengthOfLine(line)
 end
 
 function TextBuffer:grabRowFrom(cursor)
-	 return self:getLine(cursor.y):getItem():grabFrom(cursor.x)
+	 return self:getLine(cursor:getY()):getItem():grabFrom(cursor:getX())
 end
 
 function TextBuffer:addLineAt(pos)
@@ -93,24 +93,24 @@ function TextBuffer:insertAtStart(pos,chars)
 end
 
 function TextBuffer:findForwardPattern(cursor,pat)
-	return self.lines:getItem(cursor.y):findForwardPattern(pat,cursor.x)
+	return self.lines:getItem(cursor:getY()):findForwardPattern(pat,cursor:getX())
 end
 
 function TextBuffer:getCharAtCursor(cursor)
-	return self.lines:getItem(cursor.y):getCharAtCursor(cursor)
+	return self.lines:getItem(cursor:getY()):getCharAtCursor(cursor)
 end
 
 function TextBuffer:findBackwardsPattern(cursor,pat)
-	return self.lines:getItem(cursor.y):findBackwardsPattern(pat,cursor.x)
+	return self.lines:getItem(cursor:getY()):findBackwardsPattern(pat,cursor:getX())
 end
 
 function TextBuffer:findBackwards(cursor,ch)
-	local lines = self.lines:getItem(cursor.y)
-	return lines:findBackwards(ch,cursor.x)
+	local lines = self.lines:getItem(cursor:getY())
+	return lines:findBackwards(ch,cursor:getX())
 end
 
 function TextBuffer:findForward(cursor,ch)
-	return self.lines:getItem(cursor.y):findForward(ch,cursor.x)
+	return self.lines:getItem(cursor:getY()):findForward(ch,cursor:getX())
 end
 
 function TextBuffer:removeChars(start,stop,row,register)

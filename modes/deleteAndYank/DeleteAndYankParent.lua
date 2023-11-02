@@ -20,16 +20,16 @@ end
 function DeleteAndYankParent:deleteOrYankCharacters(textBuffer,cursor,start)
 	BaseMode.adjustRegister()
 	local register <const> = {}
-	local startChar <const> = start <= cursor.x and start or cursor.x
-	local stopChar <const> = cursor.x >= start and cursor.x or start
-	self.action(textBuffer,startChar,stopChar,cursor.y,register)
+	local startChar <const> = start <= cursor:getX() and start or cursor:getX()
+	local stopChar <const> = cursor:getX() >= start and cursor:getX() or start
+	self.action(textBuffer,startChar,stopChar,cursor:getY(),register)
 	BaseMode.setFirstRegister(register)
 	cursor:setX(startChar)
 	return NormalMode
 end
 
 function DeleteAndYankParent:moveCursorAndDoAction(ch,textBuffer,cursor,findFunction,offset)
-	local start <const> = cursor.x
+	local start <const> = cursor:getX()
 	if ch == KeyMap.ESC then return NormalMode.returnNormalMode() end
 	local stop <const> = findFunction(textBuffer,cursor,ch)
 	if stop == -1 then return NormalMode.returnNormalMode() end
@@ -38,11 +38,11 @@ function DeleteAndYankParent:moveCursorAndDoAction(ch,textBuffer,cursor,findFunc
 end
 
 function DeleteAndYankParent.returnLengthOfLine(textBuffer,cursor)
-	return textBuffer:getLengthOfLine(cursor.y)
+	return textBuffer:getLengthOfLine(cursor:getY())
 end
 
 function DeleteAndYankParent.returnStartOfLine(textBuffer,cursor)
-	return textBuffer:getLengthOfLine(cursor.y) > 0 and 1 or 0
+	return textBuffer:getLengthOfLine(cursor:getY()) > 0 and 1 or 0
 end
 
 function DeleteAndYankParent:parseInput(ch,textBuffer,cursor)
