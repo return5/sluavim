@@ -8,16 +8,10 @@
 
 local NormalMode <const> = require('modes.NormalMode')
 local InsertMode <const> = require('modes.InsertMode')
-local DeleteModeDriver <const> = require('modes.delete.DeleteModeDriver')
-local YankModeDriver <const> = require('modes.yank.YankModeDriver')
-local MacroModeDriver <const> = require('modes.macro.MacroModeDriver')
-local MacroNormalMode <const> = require('modes.macro.macroNormalAndInsert.MacroNormalMode')
-local MacroInsertMode <const> = require('modes.macro.macroNormalAndInsert.MacroInsertMode')
-local MacroDeleteModeDriver <const> = require('modes.macro.macroDelete.MacroDeleteModeDriver')
+local DeleteModeDriver <const> = require('modes.deleteAndYank.delete.DeleteModeDriver')
 local MovementDriver <const> = require('modes.movement.MovementDriver')
-local MacroMovementDriver <const> = require('modes.macro.movement.MacroMovementDriver')
+--local YankModeDriver <const> = require('modes.deleteAndYank.yank.YankModeDriver')
 local ReplacementModeDriver <const> = require('modes.replace.ReplacementModeDriver')
-local MacroYankDriver <const> = require('modes.macro.macroYank.MacroYankModeDriver')
 
 local SetModeFields <const> = {}
 SetModeFields.__index = SetModeFields
@@ -27,8 +21,6 @@ _ENV = SetModeFields
 function SetModeFields.setModes()
 	InsertMode.normalMode = NormalMode
 	NormalMode.setDrivers(ReplacementModeDriver,MovementDriver,MacroModeDriver,YankModeDriver,DeleteModeDriver)
-	MacroNormalMode.setDriverModes(MacroInsertMode,MacroDeleteModeDriver,MacroMovementDriver,MacroYankDriver)
-	MacroInsertMode.setMacroNormalMode(MacroNormalMode)
 	return SetModeFields
 end
 

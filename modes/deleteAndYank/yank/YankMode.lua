@@ -2,7 +2,7 @@
 	class for yank mode. handles copying text from a textBuffer when using 'y' commands in NormalMode and VisualSelect mode
 --]]
 
-local DeleteAndYankParent <const> = require('modes.DeleteAndYankParent')
+local DeleteAndYankParent <const> = require('modes.deleteAndYank.DeleteAndYankParent')
 
 local YankMode <const> = {}
 YankMode.__index = YankMode

@@ -28,19 +28,13 @@ function DeleteAndYankParent:deleteOrYankCharacters(textBuffer,cursor,start)
 	return NormalMode
 end
 
-function DeleteAndYankParent:doAction(textBuffer,cursor)
+function DeleteAndYankParent:moveCursorAndDoAction(ch,textBuffer,cursor,findFunction,offset)
 	local start <const> = cursor.x
-	local nextStep <const> = NormalMode:takeInput(textBuffer,cursor)
-	return nextStep(self,textBuffer,cursor,start)
-end
-
-function DeleteAndYankParent:moveCursor(textBuffer,cursor,findFunction,offset)
-	local ch <const> = BaseMode.grabInput()
-	if ch == KeyMap.ESC then return NormalMode.returnNormalMode end
+	if ch == KeyMap.ESC then return NormalMode.returnNormalMode() end
 	local stop <const> = findFunction(textBuffer,cursor,ch)
-	if stop == -1 then return NormalMode.returnNormalMode end
+	if stop == -1 then return NormalMode.returnNormalMode() end
 	cursor:setX(stop + offset)
-	return DeleteAndYankParent.deleteOrYankCharacters
+	return self:deleteOrYankCharacters(textBuffer,cursor,start)
 end
 
 function DeleteAndYankParent.moveCursorToEndOfLine(textBuffer,cursor)
@@ -53,13 +47,17 @@ function DeleteAndYankParent.moveCursorToStartOfLine(cursor)
 	return DeleteAndYankParent
 end
 
+function DeleteAndYankParent:parseInput(ch,textBuffer,cursor)
+	if self.keyBindings[ch] then
+		return self.keyBindings[ch](textBuffer,cursor)
+	else
+		return self:default(ch,textBuffer,cursor)
+	end
+end
+
 function DeleteAndYankParent:takeInput(textBuffer,cursor)
 	local ch <const> = DeleteAndYankParent.grabInput()
-	if self.keyBindings[ch] then
-		self.keyBindings[ch](textBuffer,cursor,self)
-		self:doAction(textBuffer,cursor)
-	end
-	return NormalMode
+	return self:parseInput(ch,textBuffer,cursor)
 end
 
 local function findTilPattern(textBuffer,cursor,offset,findFunction)
@@ -77,10 +75,13 @@ function DeleteAndYankParent:findBackwards(textBuffer,cursor,offset)
 	return findTilPattern(textBuffer,cursor,offset,textBuffer.findBackwardsPattern)
 end
 
-function DeleteAndYankParent:takeInputAndMoveThenDoAction(textBuffer,cursor,findFunc,offset)
-	local start <const> = cursor.x
-	local nextFunc <const> = self:moveCursor(textBuffer,cursor,findFunc,offset)
-	return nextFunc(self,textBuffer,cursor,start)
+function DeleteAndYankParent.returnNormalMode()
+	return NormalMode
 end
 
+DeleteAndYankParent.keyBindings = {
+	[KeyMap.ESC] = DeleteAndYankParent.returnNormalMode,
+	[KeyMap.ENTER] = DeleteAndYankParent.returnNormalMode,
+	[KeyMap.BACK] = DeleteAndYankParent.returnNormalMode
+}
 return DeleteAndYankParent

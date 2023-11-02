@@ -6,7 +6,7 @@ local BaseMode <const> = require('modes.BaseMode')
 local InsertMode <const> = require('modes.InsertMode')
 
 local NormalMode <const> = {
-		type = 'NormalMode', deleteModeDriver = "please remember to set this before using this class.",
+		type = 'NormalMode', deleteMode = "please remember to set this before using this class.",
 		yankModeDriver = "please remember to set this before using this class.",
 	}
 NormalMode.__index = NormalMode
@@ -104,6 +104,7 @@ function NormalMode:moveToStartOfLine(_,cursor)
 end
 
 function NormalMode.deleteTilEnd(textBuffer,_,cursor)
+	--TODO rewrite this
 	return NormalMode.deleteModeDriver.deleteToEnd(textBuffer,_,cursor)
 end
 
@@ -144,24 +145,9 @@ NormalMode.keyBindings = {
 	--TODO :,y,P,~,"
 }
 
-function NormalMode.setDeleteModeDriver(deleteModeDriver)
-	NormalMode.deleteModeDriver = deleteModeDriver
-	return NormalMode
-end
-
 function NormalMode.setYankModeDriver(yankModeDriver)
-	--TODO
+	--TODO reWrite this
 	NormalMode.yankModeDriver = yankModeDriver
-	return NormalMode
-end
-
-local function setMacroModeDriverFuncs(macroModeDriver)
-	NormalMode.keyBindings.q = macroModeDriver.setRegister
-	NormalMode.keyBindings['@'] = macroModeDriver.runMacro
-end
-
-function NormalMode.setMacroModeDriver(macroModeDriver)
-	setMacroModeDriverFuncs(macroModeDriver)
 	return NormalMode
 end
 
@@ -186,9 +172,7 @@ end
 function NormalMode.setDrivers(replaceDriver,movementDriver,macroModeDriver,yankModeDriver,deleteModeDriver)
 	NormalMode.setMovementDriver(movementDriver)
 	NormalMode.setReplacementModeDriver(replaceDriver)
-	NormalMode.setMacroModeDriver(macroModeDriver)
-	NormalMode.setYankModeDriver(yankModeDriver)
-	NormalMode.setDeleteModeDriver(deleteModeDriver)
+	NormalMode.deleteModeDriver = deleteModeDriver
 end
 
 return NormalMode

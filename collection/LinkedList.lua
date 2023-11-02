@@ -76,16 +76,26 @@ local function returnNextNode(temp)
 	return temp.next
 end
 
-function LinkedList:findForward(expected,startPos,findFunction)
-	return self:find(expected,startPos,1,returnNextNode,findFunction)
+function LinkedList:findForward(expected,startPos)
+	return self:find(expected,startPos,1,returnNextNode,LinkedList.findChar)
+end
+
+function LinkedList:findForwardPattern(expected,startPos)
+	local stop <const> = self:find(expected,startPos,1,returnNextNode,LinkedList.findPattern)
+	return stop ~= -1 and stop or self.size + 1
 end
 
 local function returnPreviousNode(temp)
 	return temp.prev
 end
 
-function LinkedList:findBackwards(expected,startPos,findFunction)
-	return self:find(expected,startPos,-1,returnPreviousNode,findFunction)
+function LinkedList:findBackwardsPattern(expected,startPos)
+	local stop <const> = self:find(expected,startPos,-1,returnPreviousNode,LinkedList.findPattern)
+	return stop ~= -1 and stop or 0
+end
+
+function LinkedList:findBackwards(expected,startPos)
+	return self:find(expected,startPos,-1,returnPreviousNode,LinkedList.findChar)
 end
 
 function LinkedList:setNewSize()
