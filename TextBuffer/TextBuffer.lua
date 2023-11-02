@@ -96,6 +96,10 @@ function TextBuffer:findForwardPattern(cursor,pat)
 	return self.lines:getItem(cursor.y):findForwardPattern(pat,cursor.x)
 end
 
+function TextBuffer:getCharAtCursor(cursor)
+	return self.lines:getItem(cursor.y):getCharAtCursor(cursor)
+end
+
 function TextBuffer:findBackwardsPattern(cursor,pat)
 	return self.lines:getItem(cursor.y):findBackwardsPattern(pat,cursor.x)
 end

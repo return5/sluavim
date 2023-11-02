@@ -28,10 +28,12 @@ local Input <const> = require('localIO.Input')
 local function printRegister(r)
 	local reg <const> = BaseMode.getRegister(r)
 	Output.printCharAt("printing register\n")
-	for i=1,#reg,1 do
-		Output.printCharAt(reg[i])
+	if reg then
+		for i=1,#reg,1 do
+			Output.printCharAt(reg[i])
+		end
+		Output.printCharAt("\n")
 	end
-	Output.printCharAt("\n")
 end
 
 local function repl(currentMode,textBuffer)

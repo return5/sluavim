@@ -1,5 +1,4 @@
 # TODO  
-- [ ] add ```~``` functionality.
 - [ ] add ```u``` and ```^r``` functionality.
 - [ ] add ``"`` functionality to select register.
 - [ ] add ``p`` and ```P``` functionality.

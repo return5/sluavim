@@ -5,6 +5,10 @@
 local BaseMode <const> = require('modes.BaseMode')
 local InsertMode <const> = require('modes.InsertMode')
 
+local toByte <const> = string.byte
+local upper <const> = string.upper
+local lower <const> = string.lower
+
 local NormalMode <const> = {
 		type = 'NormalMode', deleteMode = "please remember to set this before using this class.",
 		yankModeDriver = "please remember to set this before using this class.",
@@ -14,6 +18,11 @@ NormalMode.__index = NormalMode
 setmetatable(NormalMode,BaseMode)
 
 _ENV = NormalMode
+
+local aByte <const> = toByte('a',1,1)
+local zByte <const> = toByte('z',1,1)
+local AByte <const> = toByte('A',1,1)
+local ZByte <const> = toByte('Z',1,1)
 
 function NormalMode.default()
 	return NormalMode
@@ -123,6 +132,21 @@ function NormalMode.pasteRegister(textBuffer,_,cursor)
 	return NormalMode
 end
 
+local function lowerCaseToUpperAndUpperTOLowerCase(ch)
+	local byte <const> = toByte(ch,1,1)
+	if byte >= aByte and byte <= zByte then return upper(ch) end
+	if byte >= AByte and byte <= ZByte then return lower(ch) end
+	return ch
+end
+
+function NormalMode.toggleCase(textBuffer,_,cursor)
+	local ch <const> = textBuffer:getCharAtCursor(cursor)
+	local replacementCh <const> = lowerCaseToUpperAndUpperTOLowerCase(ch)
+	textBuffer:replaceCharAt(replacementCh,cursor)
+	cursor:moveRightWithLimit(textBuffer:getLengthOfLine(cursor.y))
+	return NormalMode
+end
+
 NormalMode.keyBindings = {
 	a = NormalMode.moveRightAndReturnInsertMode,
 	A = NormalMode.moveToEndAndReturnInsertMode,
@@ -141,8 +165,9 @@ NormalMode.keyBindings = {
 	p = NormalMode.pasteRegister,
 	['$'] = NormalMode.moveToEndOfLine,
 	['^'] = NormalMode.moveToStartOfLine,
+	['~'] = NormalMode.toggleCase,
 	y = NormalMode.yank
-	--TODO :,y,P,~,"
+	--TODO :,y,P,"
 }
 
 local function setMovementDriverFuncs(movementDriver)

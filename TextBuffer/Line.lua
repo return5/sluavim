@@ -56,6 +56,10 @@ function Line:findForwardPattern(pattern,startPos)
 	return self.chars:findForwardPattern(pattern,startPos)
 end
 
+function Line:getCharAtCursor(cursor)
+	return self.chars:getItem(cursor.x)
+end
+
 function Line:findForward(ch,startPos)
 	return self.chars:findForward(ch,startPos)
 end
