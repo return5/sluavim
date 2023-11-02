@@ -59,12 +59,12 @@ function DeleteModeDriver.deleteTilEnd(textBuffer,_,cursor)
 	return DeleteToEnd:deleteToEnd(textBuffer,cursor)
 end
 
-function DeleteModeDriver.deleteWord()
-	return DeleteWord
+function DeleteModeDriver.deleteWord(textBuffer,_,cursor)
+	return DeleteWord:deleteWord(textBuffer,cursor)
 end
 
-function DeleteModeDriver.deleteWordBackwards()
-	return DeleteWordBackwards
+function DeleteModeDriver.deleteWordBackwards(textBuffer,_,cursor)
+	return DeleteWordBackwards:deleteWordBackwards(textBuffer,cursor)
 end
 
 DeleteModeDriver.keyBindings = {

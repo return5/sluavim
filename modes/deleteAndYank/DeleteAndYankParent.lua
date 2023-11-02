@@ -58,19 +58,12 @@ function DeleteAndYankParent:takeInput(textBuffer,cursor)
 	return self:parseInput(ch,textBuffer,cursor)
 end
 
-local function findTilPattern(textBuffer,cursor,offset,findFunction)
-	local startX <const> = cursor.x
-	local stop <const> = findFunction(textBuffer,cursor,DeleteAndYankParent.wordPattern)
-	cursor:setX(stop + offset)
-	return startX
+function DeleteAndYankParent.findForwardPattern(textBuffer,cursor)
+	return textBuffer:findForwardPattern(cursor,DeleteAndYankParent.wordPattern)
 end
 
-function DeleteAndYankParent:findForward(textBuffer,cursor,offset)
-	return findTilPattern(textBuffer,cursor,offset,textBuffer.findForwardPattern)
-end
-
-function DeleteAndYankParent:findBackwards(textBuffer,cursor,offset)
-	return findTilPattern(textBuffer,cursor,offset,textBuffer.findBackwardsPattern)
+function DeleteAndYankParent.findBackwardsPattern(textBuffer,cursor)
+	return textBuffer:findBackwardsPattern(cursor,DeleteAndYankParent.wordPattern)
 end
 
 function DeleteAndYankParent.returnNormalMode()
