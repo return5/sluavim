@@ -2,19 +2,19 @@
 	class for delete mode. handles deleting text from a textBuffer when using 'd' commands in NormalMode and VisualSelect mode
 --]]
 
---local DeleteFrom <const> = require('modes.deleteAndYank.delete.DeleteFrom')
 local DeleteToBackwards <const> = require('modes.deleteAndYank.delete.DeleteToBackwards')
 local DeleteFromBackwards <const> = require('modes.deleteAndYank.delete.DeleteFromBackwards')
-local DeleteMode <const> = require('modes.deleteAndYank.delete.DeleteMode')
---local ToDelete <const> = require('modes.deleteAndYank.delete.ToDelete')
---local DeleteLine <const> = require('modes.delete.DeleteLine')
---local DeleteToStart <const> = require('modes.delete.DeleteToStart')
---local DeleteToEnd <const> = require('modes.delete.DeleteToEnd')
---local DeleteWord <const> = require('modes.delete.DeleteWord')
---local DeleteWordBackwards <const> = require('modes.delete.DeleteWordBackwards')
+local DeleteFrom <const> = require('modes.deleteAndYank.delete.DeleteFrom')
+local DeleteLine <const> = require('modes.deleteAndYank.delete.DeleteLine')
+local DeleteToStart <const> = require('modes.deleteAndYank.delete.DeleteToStart')
+local DeleteToEnd <const> = require('modes.deleteAndYank.delete.DeleteToEnd')
+local DeleteWord <const> = require('modes.deleteAndYank.delete.DeleteWord')
+local DeleteWordBackwards <const> = require('modes.deleteAndYank.delete.DeleteWordBackwards')
 local DeleteAndYankParent <const> = require('modes.deleteAndYank.DeleteAndYankParent')
 local BaseMode <const> = require('modes.BaseMode')
 local NormalMode <const> = require('modes.NormalMode')
+local DeleteTo <const> = require('modes.deleteAndYank.delete.DeleteTo')
+
 local pairs <const> = pairs
 
 local DeleteModeDriver <const> = {type = "DeleteModeDriver"}
@@ -25,8 +25,6 @@ _ENV = DeleteModeDriver
 
 function DeleteModeDriver.action()
 	return NormalMode
---	textBuffer:removeChars(startChar,stopChar,y,register)
-	--return DeleteModeDriver
 end
 
 function DeleteModeDriver:default()
@@ -34,7 +32,7 @@ function DeleteModeDriver:default()
 end
 
 function DeleteModeDriver.deleteTo()
-	return ToDelete
+	return DeleteTo
 end
 
 function DeleteModeDriver.deleteToBackwards()
@@ -49,16 +47,16 @@ function DeleteModeDriver.deleteFrom()
 	return DeleteFrom
 end
 
-function DeleteModeDriver.deleteLine()
-	return DeleteLine
+function DeleteModeDriver.deleteLine(textBuffer,_,cursor)
+	return DeleteLine:deleteLine(textBuffer,cursor)
 end
 
-function DeleteModeDriver.deleteTilStart()
-	return DeleteToStart
+function DeleteModeDriver.deleteTilStart(textBuffer,_,cursor)
+	return DeleteToStart:deleteToStart(textBuffer,cursor)
 end
 
-function DeleteModeDriver.deleteTilEnd()
-	return DeleteToEnd
+function DeleteModeDriver.deleteTilEnd(textBuffer,_,cursor)
+	return DeleteToEnd:deleteToEnd(textBuffer,cursor)
 end
 
 function DeleteModeDriver.deleteWord()
@@ -76,7 +74,7 @@ DeleteModeDriver.keyBindings = {
 	f = DeleteModeDriver.deleteFrom,
 	F = DeleteModeDriver.deleteFromBackwards,
 	['$'] = DeleteModeDriver.deleteTilEnd,
-	['^'] = DeleteModeDriver.deleteTileStart,
+	['^'] = DeleteModeDriver.deleteTilStart,
 	w = DeleteModeDriver.deleteWord,
 	W = DeleteModeDriver.deleteWordBackwards
 }

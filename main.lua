@@ -38,7 +38,6 @@ local function repl(currentMode,textBuffer)
 	local cursor <const> = Cursor:new(1,1)
 	local window <const> = Window:new(1,1)
 	while Input.i < #Input.chars + 1 do
-		io.write("currentMode is: ",currentMode.type,"\n")
 		currentMode = currentMode:takeInput(textBuffer,cursor)
 		window:setY(cursor)
 	end

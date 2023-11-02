@@ -37,14 +37,12 @@ function DeleteAndYankParent:moveCursorAndDoAction(ch,textBuffer,cursor,findFunc
 	return self:deleteOrYankCharacters(textBuffer,cursor,start)
 end
 
-function DeleteAndYankParent.moveCursorToEndOfLine(textBuffer,cursor)
-	NormalMode:moveToEndOfLine(textBuffer,cursor)
-	return DeleteAndYankParent
+function DeleteAndYankParent.returnLengthOfLine(textBuffer,cursor)
+	return textBuffer:getLengthOfLine(cursor.y)
 end
 
-function DeleteAndYankParent.moveCursorToStartOfLine(cursor)
-	cursor:moveXTo(1)
-	return DeleteAndYankParent
+function DeleteAndYankParent.returnStartOfLine(textBuffer,cursor)
+	return textBuffer:getLengthOfLine(cursor.y) > 0 and 1 or 0
 end
 
 function DeleteAndYankParent:parseInput(ch,textBuffer,cursor)

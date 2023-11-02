@@ -1,8 +1,8 @@
 local DeleteParent <const> = require('modes.deleteAndYank.DeleteAndYankParent')
 
 local DeleteMode <const> = {type = "DeleteMode"}
-DeleteMode.__index = DeleteMode
 setmetatable(DeleteMode,DeleteParent)
+DeleteMode.__index = DeleteMode
 
 --make a local defensive copy
 DeleteMode.keyBindings = {}
