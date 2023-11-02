@@ -17,12 +17,4 @@ function DeleteMode.action(textBuffer,start,stop,row,register)
 	return DeleteMode
 end
 
-function DeleteMode:parseInput(ch,textBuffer,cursor)
-	return DeleteParent.parseInput(self,ch,textBuffer,cursor)
-end
-
-function DeleteMode:takeInput(textBuffer,cursor)
-	return DeleteParent.takeInput(self,textBuffer,cursor)
-end
-
 return DeleteMode

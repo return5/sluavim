@@ -1,12 +1,13 @@
-local YankMovements <const> = require('modes.yank.YankMovements')
+local YankMode <const> = require('modes.deleteAndYank.yank.YankMode')
 
-local YankFromBackwards <const> = {}
+local YankFromBackwards <const> = {type = "YankFromBackwards"}
 YankFromBackwards.__index = YankFromBackwards
+setmetatable(YankFromBackwards,YankMode)
 
 _ENV = YankFromBackwards
 
-function YankFromBackwards:takeInput(textBuffer,cursor)
-	return YankMovements:moveCursorAndCopyChars(textBuffer,cursor,textBuffer.findBackwards,0)
+function YankFromBackwards:default(ch,textBuffer,cursor)
+	return self:moveCursorAndDoAction(ch,textBuffer,cursor,textBuffer.findBackwards,0)
 end
 
 return YankFromBackwards

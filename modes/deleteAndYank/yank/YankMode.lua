@@ -4,7 +4,7 @@
 
 local DeleteAndYankParent <const> = require('modes.deleteAndYank.DeleteAndYankParent')
 
-local YankMode <const> = {}
+local YankMode <const> = {type = "YankMode"}
 YankMode.__index = YankMode
 
 setmetatable(YankMode,DeleteAndYankParent)

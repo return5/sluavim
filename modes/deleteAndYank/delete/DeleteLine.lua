@@ -9,7 +9,8 @@ _ENV = DeleteLine
 function DeleteLine:deleteLine(textBuffer,cursor)
 	cursor:setX(self.returnStartOfLine(textBuffer,cursor))
 	local returnMode <const> = self:moveCursorAndDoAction(nil,textBuffer,cursor,self.returnLengthOfLine,0)
-	--TODO check if bottom of line and move up
+	textBuffer:removeLineAt(cursor.y)
+	cursor:adjustYToTextBufferSize(textBuffer)
 	return returnMode
 end
 

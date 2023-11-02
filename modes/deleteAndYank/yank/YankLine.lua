@@ -1,19 +1,17 @@
-local YankMode <const> = require('modes.yank.YankMode')
-local NormalMode <const> = require('modes.NormalMode')
+local YankMode <const> = require('modes.deleteAndYank.yank.YankMode')
 
 local YankLine <const> = {type = "YankLine"}
 YankLine.__index = YankLine
+setmetatable(YankLine,YankMode)
 
 _ENV = YankLine
 
-function YankLine:takeInput(textBuffer,cursor)
-	local start <const> = cursor.x
-	YankMode.moveCursorToStartOfLine(cursor)
-	local startOfLine <const> = cursor.x
-	YankMode.moveCursorToEndOfLine(textBuffer,cursor)
-	YankMode:deleteOrYankCharacters(textBuffer,cursor,startOfLine)
-	cursor:moveXTo(start)
-	return NormalMode
+function YankLine:yankLine(textBuffer,cursor)
+	local originalX <const> = cursor.x
+	cursor:setX(self.returnStartOfLine(textBuffer,cursor))
+	local returnMode <const> = self:moveCursorAndDoAction(nil,textBuffer,cursor,self.returnLengthOfLine,0)
+	cursor:moveXTo(originalX)
+	return returnMode
 end
 
 return YankLine

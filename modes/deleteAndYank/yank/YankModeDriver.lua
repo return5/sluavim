@@ -1,10 +1,10 @@
-local YankTo <const> = require('modes.yank.YankTo')
-local YankFrom <const> = require('modes.yank.YankFrom')
-local YankToBackwards <const> = require('modes.yank.YankToBackwards')
-local YankFromBackwards <const> = require('modes.yank.YankFromBackwards')
-local YankLine <const> = require('modes.yank.YankLine')
-local YankToStart <const> = require('modes.yank.YankToStart')
-local YankToEnd <const> = require('modes.yank.YankToEnd')
+local YankTo <const> = require('modes.deleteAndYank.yank.YankTo')
+local YankFrom <const> = require('modes.deleteAndYank.yank.YankFrom')
+local YankToBackwards <const> = require('modes.deleteAndYank.yank.YankToBackwards')
+local YankFromBackwards <const> = require('modes.deleteAndYank.yank.YankFromBackwards')
+local YankLine <const> = require('modes.deleteAndYank.yank.YankLine')
+local YankToStart <const> = require('modes.deleteAndYank.yank.YankToStart')
+local YankToEnd <const> = require('modes.deleteAndYank.yank.YankToEnd')
 local BaseMode <const> = require('modes.BaseMode')
 
 local YankModeDriver <const> = {type = "YankModeDriver"}
@@ -31,15 +31,15 @@ function YankModeDriver.from()
 end
 
 function YankModeDriver.yankEntireLine(textBuffer,_,cursor)
-	return YankLine:takeInput(textBuffer,cursor)
+	return YankLine:yankLine(textBuffer,cursor)
 end
 
 function YankModeDriver.yankToStart(textBuffer,_,cursor)
-	return YankToStart:takeInput(textBuffer,cursor)
+	return YankToStart:yankToStart(textBuffer,cursor)
 end
 
 function YankModeDriver.yankToEnd(textBuffer,_,cursor)
-	return YankToEnd:takeInput(textBuffer,cursor)
+	return YankToEnd:yankToEnd(textBuffer,cursor)
 end
 
 YankModeDriver.keyBindings = {

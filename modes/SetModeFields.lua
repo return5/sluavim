@@ -10,7 +10,7 @@ local NormalMode <const> = require('modes.NormalMode')
 local InsertMode <const> = require('modes.InsertMode')
 local DeleteModeDriver <const> = require('modes.deleteAndYank.delete.DeleteModeDriver')
 local MovementDriver <const> = require('modes.movement.MovementDriver')
---local YankModeDriver <const> = require('modes.deleteAndYank.yank.YankModeDriver')
+local YankModeDriver <const> = require('modes.deleteAndYank.yank.YankModeDriver')
 local ReplacementModeDriver <const> = require('modes.replace.ReplacementModeDriver')
 
 local SetModeFields <const> = {}

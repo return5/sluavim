@@ -145,12 +145,6 @@ NormalMode.keyBindings = {
 	--TODO :,y,P,~,"
 }
 
-function NormalMode.setYankModeDriver(yankModeDriver)
-	--TODO reWrite this
-	NormalMode.yankModeDriver = yankModeDriver
-	return NormalMode
-end
-
 local function setMovementDriverFuncs(movementDriver)
 	NormalMode.keyBindings.t = movementDriver.to
 	NormalMode.keyBindings.T = movementDriver.toBackwards
@@ -173,6 +167,7 @@ function NormalMode.setDrivers(replaceDriver,movementDriver,macroModeDriver,yank
 	NormalMode.setMovementDriver(movementDriver)
 	NormalMode.setReplacementModeDriver(replaceDriver)
 	NormalMode.deleteModeDriver = deleteModeDriver
+	NormalMode.yankModeDriver = yankModeDriver
 end
 
 return NormalMode

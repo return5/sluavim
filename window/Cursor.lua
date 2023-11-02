@@ -14,6 +14,14 @@ function Cursor:getX()
 	return self.x
 end
 
+function Cursor:adjustYToTextBufferSize(textBuffer)
+	local size <const> = textBuffer:getSize()
+	if self.y > size then
+		self.y = size
+	end
+	return self
+end
+
 function Cursor:getY()
 	return self.y
 end
