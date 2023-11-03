@@ -88,6 +88,11 @@ function Cursor:moveXTo(to)
 	return self
 end
 
+function Cursor:moveYTo(to)
+	self.y = to
+	return self
+end
+
 function Cursor:moveLeft()
 	self:moveX(-1)
 	if self.x <= 0 then self.x = 1 end

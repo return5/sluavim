@@ -130,6 +130,12 @@ function NormalMode.pasteRegister(textBuffer,_,cursor)
 	return NormalMode
 end
 
+function NormalMode.moveCursorToTopOfFile(_,_,cursor)
+	cursor:moveXTo(1)
+	cursor:moveYTo(1)
+	return NormalMode
+end
+
 local function lowerCaseToUpperAndUpperTOLowerCase(ch)
 	local byte <const> = toByte(ch,1,1)
 	if byte >= aByte and byte <= zByte then return upper(ch) end
@@ -164,8 +170,9 @@ NormalMode.keyBindings = {
 	['$'] = NormalMode.moveToEndOfLine,
 	['^'] = NormalMode.moveToStartOfLine,
 	['~'] = NormalMode.toggleCase,
-	y = NormalMode.yank
-	--TODO :,y,P,"
+	y = NormalMode.yank,
+	G = NormalMode.moveCursorToTopOfFile
+	--TODO :,y,P,",G,gg
 }
 
 local function setMovementDriverFuncs(movementDriver)
