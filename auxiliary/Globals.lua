@@ -1,1 +1,3 @@
-return  {}
+return  {
+	fileName = nil
+}

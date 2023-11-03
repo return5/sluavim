@@ -19,6 +19,7 @@ local CmdArgs <const> = require('auxiliary.CmdArgs')
 local ChangeOptions <const> = require('auxiliary.ChangeProgramOptions')
 local TextBuffer <const> = require('TextBuffer.TextBuffer')
 local SetModeFields <const> = require('modes.SetModeFields')
+local Cursor <const> = require('window.Cursor')
 local Repl <const> = require('model.Repl')
 
 local function main()
@@ -27,7 +28,8 @@ local function main()
 	ChangeOptions.options()
 	SetModeFields.setModes()
 	local initMode <const> = ChangeOptions.getInitMode()
-	Repl.repl(initMode,textBuffer)
+	local cursor <const> = Cursor:new(1,1)
+	Repl.repl(initMode,textBuffer,cursor)
 end
 
 main()

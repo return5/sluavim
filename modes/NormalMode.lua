@@ -159,9 +159,14 @@ function NormalMode.fromBackwards()
 	return NormalMode.movementDriver.fromBackwards()
 end
 
-function NormalMode.returnColonMode(textBuffer)
+function NormalMode.returnColonMode()
 	return NormalMode.colonMode
 end
+
+function NormalMode.digit(textBuffer,ch,cursor)
+	return NormalMode.repeatMode:takeNumber(textBuffer,cursor,ch)
+end
+
 
 NormalMode.keyBindings = {
 	a = NormalMode.moveRightAndReturnInsertMode,
@@ -189,8 +194,19 @@ NormalMode.keyBindings = {
 	T = NormalMode.toBackwards,
 	f = NormalMode.from,
 	F = NormalMode.fromBackwards,
-	[':'] = NormalMode.returnColonMode
-	--TODO :,P,",gg
+	[':'] = NormalMode.returnColonMode,
+	['0'] = NormalMode.digit,
+	['1'] = NormalMode.digit,
+	['2'] = NormalMode.digit,
+	['3'] = NormalMode.digit,
+	['4'] = NormalMode.digit,
+	['5'] = NormalMode.digit,
+	['6'] = NormalMode.digit,
+	['7'] = NormalMode.digit,
+	['8'] = NormalMode.digit,
+	['9'] = NormalMode.digit
+
+	--TODO :,P,"
 }
 
 function NormalMode.setReplacementModeDriver(replaceDriver)
@@ -199,12 +215,13 @@ function NormalMode.setReplacementModeDriver(replaceDriver)
 	return NormalMode
 end
 
-function NormalMode.setDrivers(replaceDriver,movementDriver,macroModeDriver,yankModeDriver,deleteModeDriver,colonMode)
+function NormalMode.setDrivers(replaceDriver,movementDriver,macroModeDriver,yankModeDriver,deleteModeDriver,colonMode,repeatMode)
 	NormalMode.movementDriver = movementDriver
 	NormalMode.setReplacementModeDriver(replaceDriver)
 	NormalMode.deleteModeDriver = deleteModeDriver
 	NormalMode.yankModeDriver = yankModeDriver
 	NormalMode.colonMode = colonMode
+	NormalMode.repeatMode = repeatMode
 end
 
 return NormalMode

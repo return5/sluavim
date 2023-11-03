@@ -67,6 +67,7 @@ end
 
 --TODO fix this stuff up
 local function readFile(argsText,textBuffer)
+	--TODO set global file name here
 	local fileOption <const> = match(argsText,"%-%-file;*([^;]+)")
 	if fileOption then
 		return ReadFile.readFile(fileOption,textBuffer)
