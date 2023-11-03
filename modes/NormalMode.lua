@@ -111,7 +111,6 @@ function NormalMode:moveToStartOfLine(_,cursor)
 end
 
 function NormalMode.deleteTilEnd(textBuffer,_,cursor)
-	--TODO rewrite this
 	return NormalMode.deleteModeDriver.deleteToEnd(textBuffer,_,cursor)
 end
 
@@ -130,10 +129,12 @@ function NormalMode.pasteRegister(textBuffer,_,cursor)
 	return NormalMode
 end
 
-function NormalMode.moveCursorToTopOfFile(_,_,cursor)
-	cursor:moveXTo(1)
-	cursor:moveYTo(1)
-	return NormalMode
+function NormalMode.moveCursorToBottomOfFile(textBuffer,_,cursor)
+	return NormalMode.movementDriver.moveCursorToBottomOfFile(textBuffer,cursor)
+end
+
+function NormalMode.returnGoToMode()
+	return NormalMode.movementDriver.returnGoToMode()
 end
 
 local function lowerCaseToUpperAndUpperTOLowerCase(ch)
@@ -150,6 +151,23 @@ function NormalMode.toggleCase(textBuffer,_,cursor)
 	cursor:moveRightWithLimit(textBuffer:getLengthOfLine(cursor.y))
 	return NormalMode
 end
+
+function NormalMode.to()
+	return NormalMode.movementDriver.to()
+end
+
+function NormalMode.toBackwards()
+	return NormalMode.movementDriver.toBackwards()
+end
+
+function NormalMode.from()
+	return NormalMode.movementDriver.from()
+end
+
+function NormalMode.fromBackwards()
+	return NormalMode.movementDriver.fromBackwards()
+end
+
 
 NormalMode.keyBindings = {
 	a = NormalMode.moveRightAndReturnInsertMode,
@@ -171,21 +189,14 @@ NormalMode.keyBindings = {
 	['^'] = NormalMode.moveToStartOfLine,
 	['~'] = NormalMode.toggleCase,
 	y = NormalMode.yank,
-	G = NormalMode.moveCursorToTopOfFile
-	--TODO :,y,P,",G,gg
+	G = NormalMode.moveCursorToBottomOfFile,
+	g = NormalMode.returnGoToMode,
+	t = NormalMode.to,
+	T = NormalMode.toBackwards,
+	f = NormalMode.from,
+	F = NormalMode.fromBackwards,
+	--TODO :,P,",gg
 }
-
-local function setMovementDriverFuncs(movementDriver)
-	NormalMode.keyBindings.t = movementDriver.to
-	NormalMode.keyBindings.T = movementDriver.toBackwards
-	NormalMode.keyBindings.f = movementDriver.from
-	NormalMode.keyBindings.F = movementDriver.fromBackwards
-end
-
-function NormalMode.setMovementDriver(movementDriver)
-	setMovementDriverFuncs(movementDriver)
-	return NormalMode
-end
 
 function NormalMode.setReplacementModeDriver(replaceDriver)
 	NormalMode.keyBindings.r = replaceDriver.replaceChar
@@ -194,7 +205,7 @@ function NormalMode.setReplacementModeDriver(replaceDriver)
 end
 
 function NormalMode.setDrivers(replaceDriver,movementDriver,macroModeDriver,yankModeDriver,deleteModeDriver)
-	NormalMode.setMovementDriver(movementDriver)
+	NormalMode.movementDriver = movementDriver
 	NormalMode.setReplacementModeDriver(replaceDriver)
 	NormalMode.deleteModeDriver = deleteModeDriver
 	NormalMode.yankModeDriver = yankModeDriver
