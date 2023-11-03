@@ -3,6 +3,7 @@ local Cursor <const> = require('window.Cursor')
 local BaseMode <const> = require('modes.BaseMode')
 local Output <const> = require('localIO.Output')
 local Input <const> = require('localIO.Input')
+local WriteFile <const> = require('files.WriteFile')
 local io = io
 
 local Repl <const> = {ype = "Repl"}
@@ -30,8 +31,9 @@ function Repl.repl(currentMode,textBuffer)
 		window:setY(cursor)
 	end
 	textBuffer:print(window)
+	WriteFile.writeFile('myText.txt',textBuffer)
 	io.write("\ncursor.x is: ",cursor.x ," cursor y is: ",cursor.y,"\n")
-	printRegister(1)
+	--printRegister(1)
 end
 
 return Repl

@@ -7,13 +7,13 @@
  local NcursesIO <const> = require('ncurses.NcursesIO')
  local KeyMapings <const> = require('ncurses.NcursesKeyMap')
 
-local Input <const> = {type = "input"}
+local Input <const> = {type = "Input"}
 Input.__index = Input
 
 _ENV = Input
 
  Input.i = 1
- Input.chars = {'i','g','O','z','z','D','.',KeyMapings.ENTER,'h','e','l','l','o','.','W','O','R','L','D',KeyMapings.ESC,'k','h','r','x','x','x'}
+ Input.chars = {'i','g','O','z','z','D','.',KeyMapings.ENTER,'h','e','l','l','o','.','W','O','R','L','D',KeyMapings.ESC}
 
  function Input.getCh()
    Input.i = Input.i + 1

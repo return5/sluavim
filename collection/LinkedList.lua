@@ -136,7 +136,11 @@ function LinkedList:readIntoTable(strTbl)
 	local temp = self.head
 	while temp do
 		temp:getItem():readIntoTable(strTbl)
+		strTbl[#strTbl + 1] = "\n"
 		temp = temp.next
+	end
+	if #strTbl > 0 then
+		strTbl[#strTbl] = nil
 	end
 	return self
 end
