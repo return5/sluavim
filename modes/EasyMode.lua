@@ -4,7 +4,7 @@
 --]]
 
 local InsertMode <const> = require('modes.InsertMode')
-local KeyMappings <const> = require('ncurses.NcursesKeyMap')
+local KeyMappings <const> = require('localIO.KeyMapper')
 local pairs <const> = pairs
 
 local EasyMode <const> = {type = 'easymode'}

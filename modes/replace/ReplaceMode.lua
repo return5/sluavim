@@ -1,6 +1,6 @@
 local BaseMode <const> = require('modes.BaseMode')
 local NormalMode <const> = require('modes.NormalMode')
-local KeyMap <const> = require('ncurses.NcursesKeyMap')
+local KeyMap <const> = require('localIO.KeyMapper')
 
 local ReplaceMode <const> = {type = "ReplaceMode"}
 ReplaceMode.__index = ReplaceMode

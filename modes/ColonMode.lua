@@ -1,5 +1,5 @@
 local BaseMode <const> = require('modes.BaseMode')
-local KeyMap <const> = require('ncurses.NcursesKeyMap')
+local KeyMap <const> = require('localIO.KeyMapper')
 local NormalMode <const> = require('modes.NormalMode')
 local WriteFile <const> = require('files.WriteFile')
 local Globals <const> = require('auxiliary.Globals')

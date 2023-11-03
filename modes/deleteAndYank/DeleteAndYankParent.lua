@@ -4,7 +4,7 @@
 
 local NormalMode <const> = require('modes.NormalMode')
 local BaseMode <const> = require('modes.BaseMode')
-local KeyMap <const> = require('ncurses.NcursesKeyMap')
+local KeyMap <const> = require('localIO.KeyMapper')
 
 local DeleteAndYankParent <const> = {type = "DeleteAndYankParent",wordPattern = "[^a-zA-Z]"}
 DeleteAndYankParent.__index = DeleteAndYankParent

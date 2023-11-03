@@ -5,7 +5,7 @@
  --]]
 
  local NcursesIO <const> = require('ncurses.NcursesIO')
- local KeyMapings <const> = require('ncurses.NcursesKeyMap')
+ local KeyMapings <const> = require('localIO.KeyMapper')
 
 local Input <const> = {type = "Input"}
 Input.__index = Input

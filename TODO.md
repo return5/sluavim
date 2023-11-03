@@ -3,9 +3,6 @@
 - add ```u``` and ```^r``` functionality.
 - add ``"`` functionality to select register.
 - add ``p`` and ```P``` functionality.
-- add ``:`` mode.
-  - add ```w```
-  - add ```q```
 - add VisualSelect mode.
   - add ```u``` and ```U``` to VisualSelect.
 - build terminal interface for it.
