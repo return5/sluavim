@@ -11,6 +11,13 @@ setmetatable(YankMode,DeleteAndYankParent)
 
 _ENV = YankMode
 
+function YankMode:yank(ch,textBuffer,cursor,findFunction,offSet)
+	local originalX <const> = cursor:getX()
+	local returnMode <const> = self:moveCursorAndDoAction(ch,textBuffer,cursor,findFunction,offSet)
+	cursor:moveXTo(originalX)
+	return returnMode
+end
+
 function YankMode.action(textBuffer,startChar,stopChar,y,register)
 	textBuffer:copyChars(startChar,stopChar,y,register)
 	return YankMode

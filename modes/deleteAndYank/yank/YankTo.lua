@@ -7,7 +7,8 @@ setmetatable(YankTo,YankMode)
 _ENV = YankTo
 
 function YankTo:default(ch,textBuffer,cursor)
-	return self:moveCursorAndDoAction(ch,textBuffer,cursor,textBuffer.findForward,-1)
+	return self:yank(ch,textBuffer,cursor,textBuffer.findForward,-1)
+
 end
 
 return YankTo

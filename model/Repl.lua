@@ -30,7 +30,7 @@ function Repl.repl(currentMode,textBuffer,cursor)
 	textBuffer:print(window)
 	io.write("\ncursor.x is: ",cursor.x ," cursor y is: ",cursor.y,"\n")
 	--printRegister(1)
-	return currentMode
+	return Repl
 end
 
 

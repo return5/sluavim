@@ -2,7 +2,7 @@
 	class which represents a collection of registers.
 --]]
 
-local Registers <const> = {type = "Registers",registers = {},currentRegister = ""}
+local Registers <const> = {type = "Registers",registers = {},currentRegister = 1}
 Registers.__index = Registers
 
 _ENV = Registers
@@ -37,7 +37,7 @@ end
 
 function Registers:setCurrentRegister(ch)
 	self.currentRegister = ch
-	return self:setRegister(ch)
+	return self
 end
 
 function Registers:addToCurrentRegister(ch)

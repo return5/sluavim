@@ -47,6 +47,4 @@ function RepeatMode:takeNumber(textBuffer,cursor,ch)
 	end
 end
 
-
-
 return RepeatMode

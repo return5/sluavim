@@ -4,6 +4,7 @@
 
 local BaseMode <const> = require('modes.BaseMode')
 local InsertMode <const> = require('modes.InsertMode')
+local PasteRegisterMode <const> = require('modes.PasteRegisterMode')
 
 local toByte <const> = string.byte
 local upper <const> = string.upper
@@ -105,19 +106,14 @@ function NormalMode.deleteTilEnd(textBuffer,_,cursor)
 	return NormalMode.deleteModeDriver.deleteToEnd(textBuffer,_,cursor)
 end
 
---TODO test this.  move pasting to a mode or add to register class
 function NormalMode.pasteRegister(textBuffer,_,cursor)
-	--add this to register class
-	local registerName <const> = BaseMode.registers.currentRegister ~= "" and BaseMode.registers.currentRegister or 1
-	local register <const> = BaseMode.getRegister(registerName)
-	local insertMode <const> = NormalMode.returnInsertMode()
-	if #register > 0 then
-		cursor:moveRight()
-	end
-	for i=1,#register,1 do
-		insertMode.insertChar(textBuffer,register[i],cursor)
-	end
+	PasteRegisterMode:pasteRegister(textBuffer,cursor)
 	return NormalMode
+end
+
+function NormalMode.pasteRegisterAbove(textBuffer,_,cursor)
+	NormalMode.insertNewLineAbove(textBuffer,nil,cursor)
+	return NormalMode.pasteRegister(textBuffer,nil,cursor)
 end
 
 function NormalMode.moveCursorToBottomOfFile(textBuffer,_,cursor)

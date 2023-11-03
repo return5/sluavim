@@ -5,10 +5,7 @@ YankWordBackwards.__index = YankWordBackwards
 setmetatable(YankWordBackwards,YankMode)
 
 function YankWordBackwards:yankWordBackwards(textBuffer,cursor)
-	local originalX <const> = cursor:getX()
-	local returnMode <const> = self:moveCursorAndDoAction(nil,textBuffer,cursor,self.findBackwardsPattern,1)
-	cursor:moveXTo(originalX)
-	return returnMode
+	return self:yank(nil,textBuffer,cursor,self.findBackwardsPattern,1)
 end
 
 return YankWordBackwards

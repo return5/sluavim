@@ -7,7 +7,7 @@ setmetatable(YankFromBackwards,YankMode)
 _ENV = YankFromBackwards
 
 function YankFromBackwards:default(ch,textBuffer,cursor)
-	return self:moveCursorAndDoAction(ch,textBuffer,cursor,textBuffer.findBackwards,0)
+	return self:yank(ch,textBuffer,cursor,textBuffer.findBackwards,0)
 end
 
 return YankFromBackwards

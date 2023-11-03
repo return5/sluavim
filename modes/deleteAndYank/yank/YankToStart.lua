@@ -7,10 +7,7 @@ setmetatable(YankToStart,YankMode)
 _ENV = YankToStart
 
 function YankToStart:yankToStart(textBuffer,cursor)
-	local original <const> = cursor:getX()
-	local returnMode <const> = self:moveCursorAndDoAction(nil,textBuffer,cursor,self.returnStartOfLine,0)
-	cursor:moveXTo(original)
-	return returnMode
+	return self:yank(nil,textBuffer,cursor,self.returnStartOfLine,0)
 end
 
 return YankToStart

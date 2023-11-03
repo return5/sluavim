@@ -19,6 +19,15 @@ function BaseMode.adjustRegister()
 	return BaseMode
 end
 
+function BaseMode.getCurrentRegister()
+	return BaseMode.registers:getCurrentRegister()
+end
+
+function BaseMode.setCurrentRegister(ch)
+	BaseMode.registers:setCurrentRegister(ch)
+	return BaseMode
+end
+
 function BaseMode.setFirstRegister(register)
 	BaseMode.registers:setFirstRegister(register)
 	return BaseMode

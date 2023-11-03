@@ -7,10 +7,7 @@ setmetatable(YankToEnd,YankMode)
 _ENV = YankToEnd
 
 function YankToEnd:yankToEnd(textBuffer,cursor)
-	local original <const> = cursor:getX()
-	local returnMode <const> = self:moveCursorAndDoAction(nil,textBuffer,cursor,self.returnLengthOfLine,0)
-	cursor:moveXTo(original)
-	return returnMode
+	self:yank(nil,textBuffer,cursor,self.returnLengthOfLine,0)
 end
 
 return YankToEnd
