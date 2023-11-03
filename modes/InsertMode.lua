@@ -5,7 +5,7 @@
 local BaseMode <const> = require('modes.BaseMode')
 local KeyMap <const> = require('localIO.KeyMapper')
 
-local InsertMode <const> = {type = 'InsertMode', normalMode = "please remember to set this before using this class"}
+local InsertMode <const> = {type = 'InsertMode'}
 InsertMode.__index = InsertMode
 setmetatable(InsertMode,BaseMode)
 

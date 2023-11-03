@@ -21,10 +21,12 @@ function Registers:setFirstRegister(register)
 end
 
 function Registers:adjustRegister()
-	local i = 1
-	while self.registers[i] and i < 9 do
-		self.registers[i + 1] = self.registers[i]
-		i = i + 1
+	if self.currentRegister == 1 then
+		local i = 1
+		while self.registers[i] and i < 9 do
+			self.registers[i + 1] = self.registers[i]
+			i = i + 1
+		end
 	end
 	return self
 end
@@ -35,15 +37,22 @@ function Registers:setRegister(ch)
 	return self
 end
 
-function Registers:setCurrentRegister(ch)
-	self.currentRegister = ch
-	return self
+function Registers:getCurrentRegisterName()
+	return self.currentRegister
+end
+
+function Registers:setCurrentRegister(register)
+	self.registers[self.currentRegister] = register
 end
 
 function Registers:addToCurrentRegister(ch)
 	local reg <const> = self:getCurrentRegister()
 	reg[#reg + 1] = ch
 	return self
+end
+
+function Registers:resetCurrentRegister()
+	self.currentRegister = 1
 end
 
 return Registers

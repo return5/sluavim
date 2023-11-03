@@ -10,10 +10,7 @@ local toByte <const> = string.byte
 local upper <const> = string.upper
 local lower <const> = string.lower
 
-local NormalMode <const> = {
-		type = 'NormalMode', deleteMode = "please remember to set this before using this class.",
-		yankModeDriver = "please remember to set this before using this class.",
-	}
+local NormalMode <const> = {type = 'NormalMode' }
 NormalMode.__index = NormalMode
 
 setmetatable(NormalMode,BaseMode)
@@ -163,6 +160,18 @@ function NormalMode.digit(textBuffer,ch,cursor)
 	return NormalMode.repeatMode:takeNumber(textBuffer,cursor,ch)
 end
 
+function NormalMode.setCurrentRegisterName()
+	return NormalMode.setRegisterMode:takeInput()
+end
+
+function NormalMode.replaceCurrentChar()
+	return NormalMode.replacementDriver.replaceChar()
+end
+
+function NormalMode.continuousReplaceChar()
+	return NormalMode.replaceDriver.continuousReplacement()
+end
+
 
 NormalMode.keyBindings = {
 	a = NormalMode.moveRightAndReturnInsertMode,
@@ -200,24 +209,20 @@ NormalMode.keyBindings = {
 	['6'] = NormalMode.digit,
 	['7'] = NormalMode.digit,
 	['8'] = NormalMode.digit,
-	['9'] = NormalMode.digit
+	['9'] = NormalMode.digit,
+	['"'] = NormalMode.setCurrentRegisterName,
+	r = NormalMode.replaceCurrentChar,
+	R = NormalMode.continuousReplaceChar
+} --TODO q,@,v,u,^r
 
-	--TODO :,P,"
-}
-
-function NormalMode.setReplacementModeDriver(replaceDriver)
-	NormalMode.keyBindings.r = replaceDriver.replaceChar
-	NormalMode.keyBindings.R = replaceDriver.continuousReplacement
-	return NormalMode
-end
-
-function NormalMode.setDrivers(replaceDriver,movementDriver,macroModeDriver,yankModeDriver,deleteModeDriver,colonMode,repeatMode)
+function NormalMode.setDrivers(replaceDriver,movementDriver,yankModeDriver,deleteModeDriver,colonMode,repeatMode,setRegisterMode)
 	NormalMode.movementDriver = movementDriver
-	NormalMode.setReplacementModeDriver(replaceDriver)
+	NormalMode.replacementDriver = replaceDriver
 	NormalMode.deleteModeDriver = deleteModeDriver
 	NormalMode.yankModeDriver = yankModeDriver
 	NormalMode.colonMode = colonMode
 	NormalMode.repeatMode = repeatMode
+	NormalMode.setRegisterMode = setRegisterMode
 end
 
 return NormalMode

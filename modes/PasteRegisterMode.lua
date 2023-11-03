@@ -15,6 +15,7 @@ function PasteRegisterMode:pasteRegister(textBuffer,cursor)
 			InsertMode.insertChar(textBuffer,register[i],cursor)
 		end
 	end
+	self.resetCurrentRegister()
 	return PasteRegisterMode
 end
 

@@ -23,8 +23,9 @@ function DeleteAndYankParent:deleteOrYankCharacters(textBuffer,cursor,start)
 	local startChar <const> = start <= cursor:getX() and start or cursor:getX()
 	local stopChar <const> = cursor:getX() >= start and cursor:getX() or start
 	self.action(textBuffer,startChar,stopChar,cursor:getY(),register)
-	BaseMode.setFirstRegister(register)
+	BaseMode.setCurrentRegister(register)
 	cursor:setX(startChar)
+	self.resetCurrentRegister()
 	return NormalMode
 end
 

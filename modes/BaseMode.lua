@@ -23,8 +23,18 @@ function BaseMode.getCurrentRegister()
 	return BaseMode.registers:getCurrentRegister()
 end
 
-function BaseMode.setCurrentRegister(ch)
-	BaseMode.registers:setCurrentRegister(ch)
+function BaseMode.setCurrentRegisterName(ch)
+	BaseMode.registers:setCurrentRegisterName(ch)
+	return BaseMode
+end
+
+function BaseMode.setCurrentRegister(register)
+	BaseMode.registers:setCurrentRegister(register)
+	return BaseMode
+end
+
+function BaseMode.resetCurrentRegister()
+	BaseMode.registers:resetCurrentRegister()
 	return BaseMode
 end
 
