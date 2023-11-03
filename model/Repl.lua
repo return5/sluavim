@@ -31,7 +31,6 @@ function Repl.repl(currentMode,textBuffer)
 		window:setY(cursor)
 	end
 	textBuffer:print(window)
-	WriteFile.writeFile('myText.txt',textBuffer)
 	io.write("\ncursor.x is: ",cursor.x ," cursor y is: ",cursor.y,"\n")
 	--printRegister(1)
 end

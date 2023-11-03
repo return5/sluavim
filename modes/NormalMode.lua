@@ -159,6 +159,9 @@ function NormalMode.fromBackwards()
 	return NormalMode.movementDriver.fromBackwards()
 end
 
+function NormalMode.returnColonMode(textBuffer)
+	return NormalMode.colonMode
+end
 
 NormalMode.keyBindings = {
 	a = NormalMode.moveRightAndReturnInsertMode,
@@ -186,6 +189,7 @@ NormalMode.keyBindings = {
 	T = NormalMode.toBackwards,
 	f = NormalMode.from,
 	F = NormalMode.fromBackwards,
+	[':'] = NormalMode.returnColonMode
 	--TODO :,P,",gg
 }
 
@@ -195,11 +199,12 @@ function NormalMode.setReplacementModeDriver(replaceDriver)
 	return NormalMode
 end
 
-function NormalMode.setDrivers(replaceDriver,movementDriver,macroModeDriver,yankModeDriver,deleteModeDriver)
+function NormalMode.setDrivers(replaceDriver,movementDriver,macroModeDriver,yankModeDriver,deleteModeDriver,colonMode)
 	NormalMode.movementDriver = movementDriver
 	NormalMode.setReplacementModeDriver(replaceDriver)
 	NormalMode.deleteModeDriver = deleteModeDriver
 	NormalMode.yankModeDriver = yankModeDriver
+	NormalMode.colonMode = colonMode
 end
 
 return NormalMode

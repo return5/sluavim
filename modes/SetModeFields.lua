@@ -12,6 +12,7 @@ local DeleteModeDriver <const> = require('modes.deleteAndYank.delete.DeleteModeD
 local MovementDriver <const> = require('modes.movement.MovementDriver')
 local YankModeDriver <const> = require('modes.deleteAndYank.yank.YankModeDriver')
 local ReplacementModeDriver <const> = require('modes.replace.ReplacementModeDriver')
+local ColonMode <const> = require('modes.ColonMode')
 
 local SetModeFields <const> = {}
 SetModeFields.__index = SetModeFields
@@ -20,7 +21,7 @@ _ENV = SetModeFields
 
 function SetModeFields.setModes()
 	InsertMode.normalMode = NormalMode
-	NormalMode.setDrivers(ReplacementModeDriver,MovementDriver,MacroModeDriver,YankModeDriver,DeleteModeDriver)
+	NormalMode.setDrivers(ReplacementModeDriver,MovementDriver,MacroModeDriver,YankModeDriver,DeleteModeDriver,ColonMode)
 	return SetModeFields
 end
 
