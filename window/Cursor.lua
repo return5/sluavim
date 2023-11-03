@@ -60,18 +60,6 @@ function Cursor:moveDownWithLimit(limit)
 	return self
 end
 
-function Cursor:limitXToLengthOfLine(textBuffer)
-	local limit <const> = textBuffer:getLengthOfLine(self.y)
-	if self.x > limit then self.x = limit end
-	return self
-end
-
-function Cursor:limitYToSizeOfTextBuffer(textBuffer)
-	local limit <const> = textBuffer:getSize()
-	if self.y > limit then self.y = limit end
-	return self
-end
-
 function Cursor:moveRightWithLimit(limit)
 	self:moveRight()
 	if self.x > limit then self.x = limit end
@@ -90,6 +78,11 @@ end
 
 function Cursor:moveYTo(to)
 	self.y = to
+	return self
+end
+
+function Cursor:moveXIfOverLimit(limit)
+	if self.x > limit then self.x = limit end
 	return self
 end
 

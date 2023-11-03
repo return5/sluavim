@@ -45,7 +45,7 @@ local function repl(currentMode,textBuffer)
 		window:setY(cursor)
 	end
 	textBuffer:print(window)
-	io.write("\ncursor y is: ",cursor.y,"\n")
+	io.write("\ncursor.x is: ",cursor.x ," cursor y is: ",cursor.y,"\n")
 	printRegister(1)
 end
 

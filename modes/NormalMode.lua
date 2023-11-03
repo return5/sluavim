@@ -33,44 +33,36 @@ function NormalMode.returnInsertMode()
 end
 
 function NormalMode.moveToStartReturnInsertMode(_,_,cursor)
-	cursor:moveToStartOfLine()
-	return InsertMode
+	return InsertMode.movementDriver.moveToStartAndREturnInsertMode(cursor)
 end
 
 function NormalMode.moveLeft(_,_,cursor)
-	cursor:moveLeft()
-	return NormalMode
+	return NormalMode.movementDriver.moveLeft(cursor)
 end
 
-function NormalMode.moveUp(_,_,cursor)
-	cursor:moveUp()
-	return NormalMode
+function NormalMode.moveUp(textBuffer,_,cursor)
+	return NormalMode.movementDriver.moveUp(textBuffer,cursor)
 end
 
 function NormalMode.moveRight(textBuffer,_,cursor)
-	local limit <const> = textBuffer:getLengthOfLine(cursor.y) + 1
-	cursor:moveRightWithLimit(limit)
-	return NormalMode
+	return NormalMode.movementDriver.moveRight(textBuffer,cursor)
 end
 
 function NormalMode.moveDown(textBuffer,_,cursor)
-	local limit <const> = textBuffer:getSize()
-	cursor:moveDownWithLimit(limit)
-	return NormalMode
+	return NormalMode.movementDriver.moveDown(textBuffer,cursor)
 end
 
 function NormalMode.moveRightAndReturnInsertMode(textBuffer,_,cursor)
-	NormalMode.moveRight(textBuffer,nil,cursor)
-	return InsertMode
-end
-
-function NormalMode.returnNormalMode()
-	return NormalMode
+	return InsertMode.movementDriver.moveRightAndReturnInsertMode(textBuffer,cursor)
 end
 
 function NormalMode.moveToEndAndReturnInsertMode(textBuffer,_,cursor)
 	cursor:setX(textBuffer:getLengthOfLine(cursor.y) + 1)
 	return InsertMode
+end
+
+function NormalMode.returnNormalMode()
+	return NormalMode
 end
 
 function NormalMode.delete()

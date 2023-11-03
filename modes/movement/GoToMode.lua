@@ -1,6 +1,5 @@
 local MovementMode <const> = require('modes.movement.MovementMode')
 local GotToTopOfFile <const> = require('modes.movement.GoToTopOfFile')
-local io = io
 
 local GoToMode <const> = {type = 'GoToMode'}
 GoToMode.__index = GoToMode
@@ -13,9 +12,7 @@ function GoToMode:returnGoToTopOfFile(_,_,cursor)
 end
 
 function GoToMode:parseInput(ch,textBuffer,cursor)
-	io.write("ch is: ",ch,"\n")
 	if self.keyBindings[ch] then
-		io.write("it matched\n")
 		return self.keyBindings[ch](self,textBuffer,ch,cursor)
 	end
 	return self.returnNormalMode()
