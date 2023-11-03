@@ -6,7 +6,7 @@ setmetatable(DeleteCurrentChar,DeleteChar)
 
 function DeleteCurrentChar:deleteCurrentChar(textBuffer,cursor)
 	local returnMode <const> = self:deleteChar(textBuffer,cursor,1,0,cursor.doNothing)
-	cursor:moveXIfOverTheLimit(textBuffer:getLengthOfLine(cursor:getY()))
+	cursor:moveXIfOverLimit(textBuffer:getLengthOfLine(cursor:getY()))
 	return returnMode
 end
 

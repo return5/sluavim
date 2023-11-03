@@ -75,7 +75,6 @@ end
 
 function NormalMode.deleteCurrentChar(textBuffer,_,cursor)
 	NormalMode.deleteModeDriver.deleteCurrentChar(textBuffer,cursor)
-	cursor:limitXToLengthOfLine(textBuffer)
 	return NormalMode
 end
 

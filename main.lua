@@ -17,37 +17,9 @@ Copyright (c) <2023> <github.com/return5>
 
 local CmdArgs <const> = require('auxiliary.CmdArgs')
 local ChangeOptions <const> = require('auxiliary.ChangeProgramOptions')
-local Cursor <const> = require('window.Cursor')
 local TextBuffer <const> = require('TextBuffer.TextBuffer')
-local Window <const> = require('window.Window')
 local SetModeFields <const> = require('modes.SetModeFields')
-local BaseMode <const> = require('modes.BaseMode')
-local Output <const> = require('localIO.Output')
-local Input <const> = require('localIO.Input')
-
-local function printRegister(r)
-	local reg <const> = BaseMode.getRegister(r)
-	Output.printCharAt("printing register\n")
-	if reg then
-		for i=1,#reg,1 do
-			Output.printCharAt(reg[i])
-		end
-		Output.printCharAt("\n")
-	end
-end
-
-local function repl(currentMode,textBuffer)
-	local cursor <const> = Cursor:new(1,1)
-	local window <const> = Window:new(1,1)
-	while Input.i < #Input.chars + 1 do
-		io.write("currentMode: ",currentMode.type,"\n")
-		currentMode = currentMode:takeInput(textBuffer,cursor)
-		window:setY(cursor)
-	end
-	textBuffer:print(window)
-	io.write("\ncursor.x is: ",cursor.x ," cursor y is: ",cursor.y,"\n")
-	printRegister(1)
-end
+local Repl <const> = require('model.Repl')
 
 local function main()
 	local textBuffer <const> = TextBuffer:new()
@@ -55,7 +27,7 @@ local function main()
 	ChangeOptions.options()
 	SetModeFields.setModes()
 	local initMode <const> = ChangeOptions.getInitMode()
-	repl(initMode,textBuffer)
+	Repl.repl(initMode,textBuffer)
 end
 
 main()
