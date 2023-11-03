@@ -51,6 +51,11 @@ function Registers:addToCurrentRegister(ch)
 	return self
 end
 
+function Registers:setCurrentRegisterName(name)
+	self.currentRegister = name
+	return self
+end
+
 function Registers:resetCurrentRegister()
 	self.currentRegister = 1
 end

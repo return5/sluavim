@@ -8,11 +8,18 @@ setmetatable(SetRegisterMode,BaseMode)
 
 _ENV = SetRegisterMode
 
+
+function SetRegisterMode:setRegister(ch)
+	if KeyMap[ch] then
+		return false
+	end
+	self.setCurrentRegisterName(ch)
+	return true
+end
+
 function SetRegisterMode:takeInput()
 	local ch <const> = self.grabInput()
-	if not KeyMap[ch] then
-		self.setCurrentRegisterName(ch)
-	end
+	SetRegisterMode:setRegister(ch)
 	return NormalMode
 end
 

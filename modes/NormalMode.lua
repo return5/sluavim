@@ -4,7 +4,7 @@
 
 local BaseMode <const> = require('modes.BaseMode')
 local InsertMode <const> = require('modes.InsertMode')
-local PasteRegisterMode <const> = require('modes.PasteRegisterMode')
+local PasteRegisterMode <const> = require('modes.miscModes.PasteRegisterMode')
 
 local toByte <const> = string.byte
 local upper <const> = string.upper
@@ -51,7 +51,7 @@ function NormalMode.moveDown(textBuffer,_,cursor)
 end
 
 function NormalMode.moveRightAndReturnInsertMode(textBuffer,_,cursor)
-	return InsertMode.movementDriver.moveRightAndReturnInsertMode(textBuffer,cursor)
+	return NormalMode.movementDriver.moveRightAndReturnInsertMode(textBuffer,cursor)
 end
 
 function NormalMode.moveToEndAndReturnInsertMode(textBuffer,_,cursor)
@@ -172,6 +172,14 @@ function NormalMode.continuousReplaceChar()
 	return NormalMode.replaceDriver.continuousReplacement()
 end
 
+function NormalMode.setMacro(textBuffer,_,cursor)
+	return NormalMode.macroMode:setMacro(textBuffer,cursor)
+end
+
+function NormalMode.runMacro(textBuffer,_,cursor)
+	return NormalMode.macroMode:runMacro(textBuffer,cursor)
+end
+
 
 NormalMode.keyBindings = {
 	a = NormalMode.moveRightAndReturnInsertMode,
@@ -212,10 +220,12 @@ NormalMode.keyBindings = {
 	['9'] = NormalMode.digit,
 	['"'] = NormalMode.setCurrentRegisterName,
 	r = NormalMode.replaceCurrentChar,
-	R = NormalMode.continuousReplaceChar
-} --TODO q,@,v,u,^r
+	R = NormalMode.continuousReplaceChar,
+	q = NormalMode.setMacro,
+	['@'] = NormalMode.runMacro
+} --TODO v,u,^r
 
-function NormalMode.setDrivers(replaceDriver,movementDriver,yankModeDriver,deleteModeDriver,colonMode,repeatMode,setRegisterMode)
+function NormalMode.setDrivers(replaceDriver,movementDriver,yankModeDriver,deleteModeDriver,colonMode,repeatMode,setRegisterMode,macroMode)
 	NormalMode.movementDriver = movementDriver
 	NormalMode.replacementDriver = replaceDriver
 	NormalMode.deleteModeDriver = deleteModeDriver
@@ -223,6 +233,7 @@ function NormalMode.setDrivers(replaceDriver,movementDriver,yankModeDriver,delet
 	NormalMode.colonMode = colonMode
 	NormalMode.repeatMode = repeatMode
 	NormalMode.setRegisterMode = setRegisterMode
+	NormalMode.macroMode = macroMode
 end
 
 return NormalMode

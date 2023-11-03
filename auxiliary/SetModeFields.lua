@@ -12,18 +12,19 @@ local DeleteModeDriver <const> = require('modes.deleteAndYank.delete.DeleteModeD
 local MovementDriver <const> = require('modes.movement.MovementDriver')
 local YankModeDriver <const> = require('modes.deleteAndYank.yank.YankModeDriver')
 local ReplacementModeDriver <const> = require('modes.replace.ReplacementModeDriver')
-local ColonMode <const> = require('modes.ColonMode')
-local RepeatMode <const> = require('modes.RepeatMode')
-local SetRegisterMode <const> = require('modes.replace.SetRegisterMode')
+local ColonMode <const> = require('modes.miscModes.ColonMode')
+local RepeatMode <const> = require('modes.miscModes.RepeatMode')
+local SetRegisterMode <const> = require('modes.miscModes.SetRegisterMode')
+local MacroMode <const> = require('modes.miscModes.MacroMode')
 
-local SetModeFields <const> = {}
+local SetModeFields <const> = {type = "SetModeFields"}
 SetModeFields.__index = SetModeFields
 
 _ENV = SetModeFields
 
 function SetModeFields.setModes()
 	InsertMode.normalMode = NormalMode
-	NormalMode.setDrivers(ReplacementModeDriver,MovementDriver,YankModeDriver,DeleteModeDriver,ColonMode,RepeatMode,SetRegisterMode)
+	NormalMode.setDrivers(ReplacementModeDriver,MovementDriver,YankModeDriver,DeleteModeDriver,ColonMode,RepeatMode,SetRegisterMode,MacroMode)
 	return SetModeFields
 end
 

@@ -18,7 +18,7 @@ Copyright (c) <2023> <github.com/return5>
 local CmdArgs <const> = require('auxiliary.CmdArgs')
 local ChangeOptions <const> = require('auxiliary.ChangeProgramOptions')
 local TextBuffer <const> = require('TextBuffer.TextBuffer')
-local SetModeFields <const> = require('modes.SetModeFields')
+local SetModeFields <const> = require('auxiliary.SetModeFields')
 local Cursor <const> = require('window.Cursor')
 local Repl <const> = require('model.Repl')
 

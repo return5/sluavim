@@ -11,6 +11,7 @@ setmetatable(RepeatMode,BaseMode)
 
 _ENV = RepeatMode
 
+--TODO rewrite this to work with macros
 
 function RepeatMode:repl(textBuffer,cursor,number,cmds)
 	local currentMode = NormalMode

@@ -13,7 +13,7 @@ Input.__index = Input
 _ENV = Input
 
  Input.i = 1
- Input.chars = {'i','g','O','z','z','D','.',KeyMapings.ENTER,'h','e','l','l','o','.','W','o','R','L','t','D',KeyMapings.ESC,'F','R','"','g','y','f','D','y','F','.','p'}
+ Input.chars = {'i','g','O','z','z','D','.',KeyMapings.ENTER,'h','e','l','l','o','.','W','o','R','L','t','D',KeyMapings.ESC,'F','R','q','a','x','q','@','a'}
 
 
  function Input.getCh()
