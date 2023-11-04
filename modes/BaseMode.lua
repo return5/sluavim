@@ -48,8 +48,8 @@ function BaseMode.insertIntoCurrentRegister(ch)
 	return BaseMode
 end
 
-function BaseMode.setRegister(ch)
-	BaseMode.registers:setRegister(ch)
+function BaseMode.setRegister(ch,register)
+	BaseMode.registers:setRegister(ch,register)
 	return BaseMode
 end
 

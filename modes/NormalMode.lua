@@ -157,7 +157,7 @@ function NormalMode.returnColonMode()
 end
 
 function NormalMode.digit(textBuffer,ch,cursor)
-	return NormalMode.repeatMode:takeNumber(textBuffer,cursor,ch)
+	return NormalMode.setRepeatMode:parseInput(ch,textBuffer,cursor)
 end
 
 function NormalMode.setCurrentRegisterName()
@@ -172,14 +172,13 @@ function NormalMode.continuousReplaceChar()
 	return NormalMode.replaceDriver.continuousReplacement()
 end
 
-function NormalMode.setMacro(textBuffer,_,cursor)
-	return NormalMode.macroMode:setMacro(textBuffer,cursor)
+function NormalMode.setMacro()
+	return NormalMode.macroMode.returnSetMacroMode()
 end
 
-function NormalMode.runMacro(textBuffer,_,cursor)
-	return NormalMode.macroMode:runMacro(textBuffer,cursor)
+function NormalMode.runMacro()
+	return NormalMode.macroMode.returnRunMacroMode()
 end
-
 
 NormalMode.keyBindings = {
 	a = NormalMode.moveRightAndReturnInsertMode,
@@ -225,13 +224,13 @@ NormalMode.keyBindings = {
 	['@'] = NormalMode.runMacro
 } --TODO v,u,^r
 
-function NormalMode.setDrivers(replaceDriver,movementDriver,yankModeDriver,deleteModeDriver,colonMode,repeatMode,setRegisterMode,macroMode)
+function NormalMode.setDrivers(replaceDriver,movementDriver,yankModeDriver,deleteModeDriver,colonMode,setRepeatMode,setRegisterMode,macroMode)
 	NormalMode.movementDriver = movementDriver
 	NormalMode.replacementDriver = replaceDriver
 	NormalMode.deleteModeDriver = deleteModeDriver
 	NormalMode.yankModeDriver = yankModeDriver
 	NormalMode.colonMode = colonMode
-	NormalMode.repeatMode = repeatMode
+	NormalMode.setRepeatMode = setRepeatMode
 	NormalMode.setRegisterMode = setRegisterMode
 	NormalMode.macroMode = macroMode
 end

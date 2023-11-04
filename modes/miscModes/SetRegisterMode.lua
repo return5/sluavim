@@ -9,7 +9,7 @@ setmetatable(SetRegisterMode,BaseMode)
 _ENV = SetRegisterMode
 
 
-function SetRegisterMode:setRegister(ch)
+function SetRegisterMode:setRegisterName(ch)
 	if KeyMap[ch] then
 		return false
 	end
@@ -17,9 +17,8 @@ function SetRegisterMode:setRegister(ch)
 	return true
 end
 
-function SetRegisterMode:takeInput()
-	local ch <const> = self.grabInput()
-	SetRegisterMode:setRegister(ch)
+function SetRegisterMode:parseInput(ch)
+	SetRegisterMode:setRegisterName(ch)
 	return NormalMode
 end
 

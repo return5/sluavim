@@ -28,8 +28,8 @@ function Repl.repl(currentMode,textBuffer,cursor)
 		window:setY(cursor)
 	end
 	textBuffer:print(window)
-	io.write("\ncursor.x is: ",cursor.x ," cursor y is: ",cursor.y,"\n")
-	--printRegister(1)
+	--io.write("\ncursor.x is: ",cursor.x ," cursor y is: ",cursor.y,"\n")
+	--printRegister('a')
 	return Repl
 end
 

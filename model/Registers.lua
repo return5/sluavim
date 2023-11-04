@@ -31,8 +31,8 @@ function Registers:adjustRegister()
 	return self
 end
 
-function Registers:setRegister(ch)
-	self.registers[ch] = {}
+function Registers:setRegister(ch,register)
+	self.registers[ch] = register
 	self.currentRegister = ch
 	return self
 end
