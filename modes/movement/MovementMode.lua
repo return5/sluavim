@@ -25,9 +25,4 @@ function MovementMode:parseInput(ch,textBuffer,cursor)
 	return self:move(textBuffer,cursor,ch)
 end
 
-function MovementMode:takeInput(textBuffer,cursor)
-	local ch <const> = BaseMode.grabInput()
-	return self:parseInput(ch,textBuffer,cursor)
-end
-
 return MovementMode

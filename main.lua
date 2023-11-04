@@ -21,15 +21,19 @@ local TextBuffer <const> = require('TextBuffer.TextBuffer')
 local SetModeFields <const> = require('auxiliary.SetModeFields')
 local Cursor <const> = require('window.Cursor')
 local Repl <const> = require('model.Repl')
+local NcursesAux <const> = require('ncurses.NcursesAux')
 
 local function main()
+
 	local textBuffer <const> = TextBuffer:new()
+	--NcursesAux.initNcurses()
 	CmdArgs.readArgs(arg,textBuffer)
 	ChangeOptions.options()
 	SetModeFields.setModes()
 	local initMode <const> = ChangeOptions.getInitMode()
 	local cursor <const> = Cursor:new(1,1)
 	Repl.repl(initMode,textBuffer,cursor)
+	--NcursesAux.endNcurses()
 end
 
 main()

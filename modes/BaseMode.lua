@@ -64,11 +64,6 @@ function BaseMode:parseInput(ch,textBuffer,cursor)
 	return self.default(textBuffer,ch,cursor)
 end
 
-function BaseMode:takeInput(textBuffer,cursor)
-	local ch <const> = BaseMode.grabInput()
-	return self:parseInput(ch,textBuffer,cursor)
-end
-
 function BaseMode.grabInput()
 	return Input:getCh()
 end

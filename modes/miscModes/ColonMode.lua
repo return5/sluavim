@@ -36,20 +36,18 @@ local function processString(str,textBuffer)
 	if options['q'] then quitProgram() end
 end
 
-function ColonMode:parseInput(textBuffer)
+function ColonMode:processStrTbl(textBuffer)
 	local str <const> = concat(self.strTbl)
 	processString(str,textBuffer)
+	self.strTbl = {}
 	return NormalMode
 end
 
-function ColonMode:takeInput(textBuffer)
-	self.strTbl = {}
-	while true do
-		local ch <const> = self.grabInput()
-		if ch == KeyMap.ESC then return NormalMode end
-		if ch == KeyMap.ENTER then return self:parseInput(textBuffer) end
-		self.strTbl[#self.strTbl + 1] = ch
-	end
+function ColonMode:parseInput(ch,textBuffer)
+	if ch == KeyMap.ESC then return NormalMode end
+	if ch == KeyMap.ENTER then return self:processStrTbl(textBuffer) end
+	self.strTbl[#self.strTbl + 1] = ch
+	return ColonMode
 end
 
 return ColonMode

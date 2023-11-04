@@ -161,7 +161,7 @@ function NormalMode.digit(textBuffer,ch,cursor)
 end
 
 function NormalMode.setCurrentRegisterName()
-	return NormalMode.setRegisterMode:takeInput()
+	return NormalMode.setRegisterMode
 end
 
 function NormalMode.replaceCurrentChar()

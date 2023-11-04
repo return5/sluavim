@@ -18,11 +18,6 @@ function GoToMode:parseInput(ch,textBuffer,cursor)
 	return self.returnNormalMode()
 end
 
-function GoToMode:takeInput(textBuffer,cursor)
-	local ch <const> = self.grabInput()
-	return self:parseInput(ch,textBuffer,cursor)
-end
-
 GoToMode.keyBindings = {
 	g = GoToMode.returnGoToTopOfFile
 }

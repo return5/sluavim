@@ -13,13 +13,15 @@ Input.__index = Input
 _ENV = Input
 
  Input.i = 1
-Input.chars = {'i','g','O','z','z','D','.',KeyMap.ENTER,'h','l','e','l','i','l','o','.','W','o','R','l','f','l','D',KeyMap.ESC,'q','a','F','l','q','@','a','@','a','x'}
+Input.chars = {'i','g','O','z','z','D','.',KeyMap.ENTER,'h','l','e','l','i','l','o','.','W','o','R','l','f','l','D',KeyMap.ESC,'F','l','x'}
 
 
 
  function Input.getCh()
+  --local ch <const> = NcursesIO.getCh()
+  --return ch
    Input.i = Input.i + 1
-  return Input.chars[Input.i - 1]
+   return Input.chars[Input.i - 1]
  end
 
 return Input

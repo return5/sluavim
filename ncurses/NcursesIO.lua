@@ -27,7 +27,7 @@ function NcursesIo.getLines()
 end
 
 function NcursesIo.getCh()
-    return getch()    
+    return getch()
 end
 
 function NcursesIo.getStr()
@@ -36,6 +36,7 @@ end
 
 function NcursesIo.printLineNoRefresh(y,line)
     mvprintw(y,0,line)
+    return NcursesIo
 end
 
 function NcursesIo.printLine(y,line)
@@ -43,17 +44,25 @@ function NcursesIo.printLine(y,line)
     refresh()
 end
 
+function NcursesIo.printCh(i,j,ch)
+    mvprintw(i,j,ch)
+    return NcursesIo
+end
+
 function NcursesIo.refresh()
     refresh()
     getch()
+    return NcursesIo
 end
 
 function NcursesIo.clearScreen()
     clear()
+    return NcursesIo
 end
 
 function NcursesIo.moveCurs(y,x)
     move(y,x)
+    return NcursesIo
 end
 
 return NcursesIo

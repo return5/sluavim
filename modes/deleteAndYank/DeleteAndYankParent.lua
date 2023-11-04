@@ -54,11 +54,6 @@ function DeleteAndYankParent:parseInput(ch,textBuffer,cursor)
 	end
 end
 
-function DeleteAndYankParent:takeInput(textBuffer,cursor)
-	local ch <const> = DeleteAndYankParent.grabInput()
-	return self:parseInput(ch,textBuffer,cursor)
-end
-
 function DeleteAndYankParent.findForwardPattern(textBuffer,cursor)
 	return textBuffer:findForwardPattern(cursor,DeleteAndYankParent.wordPattern)
 end

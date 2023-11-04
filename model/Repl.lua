@@ -23,8 +23,8 @@ end
 function Repl.repl(currentMode,textBuffer,cursor)
 	local window <const> = Window:new(1,1)
 	while Input.i < #Input.chars + 1 do
-		--io.write("currentMode: ",currentMode.type,"\n")
-		currentMode = currentMode:takeInput(textBuffer,cursor)
+		local ch <const> = Input.getCh()
+		currentMode = currentMode:parseInput(ch,textBuffer,cursor)
 		window:setY(cursor)
 	end
 	textBuffer:print(window)

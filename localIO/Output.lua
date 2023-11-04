@@ -18,7 +18,7 @@ function Output.newLine()
 end
 
 function Output.printCharAt(char,i,j)
-	--write('printing at: ',j,":",i,' ')
+	--NcursesIO.printCh(i,j,char)
 	write(char)
 	return Output
 end
