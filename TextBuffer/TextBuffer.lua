@@ -30,9 +30,9 @@ function TextBuffer:readTextIntoBuffer(text)
 	return self
 end
 
-function TextBuffer:print(window)
+function TextBuffer:print(window,ncursesWindow)
 	local start <const>, limit <const> = window:getWindowStartEnd()
-	self.lines:iterateBuffer(start,limit,Line.printAtRow,Output.newLine)
+	self.lines:iterateBuffer(start,limit,Line.printAtRow,Output.newLine,ncursesWindow)
 end
 
 function TextBuffer:readIntoTable(strTbl)

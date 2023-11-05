@@ -7,6 +7,7 @@ local match <const> = string.match
 local gmatch <const> = string.gmatch
 local exit <const> = os.exit
 local concat <const> = table.concat
+local Output <const> = require('localIO.Output')
 
 local ColonMode <const> = {type = "ColonMode",strTbl = {}}
 ColonMode.__index = ColonMode
@@ -23,7 +24,8 @@ local function writeFile(fileName,textBuffer)
 end
 
 local function quitProgram()
-	exit(true,true)
+	Output.exit()
+	exit(true)
 end
 
 local function processString(str,textBuffer)

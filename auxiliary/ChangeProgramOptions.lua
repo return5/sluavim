@@ -36,15 +36,15 @@ local function showCursor(val)
 end
 
 local function showLineNumbers(val)
-	--TODO
+	if val then return NcursesAux.createNumbersWindow() end
 end
 
 function ChangeProgramOptions.options()
-	if Config.showLineNumbers ~= nil then showLineNumbers(Config.showLineNumbers) end
 	if Config.showCursor ~= nil then showCursor(Config.showCursor) end
 	if Config.enableColor then enableColor() end
 	if Config.colorPairs ~= nil then setColorPairs(Config.colorPairs) end
 	if Config.colorValues ~= nil then setColorValues(Config.colorValues) end
+	return showLineNumbers(Config.showLineNumbers)
 end
 
 function ChangeProgramOptions.getInitMode()

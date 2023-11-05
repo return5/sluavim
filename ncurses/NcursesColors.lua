@@ -13,7 +13,7 @@ local start_color <const> = start_color
 local init_pair <const> = init_pair
 local init_color <const> = init_color
 
-local NcursesColors <const> = {}
+local NcursesColors <const> = {type = "NcursesColors"}
 NcursesColors.__index = NcursesColors
 
 _ENV = NcursesColors

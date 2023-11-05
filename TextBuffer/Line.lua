@@ -11,8 +11,8 @@ Line.__index = Line
 
 _ENV = Line
 
-function Line:printAtRow(row)
-	self.chars:iterate(Output.printCharAt,row)
+function Line:printAtRow(row,ncursesWindow)
+	self.chars:iterate(Output.printCharAt,ncursesWindow,row)
 end
 
 function Line:replaceCharAt(char,column)
@@ -92,6 +92,11 @@ end
 function Line:removeCharAtEnd(ch)
 	self.chars:removeIfMatchChar(ch,self.chars.size)
 	return self
+end
+
+
+function Line:getCharAt(x)
+	return self.chars:getItem(x)
 end
 
 function Line:new()

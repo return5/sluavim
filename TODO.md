@@ -6,6 +6,8 @@
 - read files into program.
 - make ```~``` work with more than just ascii
 - rewrite repeatMode to work better with macros
+- fix :w to not crash with no filename
+- colon mode needs to display test entered
 
 
 

@@ -13,8 +13,8 @@ function Node:setItem(item)
 	return self
 end
 
-function Node:doFunc(func,i,arg1)
-	func(self.item,i,arg1)
+function Node:doFunc(func,i,arg1,arg2)
+	func(self.item,i,arg1,arg2)
 	return self
 end
 

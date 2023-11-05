@@ -145,29 +145,31 @@ function LinkedList:readIntoTable(strTbl)
 	return self
 end
 
-function LinkedList:iterateBuffer(start,limit,func,func2)
+function LinkedList:iterateBuffer(start,limit,func,func2,ncursesWindow)
 	local node = self:getNode(start)
-	local i = start
+	local i = 1
+	local loopCounter = start
 	local loopLimit <const> = limit <= self.size and limit or self.size
-	while i <= loopLimit and node do
-		node:doFunc(func,i)
+	while loopCounter <= loopLimit and node do
+		node:doFunc(func,i,ncursesWindow)
 		node = node.next
 		i = i + 1
-		func2()
+		loopCounter = loopCounter + 1
+		func2(ncursesWindow)
 	end
 	return self
 end
 
-function LinkedList:iterate(func,arg1)
+function LinkedList:iterate(func,arg1,arg2)
 	local node = self.head
 	local i = 1
 	while node do
-		node:doFunc(func,i,arg1)
+		node:doFunc(func,i,arg1,arg2)
 		node = node.next
 		i = i + 1
 	end
 	if self.endingNode and self.endingNode.item then
-		self.endingNode:doFunc(func,i,arg1)
+		self.endingNode:doFunc(func,i,arg1,arg2)
 	end
 	return self
 end

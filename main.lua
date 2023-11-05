@@ -19,21 +19,23 @@ local CmdArgs <const> = require('auxiliary.CmdArgs')
 local ChangeOptions <const> = require('auxiliary.ChangeProgramOptions')
 local TextBuffer <const> = require('TextBuffer.TextBuffer')
 local SetModeFields <const> = require('auxiliary.SetModeFields')
-local Cursor <const> = require('window.Cursor')
 local Repl <const> = require('model.Repl')
 local NcursesAux <const> = require('ncurses.NcursesAux')
 
 local function main()
-
 	local textBuffer <const> = TextBuffer:new()
-	--NcursesAux.initNcurses()
 	CmdArgs.readArgs(arg,textBuffer)
-	ChangeOptions.options()
+	NcursesAux.initNcurses()
+	local numbersWindow <const> = ChangeOptions.options()
+	local mainWindow <const> = NcursesAux.createMainWindow(numbersWindow)
 	SetModeFields.setModes()
 	local initMode <const> = ChangeOptions.getInitMode()
-	local cursor <const> = Cursor:new(1,1)
-	Repl.repl(initMode,textBuffer,cursor)
-	--NcursesAux.endNcurses()
+	if numbersWindow then
+		Repl.replWithNumbers(initMode,textBuffer,mainWindow,numbersWindow)
+	else
+		Repl.repl(initMode,textBuffer,mainWindow)
+	end
+	NcursesAux.endNcurses()
 end
 
 main()

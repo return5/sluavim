@@ -4,7 +4,7 @@
 	this is so the program only has to to print text on screen which is currently visible.
 --]]
 
-local NcurseIO <const> = require('ncurses.NcursesIO')
+local Output <const> = require('localIO.Output')
 local setmetatable <const> = setmetatable
 
 local Window <const> = {type = "window"}
@@ -13,7 +13,7 @@ Window.__index = Window
 _ENV = Window
 
 function Window:setYBasedOnCursor(cursor)
-	local lines <const> = NcurseIO.getLines()
+	local lines <const> = Output.getWindowHeight()
 	if cursor.y < lines then
 		self.y = 1
 	else
@@ -23,11 +23,11 @@ function Window:setYBasedOnCursor(cursor)
 end
 
 function Window:getHeight()
-	return self.y + NcurseIO.getLines()
+	return self.y + Output.getWindowHeight()
 end
 
 function Window:getWidth()
-	return self.x + NcurseIO.getCols()
+	return self.x + Output.getWindowWidth()
 end
 
 function Window:moveDown()
@@ -41,16 +41,21 @@ function Window:moveUp()
 end
 
 function Window:getWindowStartEnd()
-	return self.x,self:getHeight()
+	return self.y,self:getHeight()
 end
 
+
 function Window:setY(cursor)
-	if cursor.y > self.y + NcurseIO.getLines() then
-		self:moveWindowDown()
+	if cursor.y > self:getHeight() then
+		self:moveDown()
 	elseif cursor.y < self.y then
 		self:moveUp()
 	end
 	return self
+end
+
+function Window:getY()
+	return self.y
 end
 
 function Window:new(x,y)

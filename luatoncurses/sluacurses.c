@@ -81,6 +81,7 @@ static int l_getstr(lua_State *L);
 static int l_mousemask(lua_State *L);
 static int l_getCols(lua_State *L);
 static int l_getLines(lua_State *L);
+static int l_mvwaddch(lua_State *L);
 
 //-------------------------------- code -------------------------------------------------------
 
@@ -155,6 +156,9 @@ int luaopen_luatoncurses_sluacurses(lua_State *L) {
     lua_register(L,"mousemask",l_mousemask);
     lua_register(L,"getLines",l_getLines);
     lua_register(L,"getCols",l_getCols);
+    lua_register(L,"mvwaddch",l_mvwaddch);
+    lua_pushinteger(L,ERR);
+    lua_setglobal(L,"ERR");
     return 0;
 }
 
@@ -314,17 +318,26 @@ static int l_newwin(lua_State *L) {
 }
 
 static int l_wborder(lua_State *L) {
-    const int index          = luaL_checknumber(L,-9);
-    const char left          = luaL_checkstring(L,-8)[0];
-    const char right         = luaL_checkstring(L,-7)[0];
-    const char top           = luaL_checkstring(L,-6)[0];
-    const char bottom        = luaL_checkstring(L,-5)[0];
-    const char top_left      = luaL_checkstring(L,-4)[0];
-    const char top_right     = luaL_checkstring(L,-3)[0];
-    const char bottom_left   = luaL_checkstring(L,-2)[0];
-    const char bottom_right  = luaL_checkstring(L,-1)[0];
+    const int index          = luaL_checknumber(L,1);
+    const char left          = luaL_checkstring(L,2)[0];
+    const char right         = luaL_checkstring(L,3)[0];
+    const char top           = luaL_checkstring(L,4)[0];
+    const char bottom        = luaL_checkstring(L,5)[0];
+    const char top_left      = luaL_checkstring(L,6)[0];
+    const char top_right     = luaL_checkstring(L,7)[0];
+    const char bottom_left   = luaL_checkstring(L,8)[0];
+    const char bottom_right  = luaL_checkstring(L,9)[0];
     wborder(getWindow(index),left,right,top,bottom,top_left,top_right,bottom_left,bottom_right);
     return 0;
+}
+
+static int l_mvwaddch(lua_State *L) {
+   const int index = luaL_checknumber(L,1);
+   const int y = luaL_checknumber(L,2);
+   const int x = luaL_checknumber(L,3);
+   const int ch = luaL_checknumber(L,4);
+   mvwaddch(getWindow(index),y,x,ch);
+   return 0;
 }
 
 static int l_wrefresh(lua_State *L) {
@@ -334,7 +347,7 @@ static int l_wrefresh(lua_State *L) {
 }
 
 static int l_wclear(lua_State *L) {
-    const int index = luaL_checknumber(L,-1);
+    const int index = luaL_checknumber(L,1);
     wclear(getWindow(index));
     return 0;
 }
@@ -363,10 +376,13 @@ static int l_wprintw(lua_State *L) {
 }
 
 static int l_mvwprintw(lua_State *L) {
-    l_wmove(L);
-    lua_remove(L,2);
-    lua_remove(L,2);
-    return l_wprintw(L);
+    const int index = luaL_checknumber(L,1);
+    const int y     = luaL_checknumber(L,2);
+    const int x     = luaL_checknumber(L,3);
+    const char *const fmt = luaL_checkstring(L,4);
+    const int arg = luaL_checknumber(L,5);
+    mvwprintw(getWindow(index),y,x,"%3d",arg);
+    return 0;
 }
 
 static int l_mvprintw(lua_State *L) {
