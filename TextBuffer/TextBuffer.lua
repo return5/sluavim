@@ -75,8 +75,7 @@ function TextBuffer:addLineAt(pos)
 end
 
 function TextBuffer:newLine(newPos,oldPos,ch)
-	self:addEndingNewLine(oldPos,ch)
-	self:addLineAt(newPos)
+	self:addEndingNewLine(oldPos,ch):addLineAt(newPos)
 	if newPos < self:getSize() then
 		self:addEndingNewLine(newPos,ch)
 	end
@@ -132,7 +131,7 @@ end
 
 function TextBuffer:addEndingNewLine(pos,ch)
 	self.lines:getItem(pos):addEndingNewLine(ch)
-
+	return self
 end
 
 function TextBuffer:new()

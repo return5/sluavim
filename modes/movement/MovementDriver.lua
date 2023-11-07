@@ -40,7 +40,7 @@ function MovementDriver.returnGoToMode()
 end
 
 function MovementDriver.moveToEndAndReturnInsertMode(textBuffer,cursor)
-	cursor:setX(textBuffer:getLengthOfLine(cursor.y) + 1)
+	cursor:setX(textBuffer:getLengthOfLine(cursor:getY()) + 1)
 	return InsertMode
 end
 
@@ -61,7 +61,7 @@ function MovementDriver.moveUp(textBuffer,cursor)
 end
 
 function MovementDriver.moveRight(textBuffer,cursor)
-	local limit <const> = textBuffer:getLengthOfLine(cursor.y) + 1
+	local limit <const> = textBuffer:getLengthOfLine(cursor:getY()) + 1
 	cursor:moveRightWithLimit(limit)
 	return NormalMode
 end

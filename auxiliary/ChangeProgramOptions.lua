@@ -5,6 +5,7 @@
 local Config <const> = require('config.config')
 local NcursesColors <const> = require('ncurses.NcursesColors')
 local NcursesAux <const> = require('ncurses.NcursesAux')
+local Output <const> = require('localIO.Output')
 local NormalMode <const> = require('modes.NormalMode')
 local EasyMode <const> = require('modes.EasyMode')
 
@@ -36,7 +37,7 @@ local function showCursor(val)
 end
 
 local function showLineNumbers(val)
-	if val then return NcursesAux.createNumbersWindow() end
+	if val then return Output.createNumbersWindow() end
 end
 
 function ChangeProgramOptions.options()

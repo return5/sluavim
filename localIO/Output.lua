@@ -16,8 +16,13 @@ function Output.newLine()
 	return Output
 end
 
-function Output.printCharAt(char,i,ncursesWindow,j)
-	NcursesIO.printCh(j,i,char,ncursesWindow)
+function Output.initScreen()
+	NcursesAux.initNcurses()
+	return Output
+end
+
+function Output.printCharAt(char,x,ncursesWindow,y)
+	NcursesIO.printCh(y,x,char,ncursesWindow)
 	return Output
 end
 
@@ -35,6 +40,7 @@ end
 
 function Output.exit()
 	NcursesAux.endNcurses()
+	return Output
 end
 
 function Output.clearWindow(window)
@@ -52,9 +58,29 @@ function Output.refresh()
 	return Output
 end
 
-function Output.setScreenCursor(cursor,window)
-	NcursesIO.setScreenCursor(cursor,window)
+function Output.setScreenCursor(y,x,window)
+	NcursesIO.setScreenCursor(y,x,window)
 	return Output
+end
+
+function Output.getNewWindow(x,y,height,width)
+	return NcursesAux.createWindow(height,width,y,x)
+end
+
+function Output.createMainWindow(numbersWindow)
+	local startX <const> = numbersWindow and 5 or 0
+	local width <const> = Output.getWindowWidth() - startX
+	local height <const> = Output.getWindowHeight()
+	return Output.getNewWindow(startX,0,height,width)
+end
+
+function Output.createNumbersWindow()
+	local height <const> = Output.getWindowHeight()
+	local window <const> = Output.getNewWindow(0,0,height,3)
+	local borderWindow <const> = Output.getNewWindow(0,0,height,5)
+	NcursesAux.createBorder(borderWindow,"","|","","","","|","","")
+	Output.refreshWindow(borderWindow)
+	return window
 end
 
 return Output

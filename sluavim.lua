@@ -20,14 +20,14 @@ local ChangeOptions <const> = require('auxiliary.ChangeProgramOptions')
 local TextBuffer <const> = require('TextBuffer.TextBuffer')
 local SetModeFields <const> = require('auxiliary.SetModeFields')
 local Repl <const> = require('model.Repl')
-local NcursesAux <const> = require('ncurses.NcursesAux')
+local OutPut <const>  =require('localIO.Output')
 
 local function main()
 	local textBuffer <const> = TextBuffer:new()
 	CmdArgs.readArgs(arg,textBuffer)
-	NcursesAux.initNcurses()
+	OutPut.initScreen()
 	local numbersWindow <const> = ChangeOptions.options()
-	local mainWindow <const> = NcursesAux.createMainWindow(numbersWindow)
+	local mainWindow <const> = OutPut.createMainWindow(numbersWindow)
 	SetModeFields.setModes()
 	local initMode <const> = ChangeOptions.getInitMode()
 	if numbersWindow then
@@ -35,7 +35,7 @@ local function main()
 	else
 		Repl.repl(initMode,textBuffer,mainWindow)
 	end
-	NcursesAux.endNcurses()
+	OutPut.exit()
 end
 
 main()

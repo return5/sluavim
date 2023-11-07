@@ -82,7 +82,8 @@ function Cursor:moveYTo(to)
 end
 
 function Cursor:moveXIfOverLimit(limit)
-	if self.x > limit then self.x = limit end
+	local adjustedLimit <const> = limit > 0 and limit or 1
+	if self.x > adjustedLimit then self.x = adjustedLimit end
 	return self
 end
 

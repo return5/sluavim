@@ -11,7 +11,7 @@ local getCols <const> = getCols
 local getLines <const> = getLines
 local refresh  <const> = refresh
 local clear    <const> = clear
-local move     <const> =move
+local wmove     <const> = wmove
 local mvwprintw <const> = mvwprintw
 local mvwaddch <const> = mvwaddch
 local wrefresh <const> = wrefresh
@@ -46,8 +46,8 @@ function NcursesIo.printLine(y,line)
     refresh()
 end
 
-function NcursesIo.printCh(i,j,ch,ncursesWindow)
-    mvwaddch(ncursesWindow,i - 1,j - 1,toByte(ch))
+function NcursesIo.printCh(y,x,ch,ncursesWindow)
+    mvwaddch(ncursesWindow,y - 1,x - 1,toByte(ch))
     return NcursesIo
 end
 
@@ -66,8 +66,8 @@ function NcursesIo.clearScreen()
     return NcursesIo
 end
 
-function NcursesIo.moveCurs(y,x,window)
-    move(y - 1,x - 1)
+function NcursesIo.windowMoveCurs(y,x,window)
+    wmove(window,y - 1,x - 1)
     return NcursesIo
 end
 
@@ -76,8 +76,8 @@ function NcursesIo.printRightAlignChar(char,y,x,window)
     return NcursesIo
 end
 
-function NcursesIo.setScreenCursor(cursor,window)
-    return NcursesIo.moveCurs(cursor:getY(),cursor:getX(),window)
+function NcursesIo.setScreenCursor(y,x,window)
+    return NcursesIo.windowMoveCurs(y,x,window)
 end
 
 function NcursesIo.refresh()

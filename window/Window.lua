@@ -44,6 +44,10 @@ function Window:getWindowStartEnd()
 	return self.y,self:getHeight()
 end
 
+function Window:getCursorYRelativeToWindow(cursor)
+	return (cursor:getY() - self.y) + 1
+end
+
 
 function Window:setY(cursor)
 	if cursor.y > self:getHeight() then

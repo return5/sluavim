@@ -8,10 +8,12 @@ _ENV = WriteFile
 
 function WriteFile.writeFile(fileName,textBuffer)
 	local file <const> = openFile(fileName,"w+")
-	local strTbl <const> = {}
-	textBuffer:readIntoTable(strTbl)
-	file:write(concat(strTbl))
-	file:close()
+	if file then
+		local strTbl <const> = {}
+		textBuffer:readIntoTable(strTbl)
+		file:write(concat(strTbl))
+		file:close()
+	end
 	return WriteFile
 end
 

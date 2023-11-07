@@ -9,17 +9,6 @@ Repl.__index = Repl
 
 _ENV = Repl
 
-local function printRegister(r)
-	local reg <const> = BaseMode.getRegister(r)
-	Output.printCharAt("printing register\n")
-	if reg then
-		for i=1,#reg,1 do
-			Output.printCharAt(reg[i])
-		end
-		Output.printCharAt("\n")
-	end
-end
-
 local function doNothing() end
 
 local function printNumbersWindow(window,numbersWindow)
@@ -30,15 +19,18 @@ local function printNumbersWindow(window,numbersWindow)
 	Output.refreshWindow(numbersWindow)
 end
 
+local function printAndRefreshWindows(textBuffer,ncursesWindow,numbersWindow,printNumbers,window,cursor)
+	Output.clearWindow(ncursesWindow)
+	printNumbers(window,numbersWindow)
+	textBuffer:print(window,ncursesWindow)
+	Output.setScreenCursor(window:getCursorYRelativeToWindow(cursor),cursor:getX(),ncursesWindow)
+	Output.refreshWindow(ncursesWindow)
+end
+
 local function replLoopBody(currentMode,window,cursor,textBuffer,ncursesWindow,numbersWindow,printNumbers)
 	local ch <const> = Input.getCh()
 	currentMode = currentMode:parseInput(ch,textBuffer,cursor)
-	Output.clearWindow(ncursesWindow)
-	window:setY(cursor)
-	printNumbers(window,numbersWindow)
-	textBuffer:print(window,ncursesWindow)
-	Output.setScreenCursor(cursor,ncursesWindow)
-	Output.refreshWindow(ncursesWindow)
+	window:setY(cursor) --printAndRefreshWindows(textBuffer,ncursesWindow,numbersWindow,printNumbers,window,cursor)
 	return currentMode
 end
 
@@ -46,9 +38,7 @@ function Repl.loop(printNumbers,initMode,textBuffer,ncursesWindow,numbersWindow)
 	local currentMode = initMode
 	local cursor <const> = Cursor:new(1,1)
 	local window <const> = Window:new(1,1)
-	printNumbers(window,numbersWindow)
-	Output.setScreenCursor(cursor,ncursesWindow)
-	Output.refreshWindow(ncursesWindow)
+	printAndRefreshWindows(textBuffer,ncursesWindow,numbersWindow,printNumbers,window,cursor)
 	while true do
 		currentMode = replLoopBody(currentMode,window,cursor,textBuffer,ncursesWindow,numbersWindow,printNumbers)
 	end

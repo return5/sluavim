@@ -54,6 +54,7 @@ function NormalMode.moveRightAndReturnInsertMode(textBuffer,_,cursor)
 	return NormalMode.movementDriver.moveRightAndReturnInsertMode(textBuffer,cursor)
 end
 
+--TODO check this in movementdriver
 function NormalMode.moveToEndAndReturnInsertMode(textBuffer,_,cursor)
 	cursor:setX(textBuffer:getLengthOfLine(cursor.y) + 1)
 	return InsertMode
@@ -153,7 +154,7 @@ function NormalMode.fromBackwards()
 end
 
 function NormalMode.returnColonMode()
-	return NormalMode.colonMode
+	return NormalMode.colonMode.startColonMode()
 end
 
 function NormalMode.digit(textBuffer,ch,cursor)
