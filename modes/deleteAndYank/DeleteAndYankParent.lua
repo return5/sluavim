@@ -30,6 +30,7 @@ function DeleteAndYankParent:deleteOrYankCharacters(textBuffer,cursor,start)
 end
 
 function DeleteAndYankParent:moveCursorAndDoAction(ch,textBuffer,cursor,findFunction,offset)
+	if not textBuffer:doesLineExistAndHaveLength(cursor:getY()) then return NormalMode end
 	local start <const> = cursor:getX()
 	if ch == KeyMap.ESC then return NormalMode.returnNormalMode() end
 	local stop <const> = findFunction(textBuffer,cursor,ch)

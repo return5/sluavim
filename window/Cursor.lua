@@ -46,7 +46,7 @@ end
 
 function Cursor:moveUp()
 	self:moveY(-1)
-	if self.y <= 0 then self.y = 1 end
+	if self.y < 1 then self.y = 1 end
 	return self
 end
 

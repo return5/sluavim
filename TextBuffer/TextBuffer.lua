@@ -61,7 +61,9 @@ end
 
 function TextBuffer:getLengthOfLine(line)
 	local lineNode = self:getLine(line)
+	if not lineNode then return -1 end
 	local item = lineNode:getItem()
+	if not item then return -1 end
 	return item:getSize()
 end
 
@@ -121,7 +123,7 @@ function TextBuffer:copyChars(start,stop,row,register)
 end
 
 function TextBuffer:getSize()
-	return self.lines.size
+	return self.lines:getSize()
 end
 
 function TextBuffer:removeCharAtEnd(row,ch)
@@ -132,6 +134,15 @@ end
 function TextBuffer:addEndingNewLine(pos,ch)
 	self.lines:getItem(pos):addEndingNewLine(ch)
 	return self
+end
+
+function TextBuffer:doesLineExistAndHaveLength(y)
+	if self:getSize() < y then return false end
+	local node = self.lines:getNode(y)
+	if not node then return false end
+	local line = node:getItem()
+	if not line then return false end
+	return line:getSize() > 0
 end
 
 function TextBuffer:new()

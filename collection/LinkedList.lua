@@ -255,6 +255,10 @@ function LinkedList:replace(index,item)
 	return self
 end
 
+function LinkedList:getSize()
+	return self.size
+end
+
 function LinkedList:addEndingNode(ch)
 	self.endingNode = Node:new(nil,ch)
 	return self

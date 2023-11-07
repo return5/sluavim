@@ -170,7 +170,7 @@ function NormalMode.replaceCurrentChar()
 end
 
 function NormalMode.continuousReplaceChar()
-	return NormalMode.replaceDriver.continuousReplacement()
+	return NormalMode.replacementDriver.continuousReplacement()
 end
 
 function NormalMode.setMacro()

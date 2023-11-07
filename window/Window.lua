@@ -37,6 +37,7 @@ end
 
 function Window:moveUp()
 	self.y = self.y - 1
+	if self.y < 1 then self.y = 1 end
 	return self
 end
 

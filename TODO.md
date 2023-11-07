@@ -5,7 +5,6 @@
 - make ```~``` work with more than just ascii
 - rewrite repeatMode to work better with macros
 - support color mode.
-- handle backspaces
 
 
 
