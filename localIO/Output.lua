@@ -83,4 +83,9 @@ function Output.createNumbersWindow()
 	return window
 end
 
+function Output.deleteWindow(window)
+	NcursesAux.deleteWindow(window)
+	return Output
+end
+
 return Output

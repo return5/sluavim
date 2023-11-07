@@ -285,9 +285,8 @@ static void reorderArray(const int index) {
 
 void removeFromArray(const int index) {
     if(index >= 0) {
-        WINDOW *tmp = window_array->windows[index];
+        window_array->windows[index] = NULL;
         reorderArray(index);
-        free(tmp);
     }
 }
 

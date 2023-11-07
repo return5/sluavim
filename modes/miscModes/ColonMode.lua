@@ -56,12 +56,13 @@ end
 
 function ColonMode.removeWindow()
 	Output.clearWindow(ColonMode.window)
+	Output.refreshWindow(ColonMode.window)
 	Output.deleteWindow(ColonMode.window)
 	return NormalMode
 end
 
 function ColonMode:parseInput(ch,textBuffer)
-	if ch == KeyMap.ESC then return NormalMode end
+	if ch == KeyMap.ESC then return ColonMode.removeWindow() end
 	if ch == KeyMap.ENTER then return ColonMode.processStrTbl(textBuffer) end
 	ColonMode.strTbl[#ColonMode.strTbl + 1] = ch
 	ColonMode.printWindow()
@@ -73,6 +74,7 @@ function ColonMode.startColonMode()
 	local windowWidth <const> = Output.getWindowWidth()
 	ColonMode.window = Output.getNewWindow(5,windowHeight - 1,2,windowWidth - 5)
 	ColonMode.strTbl[#ColonMode.strTbl + 1] = ":"
+	ColonMode.printWindow()
 	return ColonMode
 end
 

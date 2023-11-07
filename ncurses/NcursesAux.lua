@@ -11,6 +11,7 @@ local noecho    <const> = noecho
 local curs_set  <const> = curs_set
 local newwin <const> = newwin
 local wborder <const> = wborder
+local delwin <const> = delwin
 
 _ENV = NcursesAux
 
@@ -27,6 +28,11 @@ end
 
 function NcursesAux.endNcurses()
     endwin()
+end
+
+function NcursesAux.deleteWindow(window)
+    delwin(window)
+    return NcursesAux
 end
 
 function NcursesAux.createWindow(height,width,y,x)
