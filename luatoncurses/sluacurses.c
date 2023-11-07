@@ -82,6 +82,8 @@ static int l_mousemask(lua_State *L);
 static int l_getCols(lua_State *L);
 static int l_getLines(lua_State *L);
 static int l_mvwaddch(lua_State *L);
+static int l_refreshWindowsInOrder(lua_State *L);
+static int l_clearWindowsInOrder(lua_State *L);
 
 //-------------------------------- code -------------------------------------------------------
 
@@ -159,6 +161,8 @@ int luaopen_luatoncurses_sluacurses(lua_State *L) {
     lua_register(L,"mvwaddch",l_mvwaddch);
     lua_pushinteger(L,ERR);
     lua_setglobal(L,"ERR");
+    lua_register(L,"refreshWindowsInOrder",l_refreshWindowsInOrder);
+    lua_register(L,"clearWindowsInOrder",l_clearWindowsInOrder);
     return 0;
 }
 
@@ -303,6 +307,26 @@ int makeWindow(const WIN_INFO *const win_info) {
     }
     addToWindowArray(win_info);
     return window_array->index;
+}
+
+static int l_refreshWindowsInOrder(__attribute__((unused)) lua_State *L) {
+    if(window_array != NULL && window_array->windows != NULL) {
+        for(int i = 0; i <= window_array->index; i++) {
+            wrefresh(getWindow(i));
+        }
+    }
+    return 0;
+}
+
+
+static int l_clearWindowsInOrder(__attribute__((unused)) lua_State *L) {
+    if(window_array != NULL && window_array->windows != NULL) {
+        for(int i = 0; i <= window_array->index; i++) {
+            wclear(getWindow(i));
+        }
+    }
+    return 0;
+
 }
 
 static int l_newwin(lua_State *L) {

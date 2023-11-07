@@ -46,11 +46,11 @@ function ColonMode.processStrTbl(textBuffer)
 end
 
 function ColonMode.printWindow()
-	Output.clearWindow(ColonMode.window)
+	--Output.clearWindow(ColonMode.window)
 	for i=1,#ColonMode.strTbl,1 do
 		Output.printCharAt(ColonMode.strTbl[i],i,ColonMode.window,1)
 	end
-	Output.refreshWindow(ColonMode.window)
+	--Output.refreshWindow(ColonMode.window)
 	return ColonMode
 end
 
@@ -64,8 +64,20 @@ end
 function ColonMode:parseInput(ch,textBuffer)
 	if ch == KeyMap.ESC then return ColonMode.removeWindow() end
 	if ch == KeyMap.ENTER then return ColonMode.processStrTbl(textBuffer) end
+	if ch == KeyMap.BACK then return ColonMode.handleBackSpace() end
 	ColonMode.strTbl[#ColonMode.strTbl + 1] = ch
 	ColonMode.printWindow()
+	return ColonMode
+end
+
+function ColonMode.handleBackSpace()
+	if #ColonMode.strTbl > 1 then
+		ColonMode.strTbl[#ColonMode.strTbl] = nil
+		return ColonMode.printWindow()
+	end
+	if #ColonMode.strTbl == 1 then
+		return ColonMode.removeWindow()
+	end
 	return ColonMode
 end
 

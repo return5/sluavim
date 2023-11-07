@@ -16,6 +16,8 @@ local mvwprintw <const> = mvwprintw
 local mvwaddch <const> = mvwaddch
 local wrefresh <const> = wrefresh
 local wclear <const> = wclear
+local clearWindowsInOrder <const> = clearWindowsInOrder
+local refreshWindowsInOrder <const> = refreshWindowsInOrder
 local toByte <const> = string.byte
 
 _ENV = NcursesIo
@@ -82,6 +84,17 @@ end
 
 function NcursesIo.refresh()
     refresh()
+    return NcursesIo
+end
+
+
+function NcursesIo.refreshWindowsInOrder()
+    refreshWindowsInOrder()
+    return NcursesIo
+end
+
+function NcursesIo.clearWindowsInOrder()
+    clearWindowsInOrder()
     return NcursesIo
 end
 

@@ -64,7 +64,8 @@ function Output.setScreenCursor(y,x,window)
 end
 
 function Output.getNewWindow(x,y,height,width)
-	return NcursesAux.createWindow(height,width,y,x)
+	local window = NcursesAux.createWindow(height,width,y,x)
+	return window
 end
 
 function Output.createMainWindow(numbersWindow)
@@ -85,6 +86,16 @@ end
 
 function Output.deleteWindow(window)
 	NcursesAux.deleteWindow(window)
+	return Output
+end
+
+function Output.refreshWindowsInOrder()
+	NcursesIO.refreshWindowsInOrder()
+	return Output
+end
+
+function Output.clearWindowsInOrder()
+	NcursesIO.clearWindowsInOrder()
 	return Output
 end
 

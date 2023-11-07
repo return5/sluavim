@@ -12,11 +12,9 @@ _ENV = Repl
 local function doNothing() end
 
 local function printNumbersWindow(window,numbersWindow)
-	Output.clearWindow(numbersWindow)
 	for i=0,Output.getWindowHeight() - 1, 1 do
 		Output.printRightAlignChar(window:getY() + i,i,0,numbersWindow)
 	end
-	Output.refreshWindow(numbersWindow)
 end
 
 local function printAndRefreshWindows(textBuffer,ncursesWindow,numbersWindow,printNumbers,window,cursor)
@@ -24,13 +22,14 @@ local function printAndRefreshWindows(textBuffer,ncursesWindow,numbersWindow,pri
 	printNumbers(window,numbersWindow)
 	textBuffer:print(window,ncursesWindow)
 	Output.setScreenCursor(window:getCursorYRelativeToWindow(cursor),cursor:getX(),ncursesWindow)
-	Output.refreshWindow(ncursesWindow)
+	Output.refreshWindowsInOrder()
 end
 
 local function replLoopBody(currentMode,window,cursor,textBuffer,ncursesWindow,numbersWindow,printNumbers)
 	local ch <const> = Input.getCh()
 	currentMode = currentMode:parseInput(ch,textBuffer,cursor)
-	window:setY(cursor) --printAndRefreshWindows(textBuffer,ncursesWindow,numbersWindow,printNumbers,window,cursor)
+	window:setY(cursor)
+	printAndRefreshWindows(textBuffer,ncursesWindow,numbersWindow,printNumbers,window,cursor)
 	return currentMode
 end
 
@@ -46,7 +45,6 @@ function Repl.loop(printNumbers,initMode,textBuffer,ncursesWindow,numbersWindow)
 end
 
 function Repl.replWithNumbers(currentMode,textBuffer,ncursesWindow,numberWindow)
-	Output.refreshWindow(numberWindow)
 	return Repl.loop(printNumbersWindow,currentMode,textBuffer,ncursesWindow,numberWindow)
 end
 
