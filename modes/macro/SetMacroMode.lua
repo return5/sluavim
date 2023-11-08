@@ -12,8 +12,7 @@ _ENV = SetMacroMode
 
 function SetMacroMode:parseInput(ch)
 	if SetRegisterMode:setRegisterName(ch) then
-		SetMacroModeInput.addRegisterName(ch)
-		return SetMacroModeInput
+		return SetMacroModeInput.initRegister()
 	end
 	return NormalMode
 end

@@ -25,21 +25,22 @@ local function printAndRefreshWindows(textBuffer,ncursesWindow,numbersWindow,pri
 	Output.refreshWindowsInOrder()
 end
 
-local function replLoopBody(currentMode,window,cursor,textBuffer,ncursesWindow,numbersWindow,printNumbers)
+local function replLoopBody(currentMode,window,cursor,textBuffer,ncursesWindow,numbersWindow,printNumbers,prevMode)
 	local ch <const> = Input.getCh()
-	currentMode = currentMode:parseInput(ch,textBuffer,cursor)
+	currentMode,prevMode = currentMode:parseInput(ch,textBuffer,cursor,prevMode)
 	window:setY(cursor)
 	printAndRefreshWindows(textBuffer,ncursesWindow,numbersWindow,printNumbers,window,cursor)
-	return currentMode
+	return currentMode,prevMode
 end
 
 function Repl.loop(printNumbers,initMode,textBuffer,ncursesWindow,numbersWindow)
 	local currentMode = initMode
+	local prevMode = nil
 	local cursor <const> = Cursor:new(1,1)
 	local window <const> = Window:new(1,1)
 	printAndRefreshWindows(textBuffer,ncursesWindow,numbersWindow,printNumbers,window,cursor)
 	while true do
-		currentMode = replLoopBody(currentMode,window,cursor,textBuffer,ncursesWindow,numbersWindow,printNumbers)
+		currentMode,prevMode = replLoopBody(currentMode,window,cursor,textBuffer,ncursesWindow,numbersWindow,printNumbers,prevMode)
 	end
 	return Repl
 end
