@@ -223,7 +223,7 @@ NormalMode.keyBindings = {
 	R = NormalMode.continuousReplaceChar,
 	q = NormalMode.setMacro,
 	['@'] = NormalMode.runMacro
-} --TODO v,u,^r
+} --TODO v,P,u,^r
 
 function NormalMode.setDrivers(replaceDriver,movementDriver,yankModeDriver,deleteModeDriver,colonMode,setRepeatMode,setRegisterMode,macroMode)
 	NormalMode.movementDriver = movementDriver

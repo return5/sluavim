@@ -43,10 +43,12 @@ before running for the first time, navigate to the directory ```/src/luatoncurse
   - enter insert mode.
 - ```esc``` 
   - enter normal mode.  
-- ``dt[c]`` ``df[c]`` ``dT[c]`` ``dF[c]`` ``dd`` ``d$`` ``d$``  
+- ``dt[c]`` ``df[c]`` ``dT[c]`` ``dF[c]`` ``dd`` ``d$`` ``d^``  
   - delete characters.
-- ``yt[c]`` ``yf[c]`` ``yT[c]`` ``yF[c]`` ``yy`` ``y$`` ``y$``
+- ``yt[c]`` ``yf[c]`` ``yT[c]`` ``yF[c]`` ``yy`` ``y$`` ``y^``
   - copy characters.
+- ``p``
+  - paste 
 - ``q [c]``  
   - record a macro into ``[c]``.
 - ``@ [c]``  
@@ -62,6 +64,21 @@ before running for the first time, navigate to the directory ```/src/luatoncurse
 - ``:q`` 
   - quit.
 - ``:w [filename]`` 
-  - save text to ``[filename]``
+  - write text to ``[filename]``
 - ``:wq [filename]`` 
   - write text to ``[filename]`` then quit.
+- ``G``
+  - jump to bottom of file.
+- ``gg``
+  - jump to top of file.
+
+### TODO
+- add visual select mode
+- add search and replace to colon mode
+- add a search mode
+- add undo and redo commands
+- loosen coupling to ncurses
+- loosen coupling between a few of the classes
+- enable colors for basic syntax highlighting
+- enable reading syntax highlight files
+- add jumping to a specific line based on line number. 
