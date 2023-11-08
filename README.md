@@ -1,6 +1,10 @@
 ### sluavim  
   A simple Vim like text editor. Input and Output is handled via Ncurses.
 
+
+#### screenshot
+![screenshot](/screenshot/screenShot-sluavim.png?raw=true)  
+
 #### Dependencies
 - [make](https://www.gnu.org/software/make/)
 - [Lua >= 5.4](https://www.lua.org/download.html) 
