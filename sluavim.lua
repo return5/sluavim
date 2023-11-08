@@ -29,11 +29,10 @@ local function main()
 	local numbersWindow <const> = ChangeOptions.options()
 	local mainWindow <const> = OutPut.createMainWindow(numbersWindow)
 	SetModeFields.setModes()
-	local initMode <const> = ChangeOptions.getInitMode()
 	if numbersWindow then
-		Repl.replWithNumbers(initMode,textBuffer,mainWindow,numbersWindow)
+		Repl.replWithNumbers(textBuffer,mainWindow,numbersWindow)
 	else
-		Repl.repl(initMode,textBuffer,mainWindow)
+		Repl.repl(textBuffer,mainWindow)
 	end
 	OutPut.exit()
 end

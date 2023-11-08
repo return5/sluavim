@@ -27,10 +27,6 @@ local function showLineNumbers()
 	changeBooleanValue('showLineNumbers',true)
 end
 
-local function easyMode()
-	changeBooleanValue('easyMode',true)
-end
-
 local function enableColor()
 	changeBooleanValue('enableColor',true)
 end
@@ -52,8 +48,6 @@ local function printHelp()
 	printOption("--file","[filename]","load file into editor.")
 	printOption("-n","","show line numbers(default).")
 	printOption("--line-number","","show line numbers(default).")
-	printOption("-e","","Start editor in easy-mode.")
-	printOption("--easy-mode","","Start editor in easy-mode.")
 	printOption("-s","","Show cursor.(default)")
 	printOption("--show-cursor","","Show cursor.(default)")
 	printOption("-c","","enable color.")
@@ -64,8 +58,6 @@ end
 local functionMapper <const> = {
 	n = showLineNumbers,
 	['line-number'] = showLineNumbers,
-	e = easyMode,
-	['easy-mode'] = easyMode,
 	c = enableColor,
 	['enable-color'] = enableColor,
 	s = showCursor,

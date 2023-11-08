@@ -7,7 +7,6 @@ local NcursesColors <const> = require('ncurses.NcursesColors')
 local NcursesAux <const> = require('ncurses.NcursesAux')
 local Output <const> = require('localIO.Output')
 local NormalMode <const> = require('modes.NormalMode')
-local EasyMode <const> = require('modes.EasyMode')
 
 local pairs <const> = pairs
 
@@ -46,11 +45,6 @@ function ChangeProgramOptions.options()
 	if Config.colorPairs ~= nil then setColorPairs(Config.colorPairs) end
 	if Config.colorValues ~= nil then setColorValues(Config.colorValues) end
 	return showLineNumbers(Config.showLineNumbers)
-end
-
-function ChangeProgramOptions.getInitMode()
-	if Config.easyMode ~= nil and Config.easyMode then return EasyMode end
-	return NormalMode
 end
 
 return ChangeProgramOptions

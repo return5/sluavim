@@ -1,5 +1,5 @@
 local Window <const> = require('window.Window')
-local BaseMode <const> = require('modes.BaseMode')
+local NormalMode <const> = require('modes.NormalMode')
 local Output <const> = require('localIO.Output')
 local Input <const> = require('localIO.Input')
 local Cursor <const> = require('window.Cursor')
@@ -33,8 +33,8 @@ local function replLoopBody(currentMode,window,cursor,textBuffer,ncursesWindow,n
 	return currentMode,prevMode
 end
 
-function Repl.loop(printNumbers,initMode,textBuffer,ncursesWindow,numbersWindow)
-	local currentMode = initMode
+function Repl.loop(printNumbers,textBuffer,ncursesWindow,numbersWindow)
+	local currentMode = NormalMode
 	local prevMode = nil
 	local cursor <const> = Cursor:new(1,1)
 	local window <const> = Window:new(1,1)
@@ -45,12 +45,12 @@ function Repl.loop(printNumbers,initMode,textBuffer,ncursesWindow,numbersWindow)
 	return Repl
 end
 
-function Repl.replWithNumbers(currentMode,textBuffer,ncursesWindow,numberWindow)
-	return Repl.loop(printNumbersWindow,currentMode,textBuffer,ncursesWindow,numberWindow)
+function Repl.replWithNumbers(textBuffer,ncursesWindow,numberWindow)
+	return Repl.loop(printNumbersWindow,textBuffer,ncursesWindow,numberWindow)
 end
 
-function Repl.repl(currentMode,textBuffer,ncursesWindow)
-	return Repl.loop(doNothing,currentMode,textBuffer,ncursesWindow)
+function Repl.repl(textBuffer,ncursesWindow)
+	return Repl.loop(doNothing,textBuffer,ncursesWindow)
 end
 
 
