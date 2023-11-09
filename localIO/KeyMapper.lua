@@ -6,7 +6,7 @@
 
 local NcurseKeyMapper <const> = require('ncurses.NcursesKeyMap')
 
-local KeyMapper <const> = {}
+local KeyMapper <const> = {type = "KeyMapper"}
 
 for key,value in pairs(NcurseKeyMapper) do
 	KeyMapper[key] = value

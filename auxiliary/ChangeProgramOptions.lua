@@ -6,11 +6,10 @@ local Config <const> = require('config.config')
 local NcursesColors <const> = require('ncurses.NcursesColors')
 local NcursesAux <const> = require('ncurses.NcursesAux')
 local Output <const> = require('localIO.Output')
-local NormalMode <const> = require('modes.NormalMode')
 
 local pairs <const> = pairs
 
-local ChangeProgramOptions <const> = {}
+local ChangeProgramOptions <const> = {type = "ChangeProgramOptions"}
 ChangeProgramOptions.__index = ChangeProgramOptions
 
 _ENV = ChangeProgramOptions

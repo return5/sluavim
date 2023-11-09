@@ -14,7 +14,7 @@ local write <const> = io.write
 local format <const> = string.format
 
 
-local CmdArgs <const> = {}
+local CmdArgs <const> = {type = "CmdArgs"}
 CmdArgs.__index = CmdArgs
 
 _ENV = CmdArgs

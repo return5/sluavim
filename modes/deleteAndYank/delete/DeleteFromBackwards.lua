@@ -1,6 +1,6 @@
 local DeleteMode <const> = require('modes.deleteAndYank.delete.DeleteMode')
 
-local DeleteFromBackwards <const> = {}
+local DeleteFromBackwards <const> = {type = "DeleteFromBackwards"}
 setmetatable(DeleteFromBackwards,DeleteMode)
 DeleteFromBackwards.__index = DeleteFromBackwards
 

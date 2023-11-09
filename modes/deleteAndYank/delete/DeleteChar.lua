@@ -1,4 +1,5 @@
 local DeleteMode <const> = require('modes.deleteAndYank.delete.DeleteMode')
+
 local DeleteChar <const> = {type = 'DeleteChar'}
 DeleteChar.__index = DeleteChar
 setmetatable(DeleteChar,DeleteMode)
