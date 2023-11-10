@@ -5,14 +5,35 @@
 local Output <const> = require('localIO.Output')
 local LinkedList <const> = require('collection.LinkedList')
 local setmetatable <const> = setmetatable
+local concat <const> = table.concat
+local gsub <const> = string.gsub
+local tonumber <const> = tonumber
 
 local Line <const> = {type = "line"}
 Line.__index = Line
 
 _ENV = Line
 
+
+local function getReplaceNumber(replaceOption)
+	if replaceOption == nil or replaceOption == "" then return nil end
+	return tonumber(replaceOption)
+end
+
+function Line:searchAndReplace(searchString,replaceString,replaceOptions)
+	local strTbl <const> = {}
+	self.chars:readLineIntoTable(strTbl)
+	local replaceNumber <const> = getReplaceNumber(replaceOptions)
+	local newString <const> = gsub(concat(strTbl),searchString,replaceString,replaceNumber)
+	return newString,self:isLineEnded()
+end
+
 function Line:printAtRow(row,ncursesWindow)
 	self.chars:iterate(Output.printCharAt,ncursesWindow,row)
+end
+
+function Line:isLineEnded()
+	return self.chars:isLineEnded()
 end
 
 function Line:replaceCharAt(char,column)
@@ -45,6 +66,11 @@ end
 
 function Line:addChar(char,pos)
 	self.chars:add(char,pos)
+	return self
+end
+
+function Line:insertChar(char)
+	self.chars:add(char,self:getSize() + 1)
 	return self
 end
 
@@ -85,6 +111,12 @@ function Line:readIntoTable(strTbl)
 	return self
 end
 
+function Line:readIntoString()
+	local str = {}
+	self:readIntoTable(str)
+	return concat(str)
+end
+
 function Line:addEndingNewLine(ch)
 	self.chars:addEndingNode(ch)
 end
@@ -94,6 +126,9 @@ function Line:removeCharAtEnd(ch)
 	return self
 end
 
+function Line.returnConstructor()
+	return Line.new(Line)
+end
 
 function Line:getCharAt(x)
 	return self.chars:getItem(x)

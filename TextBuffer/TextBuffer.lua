@@ -30,6 +30,11 @@ function TextBuffer:readTextIntoBuffer(text)
 	return self
 end
 
+function TextBuffer:searchAndReplace(start,stop,searchString,replaceString,replaceOptions)
+	self.lines:searchAndReplace(start,stop,searchString,replaceString,replaceOptions,Line.returnConstructor)
+	return self
+end
+
 function TextBuffer:print(window,ncursesWindow)
 	local start <const>, limit <const> = window:getWindowStartEnd()
 	self.lines:iterateBuffer(start,limit,Line.printAtRow,Output.newLine,ncursesWindow)

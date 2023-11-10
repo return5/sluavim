@@ -11,6 +11,30 @@ LinkedList.__index = LinkedList
 
 _ENV = LinkedList
 
+
+
+function LinkedList:searchAndReplace(start,stop,searchString,replaceString,replaceOptions,lineConstruct)
+	local i = start
+	local temp = self:getNode(start)
+	while i <= stop and temp do
+		local newString <const>,isLineEnded <const> = temp:getItem():searchAndReplace(searchString,replaceString,replaceOptions)
+		local newNode <const> = Node.readStringAsLineIntoNode(lineConstruct,newString,isLineEnded,temp.prev)
+		local temp2  <const> = temp.next
+		self:replaceNode(temp,newNode,temp2)
+		temp = temp2
+		i = i + 1
+	end
+	return self
+end
+
+function LinkedList:replaceNode(node,newNode,nextNode)
+	node:replaceNode(newNode,nextNode)
+	if node == self.head then
+		self.head = newNode
+	end
+	return self
+end
+
 function LinkedList:selectNodes(start,stop,register)
 	local i = start
 	local startNode = self:getNode(start)
@@ -262,6 +286,10 @@ end
 function LinkedList:addEndingNode(ch)
 	self.endingNode = Node:new(nil,ch)
 	return self
+end
+
+function LinkedList:isLineEnded()
+	return self.endingNode ~= nil
 end
 
 function LinkedList:new()
