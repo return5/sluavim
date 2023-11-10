@@ -75,10 +75,10 @@ before running for the first time, navigate to the directory ```/src/luatoncurse
 ### TODO
 - add visual select mode
 - add search and replace to colon mode
-- add a search mode
 - add undo and redo commands
 - loosen coupling to ncurses
 - loosen coupling between a few of the classes
 - enable colors for basic syntax highlighting
 - enable reading syntax highlight files
 - add jumping to a specific line based on line number. 
+- heavily refactor and clean up seach and replace code. way messier and nasty than i feel okay with. 
