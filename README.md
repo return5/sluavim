@@ -74,7 +74,6 @@ before running for the first time, navigate to the directory ```/src/luatoncurse
 
 ### TODO
 - add visual select mode
-- add search and replace to colon mode
 - add undo and redo commands
 - loosen coupling to ncurses
 - loosen coupling between a few of the classes
