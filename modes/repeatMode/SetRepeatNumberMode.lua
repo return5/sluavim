@@ -24,6 +24,11 @@ function SetRepeatNumberMode:parseInput(ch,textBuffer,cursor)
 		self.number = ""
 		return NormalMode
 	end
+	if ch == 'g' or ch == 'G' then
+		cursor:moveYTo(tonumber(self.number) + 1,textBuffer:getSize())
+		self.number = ""
+		return NormalMode
+	end
 	if not tonumber(ch) then return self:returnRepeatMode(ch,textBuffer,cursor) end
 	self.number = self.number .. ch
 	return self

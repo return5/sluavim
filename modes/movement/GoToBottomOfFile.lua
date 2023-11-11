@@ -5,7 +5,8 @@ GoToBottomOfFile.__index = GoToBottomOfFile
 setmetatable(GoToBottomOfFile,MovementMode)
 
 function GoToBottomOfFile:findFunction(textBuffer,cursor)
-	cursor:moveYTo(textBuffer:getSize())
+	local bottom <const> = textBuffer:getSize()
+	cursor:moveYTo(bottom,bottom)
 	return 1,0
 end
 

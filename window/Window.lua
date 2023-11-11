@@ -49,12 +49,15 @@ function Window:getCursorYRelativeToWindow(cursor)
 	return (cursor:getY() - self.y) + 1
 end
 
+function Window:moveYBy(amount)
+	self.y = self.y + amount
+	if self.y <= 0 then self.y = 1 end
+	return self
+end
 
 function Window:setY(cursor)
-	if cursor.y > self:getHeight() then
-		self:moveDown()
-	elseif cursor.y < self.y then
-		self:moveUp()
+	if cursor:getY() > self:getHeight()  or cursor:getY() < self.y then
+		self:moveYBy(cursor:getY() - self:getHeight())
 	end
 	return self
 end

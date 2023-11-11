@@ -7,7 +7,7 @@ setmetatable(GoToTopOfFile,MovementMode)
 _ENV = GoToTopOfFile
 
 function GoToTopOfFile:findFunction(_,cursor)
-	cursor:moveYTo(1)
+	cursor:moveYTo(1,1)
 	return 1,0
 end
 

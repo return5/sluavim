@@ -80,5 +80,4 @@ before running for the first time, navigate to the directory ```/src/luatoncurse
 - loosen coupling between a few of the classes
 - enable colors for basic syntax highlighting
 - enable reading syntax highlight files
-- add jumping to a specific line based on line number. 
-- heavily refactor and clean up seach and replace code. way messier and nasty than i feel okay with. 
+- heavily refactor and clean up search and replace code. way messier and nasty than i feel okay with. 

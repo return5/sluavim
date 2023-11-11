@@ -76,8 +76,9 @@ function Cursor:moveXTo(to)
 	return self
 end
 
-function Cursor:moveYTo(to)
+function Cursor:moveYTo(to,limit)
 	self.y = to
+	if self.y > limit then self.y = limit end
 	return self
 end
 
