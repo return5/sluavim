@@ -71,6 +71,14 @@ before running for the first time, navigate to the directory ```/src/luatoncurse
   - jump to bottom of file.
 - ``gg``
   - jump to top of file.
+- ``[number] g``
+  - jump to line [number]
+- ``:[lines]s/search/replace/[n]``
+  - search and replace using lua patterns. 
+    - ``[lines]`` 
+      - which lines to select. uses the same notation as Vim.
+    - ``[n]``
+      - how many times to repeat search per line. leave blank for all matches. 
 
 ### TODO
 - add visual select mode
