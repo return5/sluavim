@@ -2,6 +2,7 @@
 	class which represents a collection of registers.
 --]]
 
+
 local Registers <const> = {type = "Registers",registers = {},currentRegister = 1}
 Registers.__index = Registers
 
@@ -33,7 +34,6 @@ end
 
 function Registers:setRegister(ch,register)
 	self.registers[ch] = register
-	self.currentRegister = ch
 	return self
 end
 

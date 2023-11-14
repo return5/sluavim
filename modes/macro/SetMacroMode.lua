@@ -11,8 +11,8 @@ setmetatable(SetMacroMode,BaseMode)
 _ENV = SetMacroMode
 
 function SetMacroMode:parseInput(ch)
-	if SetRegisterMode:setRegisterName(ch) then
-		return SetMacroModeInput:new()
+	if SetRegisterMode.setRegisterName(ch) then
+		return SetMacroModeInput:new(ch)
 	end
 	return NormalMode
 end

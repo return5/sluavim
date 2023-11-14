@@ -9,16 +9,15 @@ setmetatable(SetRegisterMode,BaseMode)
 _ENV = SetRegisterMode
 
 
-function SetRegisterMode:setRegisterName(ch)
+function SetRegisterMode.setRegisterName(ch)
 	if KeyMap[ch] then
 		return false
 	end
-	self.setCurrentRegisterName(ch)
 	return true
 end
 
 function SetRegisterMode:parseInput(ch)
-	SetRegisterMode:setRegisterName(ch)
+	SetRegisterMode.setRegisterName(ch)
 	return NormalMode
 end
 

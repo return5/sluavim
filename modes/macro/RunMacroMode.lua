@@ -18,8 +18,9 @@ end
 
 
 function RunMacroMode:parseInput(ch,textBuffer,cursor)
-	if not SetRegisterMode:setRegisterName(ch) then return NormalMode end
-	local macroRegister <const> = self.getCurrentRegister()
+	file:write("run macro parse: ",ch,"\n")
+	if not SetRegisterMode.setRegisterName(ch) then return NormalMode end
+	local macroRegister <const> = RunMacroMode.getRegister(ch)
 	if macroRegister then
 		RunMacroMode.runMacroLoop(textBuffer,cursor,macroRegister)
 	end

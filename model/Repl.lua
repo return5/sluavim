@@ -35,12 +35,11 @@ end
 
 function Repl.loop(printNumbers,textBuffer,ncursesWindow,numbersWindow)
 	local currentMode = NormalMode
-	local prevMode = nil
 	local cursor <const> = Cursor:new(1,1)
 	local window <const> = Window:new(1,1)
 	printAndRefreshWindows(textBuffer,ncursesWindow,numbersWindow,printNumbers,window,cursor)
 	while true do
-		currentMode,prevMode = replLoopBody(currentMode,window,cursor,textBuffer,ncursesWindow,numbersWindow,printNumbers,prevMode)
+		currentMode = replLoopBody(currentMode,window,cursor,textBuffer,ncursesWindow,numbersWindow,printNumbers)
 	end
 	return Repl
 end
