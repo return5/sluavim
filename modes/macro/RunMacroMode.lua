@@ -18,7 +18,6 @@ end
 
 
 function RunMacroMode:parseInput(ch,textBuffer,cursor)
-	file:write("run macro parse: ",ch,"\n")
 	if not SetRegisterMode.setRegisterName(ch) then return NormalMode end
 	local macroRegister <const> = RunMacroMode.getRegister(ch)
 	if macroRegister then
