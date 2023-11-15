@@ -2,6 +2,7 @@
 	class which represents a collection of registers.
 --]]
 
+local tonumber <const> = tonumber
 
 local Registers <const> = {type = "Registers",registers = {},currentRegister = 1}
 Registers.__index = Registers
@@ -41,7 +42,16 @@ function Registers:getCurrentRegisterName()
 	return self.currentRegister
 end
 
+function Registers:ifCurrentRegisterIsNumberThenAdjust()
+	local registerNumber <const> = tonumber(self.currentRegister)
+	if registerNumber and registerNumber>= 0 and registerNumber <= 10 then
+		self:adjustRegister()
+	end
+	return self
+end
+
 function Registers:setCurrentRegister(register)
+	self:ifCurrentRegisterIsNumberThenAdjust()
 	self.registers[self.currentRegister] = register
 end
 

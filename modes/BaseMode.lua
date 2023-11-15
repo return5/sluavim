@@ -19,6 +19,11 @@ function BaseMode.adjustRegister()
 	return BaseMode
 end
 
+function BaseMode.adjustRegisterIfItIsNumber()
+	BaseMode.registers:ifCurrentRegisterIsNumberThenAdjust()
+	return BaseMode
+end
+
 function BaseMode.getCurrentRegister()
 	return BaseMode.registers:getCurrentRegister()
 end

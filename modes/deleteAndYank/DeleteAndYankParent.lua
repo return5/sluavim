@@ -18,7 +18,6 @@ function DeleteAndYankParent:action()
 end
 
 function DeleteAndYankParent:deleteOrYankCharacters(textBuffer,cursor,start)
-	BaseMode.adjustRegister()
 	local register <const> = {}
 	local startChar <const> = start <= cursor:getX() and start or cursor:getX()
 	local stopChar <const> = cursor:getX() >= start and cursor:getX() or start
